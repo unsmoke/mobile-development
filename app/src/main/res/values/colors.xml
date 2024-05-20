@@ -7,4 +7,21 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <!--  CUSTOM COLORS  -->
+    <!--  GREEN  -->
+    <color name="light_green">#f1f9f0</color>
+    <color name="light_hover_green">#e9f5e8</color>
+    <color name="light_active_green">#d2ebdf</color>
+    <color name="normal_green">#6fbf64</color>
+    <color name="normal_hover_green">#64ac5a</color>
+    <color name="normal_active_green">#599950</color>
+    <color name="dark_green">#538f4b</color>
+    <color name="dark_hover_green">#43733c</color>
+    <color name="dark_active_green">#32562d</color>
+    <color name="darker_green">#274323</color>
+    <!--  ACCENTS  -->
+    <color name="accent_purple">#6245D1</color>
+    <color name="accent_yellow">#F1D552</color>
+    <color name="accent_black">#000000</color>
+    <color name="accent_white">#FFFFFF</color>
 </resources>
