@@ -1,4 +1,4 @@
-package com.cpp.unsmoke
+package com.cpp.unsmoke.ui.main
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.cpp.unsmoke.R
 import com.cpp.unsmoke.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

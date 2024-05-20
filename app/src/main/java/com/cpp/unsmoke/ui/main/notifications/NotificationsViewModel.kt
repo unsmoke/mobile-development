@@ -1,4 +1,4 @@
-package com.cpp.unsmoke.ui.notifications
+package com.cpp.unsmoke.ui.main.notifications
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
