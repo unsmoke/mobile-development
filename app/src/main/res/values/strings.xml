@@ -14,4 +14,6 @@
     <string name="sign_in_with_google">Sign In With Google</string>
     <string name="no_acc">Don\'t have an account yet?</string>
     <string name="toSignup">Signup Now</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
 </resources>

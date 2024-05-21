@@ -3,6 +3,7 @@ package com.cpp.unsmoke.ui.auth.login
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.cpp.unsmoke.R
 import com.cpp.unsmoke.databinding.ActivityLoginBinding
 import com.cpp.unsmoke.ui.auth.forgotpassword.ForgotPasswordActivity
 import com.cpp.unsmoke.ui.auth.register.RegisterActivity
@@ -17,6 +18,8 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.hide()
+
+        hintSetup()
 
         binding.btnLogin.setOnClickListener {
             toHome()
@@ -33,6 +36,11 @@ class LoginActivity : AppCompatActivity() {
         binding.btnSigninWithGoogle.setOnClickListener {
             toSignInWithGoogle()
         }
+    }
+
+    private fun hintSetup() {
+        binding.emailEditTextLayout.setHint(R.string.email)
+        binding.passwordEditTextLayout.setHint(R.string.password)
     }
 
     private fun toSignInWithGoogle() {
