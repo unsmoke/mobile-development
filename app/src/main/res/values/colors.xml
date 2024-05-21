@@ -24,4 +24,7 @@
     <color name="accent_yellow">#F1D552</color>
     <color name="accent_black">#000000</color>
     <color name="accent_white">#FFFFFF</color>
+    <color name="color_error">#FB6F92</color>
+    <!--  NEUTRAL  -->
+    <color name="neutral_50">#6D7280</color>
 </resources>

@@ -7,5 +7,4 @@
     android:layout_height="match_parent"
     tools:context=".ui.boarding.OnboardingActivity">
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>

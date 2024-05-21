@@ -16,4 +16,12 @@
     <string name="toSignup">Signup Now</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="hello">Hello!</string>
+    <string name="signup_description">Let\'s go, Sign up to start your smoke-free journey</string>
+    <string name="terms_and_conditions"><![CDATA[By signing up, I agree to the terms & conditions of the Unsmoke app.]]></string>
+    <string name="sign_up">Sign Up</string>
+    <string name="have_acc">Already have an account?</string>
+    <string name="login_here">Login Here!</string>
+    <string name="invalid_email">Enter your email accordingly</string>
+    <string name="password_alert">Password must not be less than 8 characters</string>
 </resources>

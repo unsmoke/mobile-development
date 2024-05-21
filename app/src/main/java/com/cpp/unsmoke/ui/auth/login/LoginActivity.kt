@@ -8,7 +8,6 @@ import com.cpp.unsmoke.R
 import com.cpp.unsmoke.databinding.ActivityLoginBinding
 import com.cpp.unsmoke.ui.auth.forgotpassword.ForgotPasswordActivity
 import com.cpp.unsmoke.ui.auth.register.RegisterActivity
-import com.cpp.unsmoke.ui.main.MainActivity
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -40,8 +39,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun hintSetup() {
-        binding.emailEditTextLayout.setHint(R.string.email)
-        binding.passwordEditTextLayout.setHint(R.string.password)
+        binding.loginEmailEditTextLayout.setHint(R.string.email)
+        binding.loginPasswordEditTextLayout.setHint(R.string.password)
     }
 
     private fun toSignInWithGoogle() {
