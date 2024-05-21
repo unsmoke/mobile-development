@@ -2,6 +2,7 @@ package com.cpp.unsmoke.ui.auth.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cpp.unsmoke.R
 import com.cpp.unsmoke.databinding.ActivityLoginBinding
@@ -44,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun toSignInWithGoogle() {
-        TODO("Not yet implemented")
+        Toast.makeText(this, "This Feature is available soon", Toast.LENGTH_SHORT).show()
     }
 
     private fun toForgotPassword() {
@@ -58,8 +59,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun toHome() {
-        val intent = Intent(this@LoginActivity, MainActivity::class.java)
-        startActivity(intent)
-        TODO("Add Finish Method In Future")
+//        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+//        startActivity(intent)
+//        finish()
+        Toast.makeText(this, "This Feature is available soon", Toast.LENGTH_SHORT).show()
     }
 }
