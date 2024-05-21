@@ -5,4 +5,13 @@
     <string name="title_notifications">Notifications</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="button">Button</string>
+    <string name="login">Login</string>
+    <string name="welcome">Welcome!</string>
+    <string name="login_description">Log in to continue your journey towards a smoke-free life</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="or">or</string>
+    <string name="sign_in_with_google">Sign In With Google</string>
+    <string name="no_acc">Don\'t have an account yet?</string>
+    <string name="toSignup">Signup Now</string>
 </resources>
