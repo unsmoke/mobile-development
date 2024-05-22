@@ -33,7 +33,7 @@
             style="@style/TextContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="28dp"
+            android:layout_marginBottom="24dp"
             android:text="@string/login_description"
             android:textSize="14sp"/>
 
