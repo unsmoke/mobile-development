@@ -26,5 +26,13 @@
     <color name="accent_white">#FFFFFF</color>
     <color name="color_error">#FB6F92</color>
     <!--  NEUTRAL  -->
+    <color name="neutral_10">#FFFFFF</color>
+    <color name="neutral_20">#F3F4F6</color>
+    <color name="neutral_30">#E5E7EB</color>
+    <color name="neutral_40">#D2D5DA</color>
     <color name="neutral_50">#6D7280</color>
+    <color name="neutral_70">#4B5563</color>
+    <color name="neutral_80">#374151</color>
+    <color name="neutral_90">#1F2937</color>
+    <color name="neutral_100">#222222</color>
 </resources>
