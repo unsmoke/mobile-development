@@ -8,6 +8,7 @@ import com.cpp.unsmoke.R
 import com.cpp.unsmoke.databinding.ActivityLoginBinding
 import com.cpp.unsmoke.ui.auth.forgotpassword.ForgotPasswordActivity
 import com.cpp.unsmoke.ui.auth.register.RegisterActivity
+import com.cpp.unsmoke.ui.main.MainActivity
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -58,9 +59,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun toHome() {
-//        val intent = Intent(this@LoginActivity, MainActivity::class.java)
-//        startActivity(intent)
-//        finish()
-        Toast.makeText(this, "This Feature is available soon", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+//        Toast.makeText(this, "This Feature is available soon", Toast.LENGTH_SHORT).show()
     }
 }

@@ -38,7 +38,7 @@
             android:exported="true" />
         <activity
             android:name=".ui.boarding.OnboardingActivity"
-            android:exported="true"></activity>
+            android:exported="true"/>
     </application>
 
 </manifest>

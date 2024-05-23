@@ -32,4 +32,7 @@
     <string name="new_password_description">Your new password must be different from previous used password</string>
     <string name="back">Back</string>
     <string name="next">Next</string>
+    <string name="title_plan">Plan</string>
+    <string name="title_rank">Rank</string>
+    <string name="title_profile">Profile</string>
 </resources>

@@ -3,7 +3,7 @@
     <style name="Theme.Unsmoke" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/normal_green</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimaryVariant">@color/dark_green</item>
         <item name="colorOnPrimary">@color/normal_green</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
