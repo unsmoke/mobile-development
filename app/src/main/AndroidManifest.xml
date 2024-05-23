@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Unsmoke"
         tools:targetApi="31">
         <activity
+            android:name=".ui.auth.newpassword.NewPasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.personalizedplan.PersonalizedActivity"
             android:exported="false" />
         <activity
@@ -20,7 +23,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.auth.login.LoginActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,8 +38,7 @@
             android:exported="true" />
         <activity
             android:name=".ui.boarding.OnboardingActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>
