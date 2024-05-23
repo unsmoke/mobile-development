@@ -1,5 +1,6 @@
 package com.cpp.unsmoke.ui.auth.register
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
@@ -15,6 +16,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.cpp.unsmoke.R
 import com.cpp.unsmoke.databinding.ActivityRegisterBinding
+import com.cpp.unsmoke.ui.personalizedplan.PersonalizedActivity
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -28,6 +30,16 @@ class RegisterActivity : AppCompatActivity() {
 
         setUpSpannableTv()
         hintSetup()
+
+        binding.btnSignup.setOnClickListener {
+            toPersonalized()
+        }
+    }
+
+    private fun toPersonalized() {
+        val intent = Intent(this, PersonalizedActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun hintSetup() {

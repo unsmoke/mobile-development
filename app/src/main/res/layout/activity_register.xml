@@ -142,7 +142,7 @@
             android:text="@string/terms_and_conditions" />
 
         <com.cpp.unsmoke.utils.customview.CustomButton
-            android:id="@+id/btn_login"
+            android:id="@+id/btn_signup"
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:background="@drawable/button_state"
@@ -168,7 +168,7 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/btn_signup"
+                android:id="@+id/btn_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"

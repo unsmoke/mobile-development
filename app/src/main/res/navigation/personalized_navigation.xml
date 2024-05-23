@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/personalized_navigation"
+    app:startDestination="@id/personalizedOneFragment">
+
+    <fragment
+        android:id="@+id/personalizedOneFragment"
+        android:name="com.cpp.unsmoke.ui.personalizedplan.screen.PersonalizedOneFragment"
+        android:label="fragment_personalized_one"
+        tools:layout="@layout/fragment_personalized_one" >
+        <action
+            android:id="@+id/action_personalizedOneFragment_to_personalizedTwoFragment"
+            app:destination="@id/personalizedTwoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalizedTwoFragment"
+        android:name="com.cpp.unsmoke.ui.personalizedplan.screen.PersonalizedTwoFragment"
+        android:label="fragment_personalized_two"
+        tools:layout="@layout/fragment_personalized_two" >
+        <action
+            android:id="@+id/action_personalizedTwoFragment_to_personalizedThreeFragment"
+            app:destination="@id/personalizedThreeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalizedThreeFragment"
+        android:name="com.cpp.unsmoke.ui.personalizedplan.screen.PersonalizedThreeFragment"
+        android:label="fragment_personalized_three"
+        tools:layout="@layout/fragment_personalized_three" >
+        <action
+            android:id="@+id/action_personalizedThreeFragment_to_personalizedFourFragment"
+            app:destination="@id/personalizedFourFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalizedFourFragment"
+        android:name="com.cpp.unsmoke.ui.personalizedplan.screen.PersonalizedFourFragment"
+        android:label="fragment_personalized_four"
+        tools:layout="@layout/fragment_personalized_four" />
+</navigation>
