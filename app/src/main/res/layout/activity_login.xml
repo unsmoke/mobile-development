@@ -84,15 +84,6 @@
                 android:paddingEnd="48dp"
                 tools:ignore="SpeakableTextPresentCheck" />
 
-            <TextView
-                android:id="@+id/textInputPaswswordError"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:textColor="@color/design_default_color_error"
-                android:layout_marginTop="4dp"
-                android:textSize="12sp"/>
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView

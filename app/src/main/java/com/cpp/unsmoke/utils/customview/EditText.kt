@@ -25,7 +25,7 @@ class EditText @JvmOverloads constructor(
 
     init {
         when (id) {
-            R.id.signup_edt_password, R.id.edt_login_password, R.id.signup_edt_confirm_password -> {
+            R.id.signup_edt_password, R.id.edt_login_password, R.id.signup_edt_confirm_password, R.id.edt_new_password, R.id.edt_confirm_new_password -> {
                 addTextChangedListener(object : TextWatcher {
                     override fun beforeTextChanged(
                         s: CharSequence?,
@@ -87,7 +87,7 @@ class EditText @JvmOverloads constructor(
                 }
             }
 
-            R.id.edt_signup_email, R.id.edt_login_email -> {
+            R.id.edt_signup_email, R.id.edt_login_email, R.id.edt_forgot_password -> {
                 addTextChangedListener(object : TextWatcher {
                     override fun beforeTextChanged(
                         s: CharSequence?,

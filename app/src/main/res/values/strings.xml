@@ -30,4 +30,5 @@
 
     <string name="forgot_password_instruction">Enter the email associated with your account and we will send an email with instructions to reset password</string>
     <string name="new_password_description">Your new password must be different from previous used password</string>
+    <string name="back">Back</string>
 </resources>
