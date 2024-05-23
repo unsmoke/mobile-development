@@ -27,6 +27,14 @@ class RegisterActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         setUpSpannableTv()
+        hintSetup()
+    }
+
+    private fun hintSetup() {
+        binding.edtSignupName.setHint("Full Name")
+        binding.edtSignupEmail.setHint(R.string.email)
+        binding.signupEdtPassword.setHint("Password")
+        binding.signupEdtConfirmPassword.setHint("Password")
     }
 
     private fun setUpSpannableTv() {
