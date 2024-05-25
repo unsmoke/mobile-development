@@ -43,5 +43,6 @@
 
     <string name="plan_week">Week</string>
     <string name="plan_description">Descriptions</string>
+    <string name="title_challenges">Challenges</string>
 
 </resources>

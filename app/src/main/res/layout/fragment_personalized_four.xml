@@ -21,7 +21,7 @@
             android:padding="16dp">
 
             <ImageView
-                android:id="@+id/icon_smoke"
+                android:id="@+id/icon_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -38,7 +38,7 @@
                 android:layout_marginStart="28dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/plan_detail_title"
-                app:layout_constraintStart_toEndOf="@id/icon_smoke"
+                app:layout_constraintStart_toEndOf="@id/icon_2"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -50,7 +50,7 @@
                 android:layout_marginBottom="16dp"
                 android:text="@string/plan_duration"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/icon_smoke"
+                app:layout_constraintStart_toEndOf="@id/icon_2"
                 app:layout_constraintTop_toBottomOf="@id/tv_plan_name" />
 
             <TextView

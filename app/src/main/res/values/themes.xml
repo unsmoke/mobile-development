@@ -48,4 +48,13 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="ShapeAppearanceOverlay.CardView" parent="">
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+        <item name="cornerSizeBottomLeft">15%</item>
+        <item name="cornerSizeBottomRight">15%</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
+    </style>
+
 </resources>
