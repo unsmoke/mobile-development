@@ -149,6 +149,16 @@ class EditText @JvmOverloads constructor(
                     }
                 }
             }
+
+            R.id.edt_signup_name -> {
+                // Add OnFocusChangeListener to revert the start icon color when focus is lost
+                onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
+                    val parent = parent.parent as? TextInputLayout
+                    if (!hasFocus) {
+                        parent?.startIconDrawable?.setTint(ContextCompat.getColor(context, R.color.neutral_50))
+                    }
+                }
+            }
         }
 
         // Add OnTouchListener to change the start icon color on touch

@@ -25,8 +25,8 @@ class NewPasswordActivity : AppCompatActivity() {
     }
 
     private fun hintSetup() {
-        binding.edtNewPassword.setHint("New Password")
-        binding.edtConfirmNewPassword.setHint("New Password")
+        binding.newPasswordEditTextLayout.setHint(R.string.new_password)
+        binding.confirmNewPasswordEditTextLayout.setHint(R.string.new_password)
     }
 
     override fun onSupportNavigateUp(): Boolean {
