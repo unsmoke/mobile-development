@@ -43,10 +43,10 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun hintSetup() {
-        binding.edtSignupName.setHint("Full Name")
-        binding.edtSignupEmail.setHint(R.string.email)
-        binding.signupEdtPassword.setHint("Password")
-        binding.signupEdtConfirmPassword.setHint("Password")
+        binding.signupNameEditTextLayout.setHint(R.string.full_name)
+        binding.signupEmailEditTextLayout.setHint(R.string.email)
+        binding.signupPasswordEditTextLayout.setHint(R.string.password)
+        binding.signupConfirmPasswordEditTextLayout.setHint(R.string.password)
     }
 
     private fun setUpSpannableTv() {
