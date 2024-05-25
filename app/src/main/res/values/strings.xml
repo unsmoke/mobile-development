@@ -35,4 +35,13 @@
     <string name="title_plan">Plan</string>
     <string name="title_rank">Rank</string>
     <string name="title_profile">Profile</string>
+
+    <string name="plan_detail_title">Plan</string>
+    <string name="plan_duration">Duration</string>
+    <string name="plan_percentage">87%</string>
+    <string name="plan_detail_progress">Detail Progress</string>
+
+    <string name="plan_week">Week</string>
+    <string name="plan_description">Descriptions</string>
+
 </resources>
