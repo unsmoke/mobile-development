@@ -27,7 +27,6 @@
     <string name="login_here">Login Here!</string>
     <string name="invalid_email">Enter your email accordingly</string>
     <string name="password_alert">Password must not be less than 8 characters</string>
-
     <string name="forgot_password_instruction">Enter the email associated with your account and we will send an email with instructions to reset password</string>
     <string name="new_password_description">Your new password must be different from previous used password</string>
     <string name="back">Back</string>
@@ -36,4 +35,10 @@
     <string name="title_rank">Rank</string>
     <string name="title_profile">Profile</string>
     <string name="full_name">Full Name</string>
+    <string name="plan_detail_title">Plan</string>
+    <string name="plan_duration">Duration</string>
+    <string name="plan_percentage">87%</string>
+    <string name="plan_detail_progress">Detail Progress</string>
+    <string name="plan_week">Week</string>
+    <string name="plan_description">Descriptions</string>
 </resources>
