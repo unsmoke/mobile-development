@@ -49,4 +49,6 @@
     <string name="challenge_desc">Complete the following challenges to earn XP and daily streaks!</string>
     <string name="challenge_smoke">Limit daily cigarettes</string>
     <string name="challenge_breath">Breathing Exercise</string>
+    <string name="rank_title">Rank</string>
+    <string name="rank_description">Compete with people who have the same goals as you. Break a leg!</string>
 </resources>
