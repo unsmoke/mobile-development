@@ -38,7 +38,7 @@
     <string name="plan_detail_title">Plan</string>
     <string name="plan_duration">Duration</string>
     <string name="plan_percentage">87%</string>
-    <string name="plan_detail_progress">Detail Progress</string>
+    <string name="plan_detail_progress">Progress Details</string>
     <string name="plan_week">Week</string>
     <string name="plan_description">Descriptions</string>
     <string name="title_challenges">Challenges</string>
@@ -46,4 +46,7 @@
     <string name="password_lowercase_error">Password must contain at least one lowercase letter</string>
     <string name="password_digit_error">Password must contain at least one digit</string>
     <string name="password_special_char_error">Password must contain at least one special character</string>
+    <string name="challenge_desc">Complete the following challenges to earn XP and daily streaks!</string>
+    <string name="challenge_smoke">Limit daily cigarettes</string>
+    <string name="challenge_breath">Breathing Exercise</string>
 </resources>
