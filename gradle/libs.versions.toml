@@ -23,7 +23,6 @@ parcelize = "1.9.23"
 splashscreen = "1.0.0"
 fragment = "1.6.2"
 
-
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
