@@ -78,10 +78,7 @@
                 android:id="@+id/edt_login_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:inputType="textPassword"
-                android:paddingStart="0dp"
-                android:paddingEnd="48dp"
                 tools:ignore="SpeakableTextPresentCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.cpp.unsmoke.R
 import com.cpp.unsmoke.data.remote.Result
 import com.cpp.unsmoke.databinding.ActivityLoginBinding
@@ -32,20 +33,31 @@ class LoginActivity : AppCompatActivity() {
         binding.btnLogin.setOnClickListener {
             val email = binding.edtLoginEmail.text.toString()
             val password = binding.edtLoginPassword.text.toString()
-            viewModel.login(email, password).observe(this){result ->
-                if (result != null){
-                    when(result){
-                        is Result.Loading -> {
-                            binding.btnLogin.isClickable = false
-                        }
-                        is Result.Error -> {
-                            binding.loginEmailEditTextLayout.error = result.error
-                            binding.loginPasswordEditTextLayout.error = result.error
-                            binding.btnLogin.isClickable = true
-                        }
-                        is Result.Success -> {
-                            binding.btnLogin.isClickable = true
-                            toHome()
+
+            val emailError = binding.loginEmailEditTextLayout.error
+            val passwordError = binding.loginPasswordEditTextLayout.error
+
+            if (email.isEmpty() && password.isEmpty() ){
+                binding.loginEmailEditTextLayout.error = "Email Cannot Empty"
+                binding.loginPasswordEditTextLayout.error = "Password Cannot Empty"
+            }
+
+            if (emailError == null && passwordError == null && email.isNotEmpty() && password.isNotEmpty()) {
+                viewModel.login(email, password).observe(this){result ->
+                    if (result != null){
+                        when(result){
+                            is Result.Loading -> {
+                                binding.btnLogin.isClickable = false
+                            }
+                            is Result.Error -> {
+                                binding.loginEmailEditTextLayout.error = result.error
+                                binding.loginPasswordEditTextLayout.error = result.error
+                                binding.btnLogin.isClickable = true
+                            }
+                            is Result.Success -> {
+                                binding.btnLogin.isClickable = true
+                                toHome()
+                            }
                         }
                     }
                 }
