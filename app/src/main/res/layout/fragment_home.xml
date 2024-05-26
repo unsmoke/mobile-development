@@ -10,6 +10,11 @@
         android:id="@+id/cv_background"
         android:layout_width="match_parent"
         android:layout_height="300dp"
+        android:padding="0dp"
+        app:strokeWidth="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.CardView">
 
@@ -23,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/lung"/>
+            android:background="@drawable/lung" />
     </com.google.android.material.card.MaterialCardView>
 
     <TextView
@@ -31,12 +36,12 @@
         style="@style/TextContent.TitleSecondaryBlack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp"
         android:text="@string/plan_detail_progress"
-        app:layout_constraintTop_toBottomOf="@id/cv_background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cv_background" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_challenge_1"
@@ -47,6 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_subtitle">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,7 +66,7 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/fi_rr_smoke"/>
+                app:srcCompat="@drawable/fi_rr_smoke" />
 
             <TextView
                 android:id="@+id/tv_challenge_1"
@@ -110,6 +116,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cv_challenge_1">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -123,7 +130,7 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/fi_rr_smoke"/>
+                app:srcCompat="@drawable/fi_rr_smoke" />
 
             <TextView
                 android:id="@+id/tv_challenge_2"
@@ -163,13 +170,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
-
-
-
-
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
