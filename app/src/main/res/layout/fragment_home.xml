@@ -8,11 +8,13 @@
     tools:context=".ui.main.home.HomeFragment">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/shop_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         app:cardCornerRadius="12dp"
+        android:clickable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -38,6 +40,7 @@
             android:padding="8dp">
 
             <TextView
+                android:id="@+id/tv_xp_user"
                 style="@style/TextContent.DescriptionMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,6 +61,7 @@
                 app:srcCompat="@drawable/icon_coin" />
 
             <TextView
+                android:id="@+id/tv_coin_user"
                 style="@style/TextContent.DescriptionMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -87,7 +91,7 @@
                 app:srcCompat="@drawable/icon_fire" />
 
             <TextView
-                android:id="@+id/tv_streak"
+                android:id="@+id/tv_streak_user"
                 style="@style/TextContent.DescriptionMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
