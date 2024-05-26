@@ -50,9 +50,28 @@ class EditText @JvmOverloads constructor(
                         count: Int
                     ) {
                         val parent = parent.parent as? TextInputLayout
-                        if (s.toString().length < 8) {
+                        val password = s.toString()
+                        val errors = mutableListOf<String>()
+
+                        if (password.length < 8) {
+                            errors.add(context.getString(R.string.password_alert))
+                        }
+                        if (!password.any { it.isUpperCase() }) {
+                            errors.add(context.getString(R.string.password_uppercase_error))
+                        }
+                        if (!password.any { it.isLowerCase() }) {
+                            errors.add(context.getString(R.string.password_lowercase_error))
+                        }
+                        if (!password.any { it.isDigit() }) {
+                            errors.add(context.getString(R.string.password_digit_error))
+                        }
+                        if (!password.any { "!@#\$%^&*()-_=+[]{}|;:'\",.<>?/".contains(it) }) {
+                            errors.add(context.getString(R.string.password_special_char_error))
+                        }
+
+                        if (errors.isNotEmpty()) {
                             isPassError = true
-                            parent?.error = context.getString(R.string.password_alert)
+                            parent?.error = errors.joinToString("\n")
                             parent?.boxStrokeColor =
                                 ContextCompat.getColor(context, R.color.color_error)
                             parent?.startIconDrawable?.setTint(ContextCompat.getColor(context, R.color.color_error))

@@ -42,4 +42,8 @@
     <string name="plan_week">Week</string>
     <string name="plan_description">Descriptions</string>
     <string name="title_challenges">Challenges</string>
+    <string name="password_uppercase_error">Password must contain at least one uppercase letter</string>
+    <string name="password_lowercase_error">Password must contain at least one lowercase letter</string>
+    <string name="password_digit_error">Password must contain at least one digit</string>
+    <string name="password_special_char_error">Password must contain at least one special character</string>
 </resources>
