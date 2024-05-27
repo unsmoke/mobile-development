@@ -94,6 +94,8 @@ class RegisterActivity : AppCompatActivity() {
                                 binding.btnLogin.isClickable = true
                                 toPersonalized()
                             }
+
+                            else -> {}
                         }
                     }
 
@@ -102,7 +104,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         binding.btnLogin.setOnClickListener {
-            toLogin()
+            toPersonalized()
         }
     }
 
