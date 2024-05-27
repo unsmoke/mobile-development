@@ -19,11 +19,21 @@ class PersonalizedActivity : AppCompatActivity() {
         binding = ActivityPersonalizedBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.personalizedToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.fi_ss_arrow_small_left)
+
         viewModel = ViewModelProvider(this)[PersonalizedViewModel::class.java]
 
         viewModel.currentProgress.observe(this){
             setProgressWithAnimation(it)
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     override fun onResumeFragments() {

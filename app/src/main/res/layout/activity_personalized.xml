@@ -7,17 +7,28 @@
     android:layout_height="match_parent"
     tools:context=".ui.personalizedplan.PersonalizedActivity">
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/personalized_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:progressDrawable="@drawable/custom_progress_bg"
-        app:layout_constraintTop_toTopOf="parent"
+        android:paddingEnd="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:progressDrawable="@drawable/custom_progress_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/personalized_toolbar" />
+
+    </androidx.appcompat.widget.Toolbar>
 
     <fragment
         android:id="@+id/fragmentContainerView"
@@ -29,7 +40,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/progress_bar"
+        app:layout_constraintTop_toBottomOf="@id/personalized_toolbar"
         app:layout_constraintVertical_bias="0.5"
         app:navGraph="@navigation/personalized_navigation" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
