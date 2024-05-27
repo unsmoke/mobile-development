@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.cpp.unsmoke.di.Injection
 import com.cpp.unsmoke.repository.AuthRepository
 import com.cpp.unsmoke.ui.auth.login.LoginViewModel
+import com.cpp.unsmoke.ui.auth.register.RegisterViewModel
 
 class ViewModelFactory private constructor(
     private val authRepository: AuthRepository
@@ -31,6 +32,8 @@ class ViewModelFactory private constructor(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
             return LoginViewModel(authRepository) as T
+        } else if (modelClass.isAssignableFrom(RegisterViewModel::class.java)){
+            return RegisterViewModel(authRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
     }

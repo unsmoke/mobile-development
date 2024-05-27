@@ -82,32 +82,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/signup_confirm_password_edit_text_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="16dp"
-            app:boxCornerRadiusBottomStart="16dp"
-            app:boxCornerRadiusTopEnd="16dp"
-            app:boxCornerRadiusTopStart="16dp"
-            app:endIconMode="password_toggle"
-            app:startIconTint="@color/neutral_50"
-            app:startIconDrawable="@drawable/fi_rr_lock">
-
-            <com.cpp.unsmoke.utils.customview.EditText
-                android:id="@+id/signup_edt_confirm_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPassword"
-                android:paddingStart="0dp"
-                android:paddingEnd="48dp"
-                tools:ignore="SpeakableTextPresentCheck" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/signup_password_edit_text_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -119,16 +93,38 @@
             app:boxCornerRadiusTopStart="16dp"
             app:endIconMode="password_toggle"
             app:startIconTint="@color/neutral_50"
+            app:errorIconDrawable="@null"
             app:startIconDrawable="@drawable/fi_rr_lock">
 
             <com.cpp.unsmoke.utils.customview.EditText
                 android:id="@+id/signup_edt_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:inputType="textPassword"
-                android:paddingStart="0dp"
-                android:paddingEnd="48dp"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/signup_confirm_password_edit_text_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:endIconMode="password_toggle"
+            app:startIconTint="@color/neutral_50"
+            app:errorIconDrawable="@null"
+            app:startIconDrawable="@drawable/fi_rr_lock">
+
+            <com.cpp.unsmoke.utils.customview.EditText
+                android:id="@+id/signup_edt_confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
                 tools:ignore="SpeakableTextPresentCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>

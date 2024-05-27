@@ -37,9 +37,9 @@ class LoginActivity : AppCompatActivity() {
             val emailError = binding.loginEmailEditTextLayout.error
             val passwordError = binding.loginPasswordEditTextLayout.error
 
-            if (email.isEmpty() && password.isEmpty() ){
-                binding.loginEmailEditTextLayout.error = "Email Cannot Empty"
-                binding.loginPasswordEditTextLayout.error = "Password Cannot Empty"
+            if (email.isEmpty() || password.isEmpty() ){
+                binding.loginEmailEditTextLayout.error = "Field Cannot Empty"
+                binding.loginPasswordEditTextLayout.error = "Field Cannot Empty"
             }
 
             if (emailError == null && passwordError == null && email.isNotEmpty() && password.isNotEmpty()) {

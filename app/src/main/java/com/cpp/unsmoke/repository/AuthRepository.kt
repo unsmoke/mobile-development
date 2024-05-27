@@ -8,6 +8,7 @@ import com.cpp.unsmoke.data.remote.responses.LoginResponse
 import com.cpp.unsmoke.data.remote.retrofit.ApiService
 import com.cpp.unsmoke.data.remote.Result
 import com.cpp.unsmoke.data.remote.responses.RefreshResponse
+import com.cpp.unsmoke.data.remote.responses.RegisterResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -42,7 +43,20 @@ class AuthRepository(
         }
     }
 
-    // todo register func
+    fun register(fullName: String, email: String, password: String): LiveData<Result<RegisterResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = apiService.register(fullName, email, password)
+            emit(Result.Success(response))
+        } catch (e: HttpException){
+            val errorResponse = parseError(e)
+            Log.e("REGISTER", errorResponse)
+            emit(Result.Error(errorResponse))
+        } catch (e: Exception) {
+            Log.e("REGISTER", e.message.toString())
+            emit(Result.Error(e.message ?: "An unknown error occurred"))
+        }
+    }
 
     fun refresh(): LiveData<Result<RefreshResponse>> = liveData {
         emit(Result.Loading)
@@ -58,12 +72,13 @@ class AuthRepository(
                     updateToken(refreshData.accessToken ?: "")
                 }
                 emit(Result.Success(response))
-            } else {
-                emit(Result.Error("Failed to refresh token"))
+            } else{
+                emit(Result.Error("Failed to refresh token: ${response.code}"))
             }
         } catch (e: HttpException) {
-            Log.e("REFRESH_TOKEN", e.message())
-            emit(Result.Error(e.message()))
+            val errorResponse = parseError(e)
+            Log.e("REFRESH_TOKEN", errorResponse)
+            emit(Result.Error(errorResponse))
         } catch (e: Exception) {
             Log.e("REFRESH_TOKEN", e.message.toString())
             emit(Result.Error(e.message ?: "An unknown error occurred"))
@@ -92,6 +107,8 @@ class AuthRepository(
                             return "Email is required"
                         } else if (message.contains("password")) {
                             return "Password is required"
+                        } else if (message.contains("fullName")){
+                            return "Full Name is required"
                         }
                         return message
                     }
