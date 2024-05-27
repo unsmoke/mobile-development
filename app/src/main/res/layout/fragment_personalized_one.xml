@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/accent_white"
+    android:padding="16dp"
     tools:context=".ui.personalizedplan.screen.PersonalizedOneFragment">
 
     <TextView
@@ -16,6 +19,39 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
+    
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/radio_null_selector"
+            android:textColor="@drawable/radio_text_selector"
+            android:paddingTop="3dp"
+            android:paddingHorizontal="12dp"
+            android:layout_marginBottom="12dp"
+            android:textSize="24sp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Yes"/>
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/radio_null_selector"
+            android:textColor="@drawable/radio_text_selector"
+            android:paddingTop="3dp"
+            android:paddingHorizontal="12dp"
+            android:layout_marginBottom="12dp"
+            android:textSize="24sp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="No"/>
+        
+    </RadioGroup>
 
     <com.cpp.unsmoke.utils.customview.CustomButton
         android:id="@+id/btn_next"
@@ -31,4 +67,4 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

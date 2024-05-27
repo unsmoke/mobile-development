@@ -22,7 +22,7 @@ class PersonalizedActivity : AppCompatActivity() {
         setSupportActionBar(binding.personalizedToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.fi_ss_arrow_small_left)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.fi_ss_arrow_small_left_black)
 
         viewModel = ViewModelProvider(this)[PersonalizedViewModel::class.java]
 
