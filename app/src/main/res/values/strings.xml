@@ -34,6 +34,8 @@
     <string name="title_plan">Plan</string>
     <string name="title_rank">Rank</string>
     <string name="title_profile">Profile</string>
+    <string name="title_edit">Edit</string>
+    <string name="title_preferences">Preferences</string>
     <string name="full_name">Full Name</string>
     <string name="plan_detail_title">Plan</string>
     <string name="plan_duration">Duration</string>
@@ -50,5 +52,16 @@
     <string name="challenge_smoke">Limit daily cigarettes</string>
     <string name="challenge_breath">Breathing Exercise</string>
     <string name="rank_title">Rank</string>
+    <string name="xp_title">XP</string>
     <string name="rank_description">Compete with people who have the same goals as you. Break a leg!</string>
+    <string name="preferences_notifications">Notifications</string>
+    <string name="preferences_darkmode">Dark Mode</string>
+    <string name="preferences_language">Language</string>
+    <string name="preferences_guide">Guide</string>
+    <string name="preferences_info">About Us</string>
+    <string name="preferences_help">Help Center</string>
+    <string name="logout">Logout</string>
+
+
+
 </resources>
