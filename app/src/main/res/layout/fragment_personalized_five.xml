@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/accent_white"
     android:padding="16dp"
-    tools:context=".ui.personalizedplan.screen.PersonalizedTwoFragment">
+    android:background="@color/accent_white"
+    tools:context=".ui.personalizedplan.screen.PersonalizedFiveFragment">
 
     <TextView
-        android:id="@+id/tv_fragment_two"
+        android:id="@+id/tv_fragment_five"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/what_is_your_gender"
+        android:text="@string/do_you_use_nicotine_alternative_medicines"
         style="@style/TextContent.Title"
         android:textSize="19sp"
         android:textColor="@color/normal_green"
@@ -28,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_fragment_two">
+        app:layout_constraintTop_toBottomOf="@id/tv_fragment_five">
 
         <RadioButton
             android:layout_width="match_parent"
@@ -39,7 +39,7 @@
             android:fontFamily="@font/poppins_semibold"
             android:paddingHorizontal="12dp"
             android:paddingTop="3dp"
-            android:text="Man"
+            android:text="Yes"
             android:textColor="@drawable/radio_text_selector"
             android:textSize="24sp" />
 
@@ -52,12 +52,11 @@
             android:fontFamily="@font/poppins_semibold"
             android:paddingHorizontal="12dp"
             android:paddingTop="3dp"
-            android:text="Women"
+            android:text="No"
             android:textColor="@drawable/radio_text_selector"
             android:textSize="24sp" />
 
     </RadioGroup>
-
 
     <com.cpp.unsmoke.utils.customview.CustomButton
         android:id="@+id/btn_next"
@@ -68,9 +67,9 @@
         android:text="@string/next"
         android:textAllCaps="false"
         android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

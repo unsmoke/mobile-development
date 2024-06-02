@@ -16,6 +16,29 @@
         <item name="android:navigationBarColor">@color/accent_white</item>
     </style>
 
+    <style name="ThemeOverlay.App.DatePicker" parent="@style/ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="colorPrimary">@color/normal_green</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="materialCalendarHeaderCancelButton">@style/CustomCancelButton</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
+        <!-- Customize text field of the text input mode. -->
+<!--        <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>-->
+    </style>
+
+    <style name="CustomCancelButton" parent="Widget.MaterialComponents.MaterialCalendar.HeaderCancelButton">
+        <item name="android:textColor">@color/color_error</item> <!-- Set the desired color -->
+        <item name="iconTint">@color/color_error</item> <!-- Set the desired color -->
+    </style>
+
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+    </style>
+
+    <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerSize">16dp</item>
+    </style>
+
     <style name="TextContent">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

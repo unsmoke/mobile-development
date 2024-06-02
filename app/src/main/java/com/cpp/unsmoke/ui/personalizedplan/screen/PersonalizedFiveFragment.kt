@@ -6,24 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.cpp.unsmoke.R
 import com.cpp.unsmoke.databinding.FragmentPersonalizedFiveBinding
-import com.cpp.unsmoke.databinding.FragmentPersonalizedFourBinding
-import com.cpp.unsmoke.databinding.FragmentPersonalizedOneBinding
+import com.cpp.unsmoke.databinding.FragmentPersonalizedTwoBinding
 import com.cpp.unsmoke.ui.personalizedplan.PersonalizedViewModel
 
-class PersonalizedFourFragment : Fragment() {
-    private var _binding: FragmentPersonalizedFourBinding? = null
+
+class PersonalizedFiveFragment : Fragment() {
+    private var _binding: FragmentPersonalizedFiveBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPersonalizedFourBinding.inflate(inflater, container, false)
+        _binding = FragmentPersonalizedFiveBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -35,7 +34,7 @@ class PersonalizedFourFragment : Fragment() {
 
         binding.btnNext.setOnClickListener {
             personalizedViewModel.increaseProgress()
-            Navigation.createNavigateOnClickListener(R.id.action_personalizedFourFragment_to_personalizedFiveFragment ).onClick(it)
+            Navigation.createNavigateOnClickListener(R.id.action_personalizedFiveFragment_to_personalizedSixFragment ).onClick(it)
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {

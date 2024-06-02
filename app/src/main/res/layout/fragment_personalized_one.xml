@@ -1,57 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/accent_white"
+    android:orientation="vertical"
     android:padding="16dp"
     tools:context=".ui.personalizedplan.screen.PersonalizedOneFragment">
 
     <TextView
-        android:id="@+id/tv_fragment_one"
+        android:id="@+id/tv_date_of_birth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="fragment one"
-        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/choose_your_date_of_birth"
+        style="@style/TextContent.Title"
+        android:textSize="19sp"
+        android:textColor="@color/normal_green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_layout_date_of_birth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="16dp"
+        app:boxCornerRadiusBottomStart="16dp"
+        app:boxCornerRadiusTopEnd="16dp"
+        app:boxCornerRadiusTopStart="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-    
-    <RadioGroup
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_date_of_birth"
+        app:startIconTint="@color/neutral_50"
+        tools:layout_editor_absoluteY="16dp">
+
+        <com.cpp.unsmoke.utils.customview.EditText
+            android:id="@+id/edt_date_of_birth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            tools:ignore="SpeakableTextPresentCheck"
+            android:text="@string/choose_your_date_of_birth" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_province"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:background="@drawable/radio_selector"
-            android:button="@drawable/radio_null_selector"
-            android:textColor="@drawable/radio_text_selector"
-            android:paddingTop="3dp"
-            android:paddingHorizontal="12dp"
-            android:layout_marginBottom="12dp"
-            android:textSize="24sp"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="Yes"/>
+        android:text="@string/choose_your_province"
+        style="@style/TextContent.Title"
+        android:textSize="19sp"
+        android:textColor="@color/normal_green"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_input_layout_date_of_birth" />
 
-        <RadioButton
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_layout_province"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="16dp"
+        app:boxCornerRadiusBottomStart="16dp"
+        app:boxCornerRadiusTopEnd="16dp"
+        app:boxCornerRadiusTopStart="16dp"
+        app:endIconDrawable="@drawable/dropdown_state"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_province">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoComplete_province"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:background="@drawable/radio_selector"
-            android:button="@drawable/radio_null_selector"
-            android:textColor="@drawable/radio_text_selector"
-            android:paddingTop="3dp"
-            android:paddingHorizontal="12dp"
-            android:layout_marginBottom="12dp"
-            android:textSize="24sp"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="No"/>
-        
-    </RadioGroup>
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:inputType="none"
+            android:text="@string/choose_your_province" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_your_city"
+        style="@style/TextContent.Title"
+        android:textSize="19sp"
+        android:textColor="@color/normal_green"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_input_layout_province" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_layout_city"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="16dp"
+        app:boxCornerRadiusBottomStart="16dp"
+        app:boxCornerRadiusTopEnd="16dp"
+        app:boxCornerRadiusTopStart="16dp"
+        app:endIconDrawable="@drawable/dropdown_state"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_city">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoComplete_city"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:inputType="none"
+            android:text="@string/choose_your_city" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.cpp.unsmoke.utils.customview.CustomButton
         android:id="@+id/btn_next"
@@ -62,9 +132,9 @@
         android:text="@string/next"
         android:textAllCaps="false"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/tv_fragment_one"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

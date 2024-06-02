@@ -10,16 +10,16 @@ class PersonalizedViewModel: ViewModel() {
     val currentProgress: LiveData<Int> = _currentProgress
 
     init {
-        _currentProgress.value = 20
+        _currentProgress.value = 10
     }
 
     fun increaseProgress(){
-        _currentProgress.value = _currentProgress.value?.plus(20)
+        _currentProgress.value = _currentProgress.value?.plus(10)
         Log.d("PERSONALIZED_VIEWMODEL", _currentProgress.value.toString())
     }
 
     fun decreaseProgress(){
-        _currentProgress.value = _currentProgress.value?.minus(20)
+        _currentProgress.value = _currentProgress.value?.minus(10)
         Log.d("PERSONALIZED_VIEWMODEL", _currentProgress.value.toString())
     }
 }

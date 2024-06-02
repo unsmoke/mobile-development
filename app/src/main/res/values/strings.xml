@@ -61,6 +61,22 @@
     <string name="preferences_info">About Us</string>
     <string name="preferences_help">Help Center</string>
     <string name="logout">Logout</string>
+    <string name="choose_your_province">Choose Your Province</string>
+    <string name="choose_your_city">Choose Your City</string>
+    <string name="choose_your_date_of_birth">Choose Your Date of Birth</string>
+    <string name="what_is_your_gender">what is your gender</string>
+    <string name="how_long_have_you_been_smoking">How long have you been smoking?</string>
+    <string name="select_a_date_approximately">select a date approximately</string>
+    <string name="e_g_5">e.g: 5</string>
+    <string name="e_g_20">e.g: 20</string>
+    <string name="e_g_35000">e.g: 35000</string>
+    <string name="how_many_total_cigarettes_per_pack_do_you_usually_consume">how many total cigarettes per pack do you usually consume?</string>
+    <string name="how_much_does_1_pack_of_cigarettes_cost">How much does 1 pack of cigarettes cost?</string>
+    <string name="do_you_use_nicotine_alternative_medicines">Do you use nicotine alternative medicines?</string>
+    <string name="are_you_currently_using_e_cigarettes">Are you currently using e-cigarettes?</string>
+    <string name="do_you_use_any_other_tobacco_products">Do you use any other tobacco products?</string>
+    <string name="are_you_currently_experiencing_depression">Are you currently experiencing depression?</string>
+    <string name="are_you_feeling_demoralized_right_now">Are you feeling demoralized right now?</string>
 
 
 </resources>

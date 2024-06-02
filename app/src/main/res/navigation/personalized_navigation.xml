@@ -36,5 +36,77 @@
         android:id="@+id/personalizedFourFragment"
         android:name="com.cpp.unsmoke.ui.personalizedplan.screen.PersonalizedFourFragment"
         android:label="fragment_personalized_four"
-        tools:layout="@layout/fragment_personalized_four" />
+        tools:layout="@layout/fragment_personalized_four" >
+        <action
+            android:id="@+id/action_personalizedFourFragment_to_personalizedFiveFragment"
+            app:destination="@id/personalizedFiveFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalizedFiveFragment"
+        android:name="com.cpp.unsmoke.ui.personalizedplan.screen.PersonalizedFiveFragment"
+        android:label="fragment_personalized_five"
+        tools:layout="@layout/fragment_personalized_five" >
+        <action
+            android:id="@+id/action_personalizedFiveFragment_to_personalizedSixFragment"
+            app:destination="@id/personalizedSixFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalizedSixFragment"
+        android:name="com.cpp.unsmoke.ui.personalizedplan.screen.PersonalizedSixFragment"
+        android:label="fragment_personalized_six"
+        tools:layout="@layout/fragment_personalized_six" >
+        <action
+            android:id="@+id/action_personalizedSixFragment_to_personalizedSevenFragment"
+            app:destination="@id/personalizedSevenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalizedSevenFragment"
+        android:name="com.cpp.unsmoke.ui.personalizedplan.screen.PersonalizedSevenFragment"
+        android:label="fragment_personalized_seven"
+        tools:layout="@layout/fragment_personalized_seven" >
+        <action
+            android:id="@+id/action_personalizedSevenFragment_to_personalizedEightFragment"
+            app:destination="@id/personalizedEightFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalizedEightFragment"
+        android:name="com.cpp.unsmoke.ui.personalizedplan.screen.PersonalizedEightFragment"
+        android:label="fragment_personalized_eight"
+        tools:layout="@layout/fragment_personalized_eight" >
+        <action
+            android:id="@+id/action_personalizedEightFragment_to_personalizedNineFragment"
+            app:destination="@id/personalizedNineFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalizedNineFragment"
+        android:name="com.cpp.unsmoke.ui.personalizedplan.screen.PersonalizedNineFragment"
+        android:label="fragment_personalized_nine"
+        tools:layout="@layout/fragment_personalized_nine" >
+        <action
+            android:id="@+id/action_personalizedNineFragment_to_personalizedTenFragment"
+            app:destination="@id/personalizedTenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalizedTenFragment"
+        android:name="com.cpp.unsmoke.ui.personalizedplan.screen.PersonalizedTenFragment"
+        android:label="fragment_personalized_ten"
+        tools:layout="@layout/fragment_personalized_ten" >
+        <action
+            android:id="@+id/action_personalizedTenFragment_to_personalizedElevenFragment"
+            app:destination="@id/personalizedElevenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalizedElevenFragment"
+        android:name="com.cpp.unsmoke.ui.personalizedplan.screen.PersonalizedElevenFragment"
+        android:label="fragment_personalized_eleven"
+        tools:layout="@layout/fragment_personalized_eleven" >
+        <action
+            android:id="@+id/action_personalizedElevenFragment_to_personalizedTwelveFragment"
+            app:destination="@id/personalizedTwelveFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalizedTwelveFragment"
+        android:name="com.cpp.unsmoke.ui.personalizedplan.screen.PersonalizedTwelveFragment"
+        android:label="fragment_personalized_twelve"
+        tools:layout="@layout/fragment_personalized_twelve" />
 </navigation>
