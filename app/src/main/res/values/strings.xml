@@ -51,6 +51,8 @@
     <string name="challenge_desc">Complete the following challenges to earn XP and daily streaks!</string>
     <string name="challenge_smoke">Limit daily cigarettes</string>
     <string name="challenge_breath">Breathing Exercise</string>
+    <string name="milestone_title">Milestone Progress</string>
+    <string name="milestone_desc">Reach milestones to achieve your goals</string>
     <string name="rank_title">Rank</string>
     <string name="xp_title">XP</string>
     <string name="rank_description">Compete with people who have the same goals as you. Break a leg!</string>
@@ -60,6 +62,7 @@
     <string name="preferences_guide">Guide</string>
     <string name="preferences_info">About Us</string>
     <string name="preferences_help">Help Center</string>
+    <string name="shop_title">Shop</string>
     <string name="logout">Logout</string>
     <string name="choose_your_province">Choose Your Province</string>
     <string name="choose_your_city">Choose Your City</string>
