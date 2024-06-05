@@ -81,7 +81,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:inputType="none"
-            android:text="@string/choose_your_province" />
+            android:hint="@string/choose_your_province" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -121,7 +121,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:inputType="none"
-            android:text="@string/choose_your_city" />
+            android:hint="@string/choose_your_city" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

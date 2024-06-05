@@ -39,6 +39,7 @@ android {
         }
     }
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -69,4 +70,5 @@ dependencies {
     implementation(libs.bundles.livedata)
     implementation(libs.bundles.datastore)
     implementation(libs.androidx.splashscreen)
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
 }

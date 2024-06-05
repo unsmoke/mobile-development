@@ -11,6 +11,8 @@ import androidx.core.content.ContextCompat
 import com.cpp.unsmoke.R
 import com.cpp.unsmoke.utils.helper.ui.EmailValidator
 import com.google.android.material.textfield.TextInputLayout
+import java.text.NumberFormat
+import java.util.Locale
 
 class EditText @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -177,6 +179,36 @@ class EditText @JvmOverloads constructor(
                         parent?.startIconDrawable?.setTint(ContextCompat.getColor(context, R.color.neutral_50))
                     }
                 }
+            }
+
+            R.id.edt_price_perpack -> {
+                addTextChangedListener(object : TextWatcher {
+                    private var current = ""
+
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                        // No implementation needed here
+                    }
+
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        if (s.toString() != current) {
+                            this@EditText.removeTextChangedListener(this)
+
+                            val cleanString = s.toString().replace("[^\\d.]".toRegex(), "")
+                            val parsed = cleanString.toDoubleOrNull() ?: 0.0
+                            val formatted = NumberFormat.getNumberInstance(Locale.getDefault()).format(parsed)
+
+                            current = formatted
+                            this@EditText.setText(formatted)
+                            this@EditText.setSelection(formatted.length)
+
+                            this@EditText.addTextChangedListener(this)
+                        }
+                    }
+
+                    override fun afterTextChanged(s: Editable?) {
+                        // No implementation needed here
+                    }
+                })
             }
         }
 

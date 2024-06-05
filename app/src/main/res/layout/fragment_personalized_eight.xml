@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:inputType="date"
             tools:ignore="SpeakableTextPresentCheck"
-            android:text="@string/select_a_time_approximately" />
+            android:hint="@string/select_a_time_approximately" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:inputType="date"
             tools:ignore="SpeakableTextPresentCheck"
-            android:text="@string/select_a_time_approximately" />
+            android:hint="@string/select_a_time_approximately" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

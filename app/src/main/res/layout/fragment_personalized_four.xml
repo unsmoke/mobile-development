@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:inputType="date"
             tools:ignore="SpeakableTextPresentCheck"
-            android:text="@string/e_g_5" />
+            android:hint="@string/e_g_5" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:inputType="date"
             tools:ignore="SpeakableTextPresentCheck"
-            android:text="@string/e_g_20" />
+            android:hint="@string/e_g_20" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -126,7 +126,7 @@
             android:layout_height="wrap_content"
             android:inputType="date"
             tools:ignore="SpeakableTextPresentCheck"
-            android:text="@string/e_g_35000" />
+            android:hint="@string/e_g_35000" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

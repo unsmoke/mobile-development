@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -31,6 +32,12 @@ class PersonalizedOneFragment : Fragment() {
     private lateinit var provinceCityMap: MutableMap<String, MutableList<String>>
     private lateinit var provinceCodeMap: MutableMap<Int, String>
 
+    private var isDateOfBirthSet = false
+    private var isProvinceSet = false
+    private var isCitySet = false
+
+    private lateinit var rawDate: String
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,7 +53,8 @@ class PersonalizedOneFragment : Fragment() {
 
         personalizedViewModel.dateOfBirth.observe(viewLifecycleOwner) { date ->
             // Menetapkan nilai dateOfBirth ke input layout
-            binding.edtDateOfBirth.setText(date)
+            dateFormat(date.toLong())
+            updateButtonState()
         }
 
         personalizedViewModel.province.observe(viewLifecycleOwner) { province ->
@@ -58,11 +66,13 @@ class PersonalizedOneFragment : Fragment() {
                 binding.autoCompleteProvince.setText(province)
                 setupCityDropdown(province) // Memperbarui dropdown kota berdasarkan provinsi yang dipilih
             }
+            updateButtonState()
         }
 
         personalizedViewModel.city.observe(viewLifecycleOwner) { city ->
             // Menetapkan nilai city ke input layout
             binding.autoCompleteCity.setText(city)
+            updateButtonState()
         }
 
         val today = MaterialDatePicker.todayInUtcMilliseconds()
@@ -80,8 +90,10 @@ class PersonalizedOneFragment : Fragment() {
 
         datePicker.addOnPositiveButtonClickListener {
             datePicker.selection?.let { it1 ->
+                rawDate = it1.toString()
                 dateFormat(it1)
                 Log.d("FORMAT TANGGAL", it1.toString())
+                isDateOfBirthSet = true
             }
         }
 
@@ -92,12 +104,16 @@ class PersonalizedOneFragment : Fragment() {
         }
 
         binding.btnNext.setOnClickListener {
-            personalizedViewModel.setDateOfBirth(binding.edtDateOfBirth.text.toString())
-            personalizedViewModel.setProvince(binding.autoCompleteProvince.text.toString())
-            personalizedViewModel.setCity(binding.autoCompleteCity.text.toString())
+            if (isDateOfBirthSet && isProvinceSet && isCitySet){
+                personalizedViewModel.setDateOfBirth(rawDate)
+                personalizedViewModel.setProvince(binding.autoCompleteProvince.text.toString())
+                personalizedViewModel.setCity(binding.autoCompleteCity.text.toString())
 
-            personalizedViewModel.increaseProgress()
-            Navigation.createNavigateOnClickListener(R.id.action_personalizedOneFragment_to_personalizedTwoFragment).onClick(it)
+                personalizedViewModel.increaseProgress()
+                Navigation.createNavigateOnClickListener(R.id.action_personalizedOneFragment_to_personalizedTwoFragment).onClick(it)
+            } else {
+                Toast.makeText(requireContext(), "Please fill out all input", Toast.LENGTH_SHORT).show()
+            }
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
@@ -112,9 +128,20 @@ class PersonalizedOneFragment : Fragment() {
         setupProvinceDropdown()
     }
 
+    private fun updateButtonState() {
+        // Memperbarui keadaan tombol berdasarkan apakah semua nilai telah diatur atau tidak
+        binding.btnNext.isEnabled = isDateOfBirthSet && isProvinceSet && isCitySet
+    }
+
     private fun dateFormat(date: Long) {
-        val format = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date)
-        binding.edtDateOfBirth.setText(format)
+        try {
+            val format = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date)
+            binding.edtDateOfBirth.setText(format)
+        } catch (e: Exception){
+            e.printStackTrace()
+            showToast("Error formatting date")
+        }
+
     }
 
     private fun loadCSVData() {
@@ -171,6 +198,7 @@ class PersonalizedOneFragment : Fragment() {
                 binding.textInputLayoutCity.visibility = View.VISIBLE
                 binding.tvCity.visibility = View.VISIBLE
                 setupCityDropdown(selectedProvince)
+                isProvinceSet = true
             }
         }
     }
@@ -180,6 +208,11 @@ class PersonalizedOneFragment : Fragment() {
         Log.d("SETUP_CITY_DROPDOWN", "Selected province: $province, Cities: $cities")
         val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, cities)
         (binding.autoCompleteCity as? AutoCompleteTextView)?.setAdapter(adapter)
+        isCitySet = true
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {

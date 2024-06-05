@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +15,7 @@ import com.cpp.unsmoke.R
 import com.cpp.unsmoke.databinding.FragmentPersonalizedOneBinding
 import com.cpp.unsmoke.databinding.FragmentPersonalizedThreeBinding
 import com.cpp.unsmoke.ui.personalizedplan.PersonalizedViewModel
+import com.cpp.unsmoke.utils.helper.ui.DateFormatter
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -24,6 +26,9 @@ class PersonalizedThreeFragment : Fragment() {
     private var _binding: FragmentPersonalizedThreeBinding? = null
     private val binding get() = _binding!!
     private lateinit var datePicker: MaterialDatePicker<Long>
+    private lateinit var rawDate: String
+
+    private var isDateSet = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,9 +59,20 @@ class PersonalizedThreeFragment : Fragment() {
             .build()
 
         datePicker.addOnPositiveButtonClickListener {
-            datePicker.selection?.let { it1 ->
-                dateFormat(it1)
-                Log.d("FORMAT TANGGAL", it1.toString())
+            datePicker.selection?.let { selection ->
+                dateFormat(selection)
+                rawDate = selection.toString()
+                binding.edtSmokingStartDate.setText(selection.toString())
+                isDateSet = true
+            }
+        }
+
+        personalizedViewModel.firstSmokeDate.observe(viewLifecycleOwner) {date ->
+            if (date.isNotEmpty()){
+                binding.edtSmokingStartDate.setText(date)
+            } else {
+                binding.edtSmokingStartDate.error = "Please Select Your Date of First Smoke"
+                binding.btnNext.isEnabled = false
             }
         }
 
@@ -67,8 +83,13 @@ class PersonalizedThreeFragment : Fragment() {
         }
 
         binding.btnNext.setOnClickListener{
-            personalizedViewModel.increaseProgress()
-            Navigation.createNavigateOnClickListener(R.id.action_personalizedThreeFragment_to_personalizedFourFragment ).onClick(it)
+            if (isDateSet){
+                personalizedViewModel.setFirstSmokeDate(rawDate)
+                personalizedViewModel.increaseProgress()
+                Navigation.createNavigateOnClickListener(R.id.action_personalizedThreeFragment_to_personalizedFourFragment ).onClick(it)
+            } else {
+                binding.edtSmokingStartDate.error = "Please Select Your Date of First Smoke"
+            }
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
