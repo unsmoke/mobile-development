@@ -17,6 +17,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import java.text.DateFormat
+import java.util.Calendar
 import java.util.Locale
 
 class PersonalizedEightFragment : Fragment() {
@@ -52,8 +53,10 @@ class PersonalizedEightFragment : Fragment() {
         }
 
         binding.btnNext.setOnClickListener {
-            personalizedViewModel.increaseProgress()
-            Navigation.createNavigateOnClickListener(R.id.action_personalizedEightFragment_to_personalizedNineFragment ).onClick(it)
+            if (validateTimes()) {
+                personalizedViewModel.increaseProgress()
+                Navigation.createNavigateOnClickListener(R.id.action_personalizedEightFragment_to_personalizedNineFragment).onClick(it)
+            }
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
@@ -74,6 +77,7 @@ class PersonalizedEightFragment : Fragment() {
 
         val timePicker = MaterialTimePicker.Builder()
             .setTimeFormat(clockFormat)
+            .setTheme(R.style.ThemeOverlay_App_TimePicker)
             .setTitleText(title)
             .build()
 
@@ -93,6 +97,60 @@ class PersonalizedEightFragment : Fragment() {
         currentPicker = timePicker
         timePicker.show(parentFragmentManager, title)
     }
+
+    private fun validateTimes(): Boolean {
+        val wakeUpTime = binding.edtWakeUpTime.text.toString()
+        val firstSmokeTime = binding.edtFirstSmokeTime.text.toString()
+
+        if (wakeUpTime.isNotEmpty() && firstSmokeTime.isNotEmpty()) {
+            val wakeUpParts = wakeUpTime.split(":")
+            val firstSmokeParts = firstSmokeTime.split(":")
+
+            val wakeUpHour = wakeUpParts[0].toInt()
+            val wakeUpMinute = wakeUpParts[1].toInt()
+            val firstSmokeHour = firstSmokeParts[0].toInt()
+            val firstSmokeMinute = firstSmokeParts[1].toInt()
+
+            val wakeUpCalendar = Calendar.getInstance().apply {
+                set(Calendar.HOUR_OF_DAY, wakeUpHour)
+                set(Calendar.MINUTE, wakeUpMinute)
+            }
+
+            val firstSmokeCalendar = Calendar.getInstance().apply {
+                set(Calendar.HOUR_OF_DAY, firstSmokeHour)
+                set(Calendar.MINUTE, firstSmokeMinute)
+            }
+
+            if (firstSmokeCalendar.before(wakeUpCalendar)) {
+                binding.textInputLayoutFirstSmokeTime.error = "First smoke time cannot be before wake up time"
+                return false
+            } else {
+                binding.textInputLayoutFirstSmokeTime.error = null
+            }
+
+            val diffInMillis = firstSmokeCalendar.timeInMillis - wakeUpCalendar.timeInMillis
+            val diffInMinutes = (diffInMillis / (1000 * 60)).toInt()
+
+            // Here you can do whatever you want with the diffInMinutes
+
+            return true
+        } else {
+            if (wakeUpTime.isEmpty()) {
+                binding.textInputLayoutWakeUpTime.error = "Please set wake up time"
+            } else {
+                binding.textInputLayoutWakeUpTime.error = null
+            }
+
+            if (firstSmokeTime.isEmpty()) {
+                binding.textInputLayoutFirstSmokeTime.error = "Please set first smoke time"
+            } else {
+                binding.textInputLayoutFirstSmokeTime.error = null
+            }
+
+            return false
+        }
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()

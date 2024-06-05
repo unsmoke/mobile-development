@@ -12,7 +12,7 @@
         android:id="@+id/tv_wake_up_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/how_long_have_you_been_smoking"
+        android:text="@string/what_time_do_you_wake_up"
         style="@style/TextContent.Title"
         android:textSize="19sp"
         android:textColor="@color/normal_green"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:inputType="date"
             tools:ignore="SpeakableTextPresentCheck"
-            android:text="@string/select_a_date_approximately" />
+            android:text="@string/select_a_time_approximately" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -52,7 +52,7 @@
         android:id="@+id/tv_first_smoke_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/how_long_have_you_been_smoking"
+        android:text="@string/what_time_did_you_smoke_your_first_cigarette_after_waking_up"
         style="@style/TextContent.Title"
         android:textSize="19sp"
         android:textColor="@color/normal_green"
@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:inputType="date"
             tools:ignore="SpeakableTextPresentCheck"
-            android:text="@string/select_a_date_approximately" />
+            android:text="@string/select_a_time_approximately" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

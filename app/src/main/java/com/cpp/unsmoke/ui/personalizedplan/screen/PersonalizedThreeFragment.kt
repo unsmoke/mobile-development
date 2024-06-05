@@ -14,6 +14,8 @@ import com.cpp.unsmoke.R
 import com.cpp.unsmoke.databinding.FragmentPersonalizedOneBinding
 import com.cpp.unsmoke.databinding.FragmentPersonalizedThreeBinding
 import com.cpp.unsmoke.ui.personalizedplan.PersonalizedViewModel
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -38,9 +40,17 @@ class PersonalizedThreeFragment : Fragment() {
 
         val personalizedViewModel = ViewModelProvider(requireActivity())[PersonalizedViewModel::class.java]
 
+        val today = MaterialDatePicker.todayInUtcMilliseconds()
+
         datePicker = MaterialDatePicker.Builder.datePicker()
-            .setTitleText("Select Your Date of Birth")
+            .setTitleText("Length of time you have been smoking")
             .setTheme(R.style.ThemeOverlay_App_DatePicker)
+            .setSelection(today)
+            .setCalendarConstraints(
+                CalendarConstraints.Builder()
+                    .setValidator(DateValidatorPointBackward.now())
+                    .build()
+            )
             .build()
 
         datePicker.addOnPositiveButtonClickListener {
