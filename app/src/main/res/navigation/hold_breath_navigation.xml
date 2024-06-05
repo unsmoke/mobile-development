@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/hold_breath_navigation"
+    app:startDestination="@id/holdBreathFragment">
+
+    <fragment
+        android:id="@+id/holdBreathFragment"
+        android:name="com.cpp.unsmoke.ui.healtimprovement.holdbreath.screen.HoldBreathFragment"
+        android:label="fragment_hold_breath"
+        tools:layout="@layout/fragment_hold_breath" >
+        <action
+            android:id="@+id/action_holdBreathFragment_to_holdBreathResultFragment"
+            app:destination="@id/holdBreathResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/holdBreathResultFragment"
+        android:name="com.cpp.unsmoke.ui.healtimprovement.holdbreath.screen.HoldBreathResultFragment"
+        android:label="fragment_hold_breath_result"
+        tools:layout="@layout/fragment_hold_breath_result" />
+</navigation>

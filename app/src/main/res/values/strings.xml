@@ -80,6 +80,12 @@
     <string name="do_you_use_any_other_tobacco_products">Do you use any other tobacco products?</string>
     <string name="are_you_currently_experiencing_depression">Are you currently experiencing depression?</string>
     <string name="are_you_feeling_demoralized_right_now">Are you feeling demoralized right now?</string>
+    <string name="start">Start</string>
+    <string name="let_s_test_your_breath">Let\'s Test Your Breath</string>
+    <string name="hi_andi">Hi, Andi</string>
+    <string name="what_time_do_you_wake_up">what time do you wake up?</string>
+    <string name="select_a_time_approximately">select a time approximately</string>
+    <string name="what_time_did_you_smoke_your_first_cigarette_after_waking_up">What time did you smoke, your first cigarette after waking up?</string>
 
 
 </resources>
