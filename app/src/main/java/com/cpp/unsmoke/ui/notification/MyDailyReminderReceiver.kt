@@ -1,6 +1,7 @@
 package com.cpp.unsmoke.ui.notification
 
 import android.app.AlarmManager
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -50,6 +51,7 @@ class MyDailyReminderReceiver : BroadcastReceiver() {
             val channel = NotificationChannel(channelId,
                 channelName,
                 NotificationManager.IMPORTANCE_HIGH)
+            channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
             channel.enableVibration(true)
             channel.vibrationPattern = longArrayOf(1000, 1000, 1000, 1000, 1000)
             builder.setChannelId(channelId)

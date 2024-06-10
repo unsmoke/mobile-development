@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         reminderReceiver = MyDailyReminderReceiver()
 
         reminderReceiver.setRepeatingAlarm(this, MyDailyReminderReceiver.TYPE_REPEATING,
-            "01:06", "Kata-kata hari ini tetap semangat")
+            "01:37", "Kata-kata hari ini tetap semangat")
 
         AutoStartHelper.getInstance().getAutoStartPermission(this)
     }
