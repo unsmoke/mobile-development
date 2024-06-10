@@ -42,8 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="date"
-            tools:ignore="SpeakableTextPresentCheck"
-            android:text="@string/choose_your_date_of_birth" />
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -62,9 +61,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/text_input_layout_province"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        style="@style/CustomTextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:hintEnabled="false"
         app:boxBackgroundMode="outline"
         app:boxCornerRadiusBottomEnd="16dp"
         app:boxCornerRadiusBottomStart="16dp"
@@ -77,11 +77,11 @@
 
         <AutoCompleteTextView
             android:id="@+id/autoComplete_province"
+            android:backgroundTint="@color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:inputType="none"
-            android:hint="@string/choose_your_province" />
+            android:inputType="none" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -101,7 +101,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/text_input_layout_city"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        style="@style/CustomTextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:boxBackgroundMode="outline"
@@ -119,9 +119,9 @@
             android:id="@+id/autoComplete_city"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:backgroundTint="@color/white"
             android:layout_weight="1"
-            android:inputType="none"
-            android:hint="@string/choose_your_city" />
+            android:inputType="none" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

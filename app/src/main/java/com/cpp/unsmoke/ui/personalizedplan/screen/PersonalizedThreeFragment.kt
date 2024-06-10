@@ -47,6 +47,8 @@ class PersonalizedThreeFragment : Fragment() {
 
         val today = MaterialDatePicker.todayInUtcMilliseconds()
 
+        binding.textInputLayoutSmokingStartDate.isErrorEnabled = false
+
         datePicker = MaterialDatePicker.Builder.datePicker()
             .setTitleText("Length of time you have been smoking")
             .setTheme(R.style.ThemeOverlay_App_DatePicker)
@@ -62,16 +64,17 @@ class PersonalizedThreeFragment : Fragment() {
             datePicker.selection?.let { selection ->
                 dateFormat(selection)
                 rawDate = selection.toString()
-                binding.edtSmokingStartDate.setText(selection.toString())
                 isDateSet = true
             }
         }
 
         personalizedViewModel.firstSmokeDate.observe(viewLifecycleOwner) {date ->
             if (date.isNotEmpty()){
-                binding.edtSmokingStartDate.setText(date)
+                binding.textInputLayoutSmokingStartDate.isErrorEnabled = false
+                dateFormat(date.toLong())
+                isDateSet = true
             } else {
-                binding.edtSmokingStartDate.error = "Please Select Your Date of First Smoke"
+                binding.textInputLayoutSmokingStartDate.error = "Please Select Your Date of First Smoke from view model"
                 binding.btnNext.isEnabled = false
             }
         }
@@ -88,7 +91,7 @@ class PersonalizedThreeFragment : Fragment() {
                 personalizedViewModel.increaseProgress()
                 Navigation.createNavigateOnClickListener(R.id.action_personalizedThreeFragment_to_personalizedFourFragment ).onClick(it)
             } else {
-                binding.edtSmokingStartDate.error = "Please Select Your Date of First Smoke"
+                binding.textInputLayoutSmokingStartDate.error = "Please Select Your Date of First Smoke from button"
             }
         }
 

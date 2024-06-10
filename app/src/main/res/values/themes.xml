@@ -16,6 +16,13 @@
         <item name="android:navigationBarColor">@color/accent_white</item>
     </style>
 
+    <!-- Custom style for TextInputLayout -->
+    <style name="CustomTextInputLayoutStyle" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlActivated">@android:color/white</item>
+        <item name="colorControlHighlight">@android:color/white</item>
+    </style>
+
     <style name="ThemeOverlay.App.DatePicker" parent="@style/ThemeOverlay.MaterialComponents.MaterialCalendar">
         <item name="colorPrimary">@color/normal_green</item>
         <item name="colorOnPrimary">@color/white</item>

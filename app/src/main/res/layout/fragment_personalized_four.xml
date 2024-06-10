@@ -25,6 +25,7 @@
         android:id="@+id/text_input_layout_total_cigarette"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:helperText="@string/e_g_5"
         app:boxBackgroundMode="outline"
         app:boxCornerRadiusBottomEnd="16dp"
         app:boxCornerRadiusBottomStart="16dp"
@@ -43,8 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="date"
-            tools:ignore="SpeakableTextPresentCheck"
-            android:hint="@string/e_g_5" />
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -66,6 +66,7 @@
         android:id="@+id/text_input_layout_total_cigarette_perpack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:helperText="@string/e_g_20"
         app:boxBackgroundMode="outline"
         app:boxCornerRadiusBottomEnd="16dp"
         app:boxCornerRadiusBottomStart="16dp"
@@ -84,8 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="date"
-            tools:ignore="SpeakableTextPresentCheck"
-            android:hint="@string/e_g_20" />
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,6 +107,7 @@
         android:id="@+id/text_input_layout_price_perpack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:helperText="@string/e_g_35000"
         app:boxBackgroundMode="outline"
         app:boxCornerRadiusBottomEnd="16dp"
         app:boxCornerRadiusBottomStart="16dp"
@@ -125,8 +126,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="date"
-            tools:ignore="SpeakableTextPresentCheck"
-            android:hint="@string/e_g_35000" />
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
