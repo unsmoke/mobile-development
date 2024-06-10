@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -17,6 +18,9 @@ import com.cpp.unsmoke.ui.personalizedplan.PersonalizedViewModel
 class PersonalizedFiveFragment : Fragment() {
     private var _binding: FragmentPersonalizedFiveBinding? = null
     private val binding get() = _binding!!
+
+    private var isNicotineMedSet = false
+    private var isNicotineMedValue = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,9 +36,35 @@ class PersonalizedFiveFragment : Fragment() {
 
         val personalizedViewModel = ViewModelProvider(requireActivity())[PersonalizedViewModel::class.java]
 
+        personalizedViewModel.isNicotineMed.observe(viewLifecycleOwner) { isNicotineMed ->
+            if (isNicotineMed) {
+                binding.rgNicotineAlternativeMedicines.check(R.id.rb_yes_fragment_five)
+            } else {
+                binding.rgNicotineAlternativeMedicines.check(R.id.rb_no_fragment_five)
+            }
+        }
+
+        binding.rgNicotineAlternativeMedicines.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.rb_yes_fragment_five -> {
+                    isNicotineMedSet = true
+                    isNicotineMedValue = true
+                }
+                R.id.rb_no_fragment_five -> {
+                    isNicotineMedSet = true
+                    isNicotineMedValue = false
+                }
+            }
+        }
+
         binding.btnNext.setOnClickListener {
-            personalizedViewModel.increaseProgress()
-            Navigation.createNavigateOnClickListener(R.id.action_personalizedFiveFragment_to_personalizedSixFragment ).onClick(it)
+            if (isNicotineMedSet) {
+                personalizedViewModel.setIsNicotineMed(isNicotineMedValue)
+                personalizedViewModel.increaseProgress()
+                Navigation.findNavController(view).navigate(R.id.action_personalizedFiveFragment_to_personalizedSixFragment)
+            } else {
+                showToast("Please fill in this field")
+            }
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
@@ -44,6 +74,10 @@ class PersonalizedFiveFragment : Fragment() {
                 requireActivity().onBackPressed()
             }
         })
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroy() {

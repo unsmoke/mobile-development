@@ -14,10 +14,19 @@ import com.cpp.unsmoke.databinding.FragmentPersonalizedFiveBinding
 import com.cpp.unsmoke.databinding.FragmentPersonalizedFourBinding
 import com.cpp.unsmoke.databinding.FragmentPersonalizedOneBinding
 import com.cpp.unsmoke.ui.personalizedplan.PersonalizedViewModel
+import kotlin.properties.Delegates
 
 class PersonalizedFourFragment : Fragment() {
     private var _binding: FragmentPersonalizedFourBinding? = null
     private val binding get() = _binding!!
+
+    private var isCigarettesPerDaySet = false
+    private var isCigarettesPerPackSet = false
+    private var isPackPriceSet = false
+
+    private var cigarettesPerDayValue: Int = 0
+    private var cigarettesPerPackValue: Int = 0
+    private var packPriceValue: Float = 0f
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,11 +40,66 @@ class PersonalizedFourFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.textInputLayoutTotalCigarette.isErrorEnabled = false
+        binding.textInputLayoutTotalCigarettePerpack.isErrorEnabled = false
+        binding.textInputLayoutPricePerpack.isErrorEnabled = false
+
         val personalizedViewModel = ViewModelProvider(requireActivity())[PersonalizedViewModel::class.java]
 
+        personalizedViewModel.cigarettesPerDay.observe(viewLifecycleOwner) { cigarettesPerDay ->
+            if (cigarettesPerDay != 0) {
+                binding.edtTotalCigarette.setText(cigarettesPerDay.toString())
+                cigarettesPerDayValue = cigarettesPerDay
+                isCigarettesPerDaySet = true
+                binding.textInputLayoutTotalCigarette.isErrorEnabled = false
+            } else {
+                binding.textInputLayoutTotalCigarette.error = "Please fill in this field"
+                binding.edtTotalCigarette.setText("")
+            }
+        }
+
+        personalizedViewModel.cigarettesPerPack.observe(viewLifecycleOwner) { cigarettesPerPack ->
+            if (cigarettesPerPack != 0) {
+                binding.edtTotalCigarettePerpack.setText(cigarettesPerPack.toString())
+                cigarettesPerPackValue = cigarettesPerPack
+                isCigarettesPerPackSet = true
+                binding.textInputLayoutTotalCigarettePerpack.isErrorEnabled = false
+            } else {
+                binding.textInputLayoutTotalCigarettePerpack.error = "Please fill in this field"
+                binding.edtTotalCigarettePerpack.setText("")
+            }
+        }
+
+        personalizedViewModel.packPrice.observe(viewLifecycleOwner) { packPrice ->
+            if (packPrice != 0f) {
+                binding.edtPricePerpack.setText(packPrice.toString())
+                packPriceValue = packPrice
+                isPackPriceSet = true
+                binding.textInputLayoutPricePerpack.isErrorEnabled = false
+            } else {
+                binding.textInputLayoutPricePerpack.error = "Please fill in this field"
+                binding.edtPricePerpack.setText("")
+            }
+        }
+
         binding.btnNext.setOnClickListener {
-            personalizedViewModel.increaseProgress()
-            Navigation.createNavigateOnClickListener(R.id.action_personalizedFourFragment_to_personalizedFiveFragment ).onClick(it)
+            if (isCigarettesPerDaySet && isCigarettesPerPackSet && isPackPriceSet) {
+                personalizedViewModel.setCigarettesPerDay(cigarettesPerDayValue)
+                personalizedViewModel.setCigarettesPerPack(cigarettesPerPackValue)
+                personalizedViewModel.setPackPrice(packPriceValue)
+                personalizedViewModel.increaseProgress()
+                Navigation.createNavigateOnClickListener(R.id.action_personalizedFourFragment_to_personalizedFiveFragment ).onClick(it)
+            } else {
+                if (!isCigarettesPerDaySet) {
+                    binding.textInputLayoutTotalCigarette.error = "Please fill in this field"
+                }
+                if (!isCigarettesPerPackSet) {
+                    binding.textInputLayoutTotalCigarettePerpack.error = "Please fill in this field"
+                }
+                if (!isPackPriceSet) {
+                    binding.textInputLayoutPricePerpack.error = "Please fill in this field"
+                }
+            }
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {

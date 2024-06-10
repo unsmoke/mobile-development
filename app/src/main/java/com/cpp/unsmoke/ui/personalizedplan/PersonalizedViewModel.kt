@@ -32,6 +32,53 @@ class PersonalizedViewModel: ViewModel() {
     private val _firstSmokeDate = MutableLiveData<String>()
     val firstSmokeDate: LiveData<String> get() = _firstSmokeDate
 
+    /* FRAGMENT FOUR */
+
+    private val _cigarettesPerDay = MutableLiveData<Int>()
+    val cigarettesPerDay: LiveData<Int> get() = _cigarettesPerDay
+
+    private val _cigarettesPerPack = MutableLiveData<Int>()
+    val cigarettesPerPack: LiveData<Int> get() = _cigarettesPerPack
+
+    private val _packPrice = MutableLiveData<Float>()
+    val packPrice: LiveData<Float> get() = _packPrice
+
+    /* FRAGMENT FIVE */
+
+    private val _isNicotineMed = MutableLiveData<Boolean>()
+    val isNicotineMed: LiveData<Boolean> get() = _isNicotineMed
+
+    /* FRAGMENT SIX */
+
+    private val _isUsingECigarette = MutableLiveData<Int>()
+    val isUsingECigarette: LiveData<Int> get() = _isUsingECigarette
+
+    /* FRAGMENT SEVEN */
+
+    private val _isUsingOtherTobacco = MutableLiveData<Int>()
+    val isUsingOtherTobacco: LiveData<Int> get() = _isUsingOtherTobacco
+
+    /* FRAGMENT EIGHT */
+
+    private val _wakeUpTime = MutableLiveData<String>()
+    val wakeUpTime: LiveData<String> get() = _wakeUpTime
+
+    private val _firstSmoke = MutableLiveData<String>()
+    val firstSmoke: LiveData<String> get() = _firstSmoke
+
+    private val _smokingStartTime = MutableLiveData<String>()
+    val smokingStartTime: LiveData<String> get() = _smokingStartTime
+
+    /* FRAGMENT NINE */
+
+    private val _isDepressed = MutableLiveData<Boolean>()
+    val isDepressed: LiveData<Boolean> get() = _isDepressed
+
+    /* FRAGMENT TEN */
+
+    private val _isSpirit = MutableLiveData<String>()
+    val isSpirit: LiveData<String> get() = _isSpirit
+
     init {
         _currentProgress.value = 10
     }
@@ -72,5 +119,63 @@ class PersonalizedViewModel: ViewModel() {
 
     fun setFirstSmokeDate(date: String) {
         _firstSmokeDate.value = date
+    }
+
+    /* FRAGMENT FOUR */
+
+    fun setCigarettesPerDay(total: Int) {
+        _cigarettesPerDay.value = total
+    }
+
+    fun setCigarettesPerPack(total: Int) {
+        _cigarettesPerPack.value = total
+    }
+
+    fun setPackPrice(total: Float) {
+        _packPrice.value = total
+    }
+
+    /* FRAGMENT FIVE */
+
+    fun setIsNicotineMed(value: Boolean) {
+        _isNicotineMed.value = value
+    }
+
+    /* FRAGMENT SIX */
+
+    fun setIsUsingECigarette(value: Int) {
+        _isUsingECigarette.value = value
+    }
+
+    /* FRAGMENT SEVEN */
+
+    fun setIsUsingOtherTobacco(value: Int) {
+        _isUsingOtherTobacco.value = value
+    }
+
+    /* FRAGMENT EIGHT */
+
+    fun setWakeUpTime(time: String) {
+        _wakeUpTime.value = time
+    }
+
+    fun setFirstSmoke(time: String) {
+        _firstSmoke.value = time
+    }
+
+    fun setSmokingStartTime(time: String) {
+        _smokingStartTime.value = time
+    }
+
+    /* FRAGMENT NINE */
+
+    fun setIsDepressed(value: Boolean) {
+        _isDepressed.value = value
+    }
+
+    /* FRAGMENT TEN */
+
+    fun setIsSpirit(value: String) {
+        _isSpirit.value = value
     }
 }
