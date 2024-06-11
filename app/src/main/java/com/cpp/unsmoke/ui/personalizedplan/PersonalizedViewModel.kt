@@ -66,8 +66,8 @@ class PersonalizedViewModel: ViewModel() {
     private val _firstSmoke = MutableLiveData<String>()
     val firstSmoke: LiveData<String> get() = _firstSmoke
 
-    private val _smokingStartTime = MutableLiveData<String>()
-    val smokingStartTime: LiveData<String> get() = _smokingStartTime
+    private val _smokingStartTime = MutableLiveData<Int>()
+    val smokingStartTime: LiveData<Int> get() = _smokingStartTime
 
     /* FRAGMENT NINE */
 
@@ -76,8 +76,8 @@ class PersonalizedViewModel: ViewModel() {
 
     /* FRAGMENT TEN */
 
-    private val _isSpirit = MutableLiveData<String>()
-    val isSpirit: LiveData<String> get() = _isSpirit
+    private val _isSpirit = MutableLiveData<Boolean>()
+    val isSpirit: LiveData<Boolean> get() = _isSpirit
 
     init {
         _currentProgress.value = 10
@@ -163,7 +163,7 @@ class PersonalizedViewModel: ViewModel() {
         _firstSmoke.value = time
     }
 
-    fun setSmokingStartTime(time: String) {
+    fun setSmokingStartTime(time: Int) {
         _smokingStartTime.value = time
     }
 
@@ -175,7 +175,31 @@ class PersonalizedViewModel: ViewModel() {
 
     /* FRAGMENT TEN */
 
-    fun setIsSpirit(value: String) {
+    fun setIsSpirit(value: Boolean) {
         _isSpirit.value = value
+    }
+
+    /* GET ALL DATA */
+    fun getAllData() {
+        val allData = """
+            Date of Birth: ${_dateOfBirth.value}
+            Province: ${_province.value}
+            City: ${_city.value}
+            Gender: ${_gender.value}
+            First Smoke Date: ${_firstSmokeDate.value}
+            Cigarettes Per Day: ${_cigarettesPerDay.value}
+            Cigarettes Per Pack: ${_cigarettesPerPack.value}
+            Pack Price: ${_packPrice.value}
+            Is Using Nicotine Medication: ${_isNicotineMed.value}
+            Is Using E-Cigarette: ${_isUsingECigarette.value}
+            Is Using Other Tobacco: ${_isUsingOtherTobacco.value}
+            Wake Up Time: ${_wakeUpTime.value}
+            First Smoke Time: ${_firstSmoke.value}
+            Smoking Start Time: ${_smokingStartTime.value}
+            Is Depressed: ${_isDepressed.value}
+            Spirit: ${_isSpirit.value}
+        """.trimIndent()
+
+        Log.d("PERSONALIZED_VIEWMODEL", allData)
     }
 }
