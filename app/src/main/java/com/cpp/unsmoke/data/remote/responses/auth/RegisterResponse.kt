@@ -1,16 +1,16 @@
-package com.cpp.unsmoke.data.remote.responses
+package com.cpp.unsmoke.data.remote.responses.auth
 
 import com.google.gson.annotations.SerializedName
 
 data class RegisterResponse(
 
-	@field:SerializedName("code")
+    @field:SerializedName("code")
 	val code: Int? = null,
 
-	@field:SerializedName("data")
+    @field:SerializedName("data")
 	val data: RegisterData? = null,
 
-	@field:SerializedName("status")
+    @field:SerializedName("status")
 	val status: String? = null
 )
 

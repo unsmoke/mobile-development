@@ -4,18 +4,16 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.cpp.unsmoke.data.local.preferences.LoginPreferences
-import com.cpp.unsmoke.data.remote.responses.LoginResponse
+import com.cpp.unsmoke.data.remote.responses.auth.LoginResponse
 import com.cpp.unsmoke.data.remote.retrofit.ApiService
 import com.cpp.unsmoke.data.remote.Result
-import com.cpp.unsmoke.data.remote.responses.RefreshResponse
-import com.cpp.unsmoke.data.remote.responses.RegisterResponse
+import com.cpp.unsmoke.data.remote.responses.auth.RefreshResponse
+import com.cpp.unsmoke.data.remote.responses.auth.RegisterResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import retrofit2.HttpException
-import kotlin.math.log
 
 class AuthRepository(
     private var apiService: ApiService,

@@ -1,10 +1,12 @@
 package com.cpp.unsmoke.data.remote.retrofit
 
-import com.cpp.unsmoke.data.remote.responses.LoginResponse
-import com.cpp.unsmoke.data.remote.responses.RefreshResponse
-import com.cpp.unsmoke.data.remote.responses.RegisterResponse
+import com.cpp.unsmoke.data.remote.responses.auth.LoginResponse
+import com.cpp.unsmoke.data.remote.responses.auth.RefreshResponse
+import com.cpp.unsmoke.data.remote.responses.auth.RegisterResponse
+import com.cpp.unsmoke.data.remote.responses.personalized.CreatePersonalizedResponse
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface ApiService {
@@ -28,4 +30,26 @@ interface ApiService {
     suspend fun refresh(
         @Field("refreshToken") refreshToken: String,
     ): RefreshResponse
+
+    @FormUrlEncoded
+    @POST("health")
+    suspend fun createPersonalized(
+        @Field("date_of_birth") dateOfBirth: String,
+        @Field("gender") gender: String,
+        @Field("smoking_start_time") smokingStartTime: Int,
+        @Field("is_nicotine_med") isNicotineMed: Boolean,
+        @Field("is_e_cigarette") isECigarette: Int,
+        @Field("first_cigarette_date") firstCigaretteDate: String,
+        @Field("is_depressed") isDepressed: Boolean,
+        @Field("is_other_tobacco") isOtherTobacco: Int,
+        @Field("is_spirit") isSpirit: Boolean,
+        @Field("cigarettes_per_day") cigarettesPerDay: Int,
+        @Field("cigarettes_per_pack") cigarettesPerPack: Int,
+        @Field("pack_price") packPrice: Float,
+        @Field("province") province: String,
+        @Field("city") city: String
+    ): CreatePersonalizedResponse
+
+    @GET
+    suspend fun getPersonalizedPlan(): CreatePersonalizedResponse
 }
