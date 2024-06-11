@@ -38,8 +38,8 @@ class PersonalizedTwoFragment : Fragment() {
 
         binding.radioButtonGroup.setOnCheckedChangeListener { _, checkedId ->
             selectedGender = when (checkedId) {
-                R.id.radioButtonMan -> "Man"
-                R.id.radioButtonWoman -> "Woman"
+                R.id.radioButtonMan -> "Male"
+                R.id.radioButtonWoman -> "Female"
                 else -> ""
             }
             isGenderSet = true
@@ -47,8 +47,8 @@ class PersonalizedTwoFragment : Fragment() {
 
         personalizedViewModel.gender.observe(viewLifecycleOwner) { gender ->
             when (gender) {
-                "Man" -> binding.radioButtonGroup.check(R.id.radioButtonMan)
-                "Woman" -> binding.radioButtonGroup.check(R.id.radioButtonWoman)
+                "Male" -> binding.radioButtonGroup.check(R.id.radioButtonMan)
+                "Female" -> binding.radioButtonGroup.check(R.id.radioButtonWoman)
                 else -> {
                     binding.radioButtonGroup.clearCheck()
                     binding.btnNext.isEnabled = false

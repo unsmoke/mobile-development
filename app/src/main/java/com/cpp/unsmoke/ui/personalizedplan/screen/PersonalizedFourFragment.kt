@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -43,6 +44,55 @@ class PersonalizedFourFragment : Fragment() {
         binding.textInputLayoutTotalCigarette.isErrorEnabled = false
         binding.textInputLayoutTotalCigarettePerpack.isErrorEnabled = false
         binding.textInputLayoutPricePerpack.isErrorEnabled = false
+
+        binding.edtTotalCigarettePerpack.doOnTextChanged { text, _, _, _ ->
+            if (text.toString().isNotEmpty()) {
+                try {
+                    cigarettesPerPackValue = text.toString().toInt()
+                    isCigarettesPerPackSet = true
+                    binding.textInputLayoutTotalCigarettePerpack.isErrorEnabled = false
+                } catch (e: NumberFormatException) {
+                    binding.textInputLayoutTotalCigarettePerpack.error = "Invalid number format"
+                    isCigarettesPerPackSet = false
+                }
+            } else {
+                binding.textInputLayoutTotalCigarettePerpack.error = "Please fill in this field"
+            }
+        }
+
+        binding.edtTotalCigarette.doOnTextChanged { text, _, _, _ ->
+            if (text.toString().isNotEmpty()) {
+                try {
+                    cigarettesPerDayValue = text.toString().toInt()
+                    isCigarettesPerDaySet = true
+                    binding.textInputLayoutTotalCigarette.isErrorEnabled = false
+                } catch (e: NumberFormatException) {
+                    binding.textInputLayoutTotalCigarette.error = "Invalid number format"
+                    isCigarettesPerDaySet = false
+                }
+            } else {
+                binding.textInputLayoutTotalCigarette.error = "Please fill in this field"
+            }
+        }
+
+        binding.edtPricePerpack.doOnTextChanged { text, _, _, _ ->
+            if (text.toString().isNotEmpty()) {
+                try {
+                    // Remove commas before parsing the string to a float
+                    val cleanPriceString = text.toString().replace(",", "")
+                    packPriceValue = cleanPriceString.toFloat()
+                    isPackPriceSet = true
+                    binding.textInputLayoutPricePerpack.isErrorEnabled = false
+                } catch (e: NumberFormatException) {
+                    binding.textInputLayoutPricePerpack.error = "Invalid price format"
+                    isPackPriceSet = false
+                }
+            } else {
+                binding.textInputLayoutPricePerpack.error = "Please fill in this field"
+            }
+        }
+
+
 
         val personalizedViewModel = ViewModelProvider(requireActivity())[PersonalizedViewModel::class.java]
 

@@ -26,6 +26,8 @@ class PersonalizedEightFragment : Fragment() {
     private val binding get() = _binding!!
     private var currentPicker: MaterialTimePicker? = null
 
+    private var valueInMinutes = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,20 +42,31 @@ class PersonalizedEightFragment : Fragment() {
 
         val personalizedViewModel = ViewModelProvider(requireActivity())[PersonalizedViewModel::class.java]
 
+        personalizedViewModel.wakeUpTime.observe(viewLifecycleOwner) { wakeUpTime ->
+            binding.edtWakeUpTime.setText(wakeUpTime)
+        }
+
+        personalizedViewModel.firstSmoke.observe(viewLifecycleOwner) { firstSmokeTime ->
+            binding.edtFirstSmokeTime.setText(firstSmokeTime)
+        }
+
         binding.edtWakeUpTime.setOnClickListener {
             openTimePicker("Wake Up Time") { hour, minute ->
+                personalizedViewModel.setWakeUpTime(String.format(Locale.getDefault(), "%02d:%02d", hour, minute))
                 binding.edtWakeUpTime.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute))
             }
         }
 
         binding.edtFirstSmokeTime.setOnClickListener {
             openTimePicker("First Smoke Time") { hour, minute ->
+                personalizedViewModel.setFirstSmoke(String.format(Locale.getDefault(), "%02d:%02d", hour, minute))
                 binding.edtFirstSmokeTime.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute))
             }
         }
 
         binding.btnNext.setOnClickListener {
             if (validateTimes()) {
+                personalizedViewModel.setSmokingStartTime(valueInMinutes)
                 personalizedViewModel.increaseProgress()
                 Navigation.createNavigateOnClickListener(R.id.action_personalizedEightFragment_to_personalizedNineFragment).onClick(it)
             }
@@ -131,7 +144,7 @@ class PersonalizedEightFragment : Fragment() {
             val diffInMillis = firstSmokeCalendar.timeInMillis - wakeUpCalendar.timeInMillis
             val diffInMinutes = (diffInMillis / (1000 * 60)).toInt()
 
-            // Here you can do whatever you want with the diffInMinutes
+            valueInMinutes = diffInMinutes
 
             return true
         } else {

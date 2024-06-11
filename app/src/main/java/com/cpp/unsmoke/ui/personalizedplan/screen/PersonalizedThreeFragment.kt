@@ -70,6 +70,7 @@ class PersonalizedThreeFragment : Fragment() {
 
         personalizedViewModel.firstSmokeDate.observe(viewLifecycleOwner) {date ->
             if (date.isNotEmpty()){
+                rawDate = date
                 binding.textInputLayoutSmokingStartDate.isErrorEnabled = false
                 dateFormat(date.toLong())
                 isDateSet = true

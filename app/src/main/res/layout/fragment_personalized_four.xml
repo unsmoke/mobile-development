@@ -12,7 +12,7 @@
         android:id="@+id/tv_start_smoking"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/how_long_have_you_been_smoking"
+        android:text="@string/how_many_cigarettes_do_you_consume_per_day"
         style="@style/TextContent.Title"
         android:textSize="19sp"
         android:textColor="@color/normal_green"
