@@ -12,6 +12,7 @@ import com.cpp.unsmoke.databinding.ActivityLoginBinding
 import com.cpp.unsmoke.ui.auth.forgotpassword.ForgotPasswordActivity
 import com.cpp.unsmoke.ui.auth.register.RegisterActivity
 import com.cpp.unsmoke.ui.main.MainActivity
+import com.cpp.unsmoke.ui.personalizedplan.PersonalizedActivity
 import com.cpp.unsmoke.utils.helper.viewmodel.ObtainViewModelFactory
 
 class LoginActivity : AppCompatActivity() {
@@ -55,8 +56,22 @@ class LoginActivity : AppCompatActivity() {
                                 binding.btnLogin.isClickable = true
                             }
                             is Result.Success -> {
-                                binding.btnLogin.isClickable = true
-                                toHome()
+                                viewModel.getPersonalizedPlan().observe(this){resultPlan ->
+                                    if (resultPlan != null){
+                                        when(resultPlan){
+                                            is Result.Loading -> {
+                                                binding.btnLogin.isClickable = false
+                                            }
+                                            is Result.Error -> {
+                                                toPersonalized()
+                                            }
+                                            is Result.Success -> {
+                                                binding.btnLogin.isClickable = true
+                                                toHome()
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -75,6 +90,11 @@ class LoginActivity : AppCompatActivity() {
         binding.btnSigninWithGoogle.setOnClickListener {
             toSignInWithGoogle()
         }
+    }
+
+    private fun toPersonalized() {
+        val intent = Intent(this, PersonalizedActivity::class.java)
+        startActivity(intent)
     }
 
     private fun hintSetup() {

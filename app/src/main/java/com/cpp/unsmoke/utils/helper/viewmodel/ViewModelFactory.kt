@@ -35,7 +35,7 @@ class ViewModelFactory private constructor(
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel(authRepository) as T
+            return LoginViewModel(authRepository, personalizedPlanRepository) as T
         } else if (modelClass.isAssignableFrom(RegisterViewModel::class.java)){
             return RegisterViewModel(authRepository) as T
         } else if (modelClass.isAssignableFrom(PersonalizedViewModel::class.java)){

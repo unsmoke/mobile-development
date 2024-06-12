@@ -92,6 +92,7 @@
     <string name="how_many_cigarettes_do_you_consume_per_day">how many cigarettes do you consume per day?</string>
     <string name="did_you_smoke_during_the_previous_7_days">Did you smoke during the previous 7 days?</string>
     <string name="what_is_your_motivation_to_quit_smoking">What is your motivation to quit smoking</string>
+    <string name="empty_name">Field Cannot Be Empty</string>
 
 
 </resources>

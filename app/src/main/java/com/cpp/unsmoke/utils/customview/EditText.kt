@@ -172,6 +172,46 @@ class EditText @JvmOverloads constructor(
             }
 
             R.id.edt_signup_name -> {
+                addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                        // No implementation needed here
+                    }
+
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                        val parent = parent.parent as? TextInputLayout
+                        if (s.toString().isEmpty()) {
+                            parent?.error = context.getString(R.string.empty_name)
+                            parent?.boxStrokeColor =
+                                ContextCompat.getColor(context, R.color.color_error)
+                            parent?.startIconDrawable?.setTint(ContextCompat.getColor(context, R.color.color_error))
+
+                            adjustLayout(parent, true)
+                        } else {
+                            parent?.error = null
+                            parent?.isErrorEnabled = false
+                            parent?.boxStrokeColor =
+                                ContextCompat.getColor(context, R.color.normal_green)
+                            parent?.startIconDrawable?.setTint(ContextCompat.getColor(context, R.color.normal_green))
+
+                            adjustLayout(parent, false)
+                        }
+                    }
+
+                    override fun afterTextChanged(s: Editable?) {
+                        // No implementation needed here
+                    }
+
+                })
                 // Add OnFocusChangeListener to revert the start icon color when focus is lost
                 onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
                     val parent = parent.parent as? TextInputLayout

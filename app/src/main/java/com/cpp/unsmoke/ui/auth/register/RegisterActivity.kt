@@ -49,6 +49,8 @@ class RegisterActivity : AppCompatActivity() {
             if (isEmpty) {
                 if (fullName.isEmpty()) {
                     binding.signupNameEditTextLayout.error = "Field Cannot Be Empty"
+                } else {
+                    binding.signupNameEditTextLayout.isErrorEnabled = false
                 }
                 if (email.isEmpty()) {
                     binding.signupEmailEditTextLayout.error = "Field Cannot Be Empty"
@@ -92,7 +94,7 @@ class RegisterActivity : AppCompatActivity() {
                             }
                             is Result.Success -> {
                                 binding.btnLogin.isClickable = true
-                                toPersonalized()
+                                toLogin()
                             }
 
                             else -> {}
