@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/daily_journal_navigation"
+    app:startDestination="@id/journalingOneFragment">
+
+    <fragment
+        android:id="@+id/journalingOneFragment"
+        android:name="com.cpp.unsmoke.ui.journal.screen.JournalingOneFragment"
+        android:label="fragment_journaling_one"
+        tools:layout="@layout/fragment_journaling_one" >
+        <action
+            android:id="@+id/action_journalingOneFragment_to_journalingTwoFragment"
+            app:destination="@id/journalingTwoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/journalingTwoFragment"
+        android:name="com.cpp.unsmoke.ui.journal.screen.JournalingTwoFragment"
+        android:label="fragment_journaling_two"
+        tools:layout="@layout/fragment_journaling_two" >
+        <action
+            android:id="@+id/action_journalingTwoFragment_to_journalingThreeFragment"
+            app:destination="@id/journalingThreeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/journalingThreeFragment"
+        android:name="com.cpp.unsmoke.ui.journal.screen.JournalingThreeFragment"
+        android:label="fragment_journaling_three"
+        tools:layout="@layout/fragment_journaling_three" >
+        <action
+            android:id="@+id/action_journalingThreeFragment_to_journalingFourFragment"
+            app:destination="@id/journalingFourFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/journalingFourFragment"
+        android:name="com.cpp.unsmoke.ui.journal.screen.JournalingFourFragment"
+        android:label="fragment_journaling_four"
+        tools:layout="@layout/fragment_journaling_four" >
+        <action
+            android:id="@+id/action_journalingFourFragment_to_journalingFiveFragment"
+            app:destination="@id/journalingFiveFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/journalingFiveFragment"
+        android:name="com.cpp.unsmoke.ui.journal.screen.JournalingFiveFragment"
+        android:label="fragment_journaling_five"
+        tools:layout="@layout/fragment_journaling_five" />
+</navigation>
