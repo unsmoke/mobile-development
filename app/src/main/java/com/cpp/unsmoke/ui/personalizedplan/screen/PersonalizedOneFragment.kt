@@ -7,19 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.cpp.unsmoke.R
+import com.cpp.unsmoke.data.remote.responses.personalized.DataItemCity
+import com.cpp.unsmoke.data.remote.responses.personalized.DataItemProvince
 import com.cpp.unsmoke.databinding.FragmentPersonalizedOneBinding
 import com.cpp.unsmoke.ui.personalizedplan.PersonalizedViewModel
+import com.cpp.unsmoke.utils.helper.viewmodel.ObtainViewModelFactory
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
-import java.io.BufferedReader
-import java.io.InputStreamReader
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -28,15 +27,16 @@ class PersonalizedOneFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var datePicker: MaterialDatePicker<Long>
 
-    private lateinit var provinceList: MutableList<String>
-    private lateinit var provinceCityMap: MutableMap<String, MutableList<String>>
-    private lateinit var provinceCodeMap: MutableMap<Int, String>
-
     private var isDateOfBirthSet = false
     private var isProvinceSet = false
     private var isCitySet = false
 
     private lateinit var rawDate: String
+
+    private var provinces: List<DataItemProvince?>? = null
+
+    private var provinceId: Int = 0
+    private var cityId: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,8 +49,48 @@ class PersonalizedOneFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val personalizedViewModel = ViewModelProvider(requireActivity())[PersonalizedViewModel::class.java]
+        val personalizedViewModel = ObtainViewModelFactory.obtain<PersonalizedViewModel>(requireActivity())
 
+        personalizedViewModel.provincesLiveData.observe(viewLifecycleOwner) { result ->
+            when (result) {
+
+                is com.cpp.unsmoke.data.remote.Result.Error -> Toast.makeText(requireContext(), "Failed to load provinces: ${result.error}", Toast.LENGTH_LONG).show()
+                com.cpp.unsmoke.data.remote.Result.Loading -> Toast.makeText(requireContext(), "Loading", Toast.LENGTH_LONG).show()
+                is com.cpp.unsmoke.data.remote.Result.Success -> setupProvinceDropdown(result.data.data)
+            }
+        }
+
+        binding.autoCompleteProvince.setOnItemClickListener { parent, _, position, _ ->
+            val selectedProvinceName = parent.getItemAtPosition(position) as String
+
+            // Find the DataItemProvince based on the selected name
+            val selectedProvince = provinces?.find { it?.provinceName == selectedProvinceName }
+
+            selectedProvince?.provinceId?.let { personalizedViewModel.loadCities(it) }
+
+            provinceId = selectedProvince?.provinceId ?: 0
+
+            if (selectedProvince != null){
+                binding.textInputLayoutCity.visibility = View.VISIBLE
+                binding.tvCity.visibility = View.VISIBLE
+                isProvinceSet = true
+            }
+        }
+
+        personalizedViewModel.citiesLiveData.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is com.cpp.unsmoke.data.remote.Result.Error -> Toast.makeText(requireContext(), "Failed to load cities: ${result.error}", Toast.LENGTH_LONG).show()
+                com.cpp.unsmoke.data.remote.Result.Loading -> Toast.makeText(requireContext(), "Loading", Toast.LENGTH_LONG).show()
+                is com.cpp.unsmoke.data.remote.Result.Success -> {
+                    setupCityDropdown(result.data.data)
+                    personalizedViewModel.setCities(result.data.data)
+                }
+            }
+        }
+
+        personalizedViewModel.loadProvinces()
+
+        
         personalizedViewModel.dateOfBirth.observe(viewLifecycleOwner) { date ->
             // Menetapkan nilai dateOfBirth ke input layout
             dateFormat(date.toLong())
@@ -58,20 +98,28 @@ class PersonalizedOneFragment : Fragment() {
         }
 
         personalizedViewModel.province.observe(viewLifecycleOwner) { province ->
-            if (province.isNotEmpty()){
+            if (province != 0){
                 binding.textInputLayoutCity.visibility = View.VISIBLE
                 binding.tvCity.visibility = View.VISIBLE
 
-                // Menetapkan nilai province ke input layout
-                binding.autoCompleteProvince.setText(province)
-                setupCityDropdown(province) // Memperbarui dropdown kota berdasarkan provinsi yang dipilih
+                val selectedProvince = provinces?.find { it?.provinceId == province }
+
+                selectedProvince?.provinceId?.let { personalizedViewModel.loadCities(it) }
+
+                binding.autoCompleteProvince.setText(selectedProvince?.provinceName)
             }
             updateButtonState()
         }
 
         personalizedViewModel.city.observe(viewLifecycleOwner) { city ->
+            cityId = city
+        }
+
+        personalizedViewModel.cities.observe(viewLifecycleOwner) { city ->
             // Menetapkan nilai city ke input layout
-            binding.autoCompleteCity.setText(city)
+            val selectedCity = city?.find { it?.cityId == cityId }
+
+            binding.autoCompleteCity.setText(selectedCity?.cityName)
             updateButtonState()
         }
 
@@ -106,8 +154,10 @@ class PersonalizedOneFragment : Fragment() {
         binding.btnNext.setOnClickListener {
             if (isDateOfBirthSet && isProvinceSet && isCitySet){
                 personalizedViewModel.setDateOfBirth(rawDate)
-                personalizedViewModel.setProvince(binding.autoCompleteProvince.text.toString())
-                personalizedViewModel.setCity(binding.autoCompleteCity.text.toString())
+                personalizedViewModel.setProvince(provinceId)
+                personalizedViewModel.setCity(cityId)
+                Log.d("PROVINCE_ID", provinceId.toString())
+                Log.d("CITY_ID", cityId.toString())
 
                 personalizedViewModel.increaseProgress()
                 Navigation.createNavigateOnClickListener(R.id.action_personalizedOneFragment_to_personalizedTwoFragment).onClick(it)
@@ -124,8 +174,6 @@ class PersonalizedOneFragment : Fragment() {
             }
         })
 
-        loadCSVData()
-        setupProvinceDropdown()
     }
 
     private fun updateButtonState() {
@@ -144,71 +192,30 @@ class PersonalizedOneFragment : Fragment() {
 
     }
 
-    private fun loadCSVData() {
-        provinceList = mutableListOf()
-        provinceCityMap = mutableMapOf()
-        provinceCodeMap = mutableMapOf()
-
-        try {
-            val inputStream = requireContext().assets.open("provinces.csv")
-            val reader = BufferedReader(InputStreamReader(inputStream))
-            var line: String?
-
-            while (reader.readLine().also { line = it } != null) {
-                val values = line?.split(",")
-                val provinceCode = values?.get(0)?.toIntOrNull()
-                val provinceName = values?.get(1)
-                if (provinceCode != null && provinceName != null) {
-                    provinceList.add(provinceName)
-                    provinceCodeMap[provinceCode] = provinceName
-                }
-            }
-            reader.close()
-
-            val inputStreamRegencies = requireContext().assets.open("regencies.csv")
-            val readerRegencies = BufferedReader(InputStreamReader(inputStreamRegencies))
-            while (readerRegencies.readLine().also { line = it } != null) {
-                val values = line?.split(",")
-                val provinceCode = values?.get(1)?.toIntOrNull()
-                val cityName = values?.get(2)
-                if (provinceCode != null && cityName != null) {
-                    val provinceName = provinceCodeMap[provinceCode]
-                    if (provinceName != null) {
-                        provinceCityMap.getOrPut(provinceName) { mutableListOf() }.add(cityName)
-                    }
-                }
-            }
-            readerRegencies.close()
-
-            Log.d("CSV_LOAD", "Loaded provinces: $provinceList")
-            Log.d("CSV_LOAD", "Loaded province-city map: $provinceCityMap")
-
-        } catch (e: Exception) {
-            Log.e("CSV_LOAD_ERROR", "Error loading CSV files", e)
+    private fun setupProvinceDropdown(provinces: List<DataItemProvince?>?) {
+        this.provinces = provinces // Store the list
+        val adapter = provinces?.let {
+            ArrayAdapter(requireContext(), R.layout.dropdown_item, it.map { it?.provinceName })
         }
+        binding.autoCompleteProvince.setAdapter(adapter)
     }
 
-    private fun setupProvinceDropdown() {
-        val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, provinceList)
-        (binding.autoCompleteProvince as? AutoCompleteTextView)?.setAdapter(adapter)
+    private fun setupCityDropdown(cities: List<DataItemCity?>?) {
+        val adapter = cities?.let { ArrayAdapter(requireContext(), R.layout.dropdown_item, it.map { it?.cityName }) }
+        binding.autoCompleteCity.setAdapter(adapter)
 
-        binding.autoCompleteProvince.setOnItemClickListener { parent, _, position, _ ->
-            val selectedProvince = parent.getItemAtPosition(position) as String
-            if (selectedProvince.isNotEmpty()) {
-                binding.textInputLayoutCity.visibility = View.VISIBLE
-                binding.tvCity.visibility = View.VISIBLE
-                setupCityDropdown(selectedProvince)
-                isProvinceSet = true
+        binding.autoCompleteCity.setOnItemClickListener { parent, _, position, _ ->
+            val selectedCityName = parent.getItemAtPosition(position) as String
+
+            // Find the DataItemCity based on the selected name
+            val selectedCity = cities?.find { it?.cityName == selectedCityName }
+
+            cityId = selectedCity?.cityId ?: 0
+
+            if (selectedCity != null){
+                isCitySet = true
             }
         }
-    }
-
-    private fun setupCityDropdown(province: String? = null) {
-        val cities = province?.let { provinceCityMap[it] } ?: emptyList()
-        Log.d("SETUP_CITY_DROPDOWN", "Selected province: $province, Cities: $cities")
-        val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, cities)
-        (binding.autoCompleteCity as? AutoCompleteTextView)?.setAdapter(adapter)
-        isCitySet = true
     }
 
     private fun showToast(message: String) {

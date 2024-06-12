@@ -14,7 +14,12 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.cpp.unsmoke.R
 import com.cpp.unsmoke.databinding.ActivityMainBinding
+import com.cpp.unsmoke.ui.notification.AlarmInfo
 import com.cpp.unsmoke.ui.notification.MyDailyReminderReceiver
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
@@ -54,10 +59,30 @@ class MainActivity : AppCompatActivity() {
 
         reminderReceiver = MyDailyReminderReceiver()
 
-        reminderReceiver.setRepeatingAlarm(this, MyDailyReminderReceiver.TYPE_REPEATING,
-            "01:37", "Kata-kata hari ini tetap semangat")
+        // Call the method to fetch notification data and set alarms
+        fetchNotificationDataAndSetAlarms()
 
         AutoStartHelper.getInstance().getAutoStartPermission(this)
+    }
+
+    private fun fetchNotificationDataAndSetAlarms() {
+        CoroutineScope(Dispatchers.IO).launch {
+            // Simulating fetching data from an API
+            val alarms = fetchAlarmsFromApi()
+
+            withContext(Dispatchers.Main) {
+                reminderReceiver.setRepeatingAlarms(this@MainActivity, alarms)
+            }
+        }
+    }
+
+    private suspend fun fetchAlarmsFromApi(): List<AlarmInfo> {
+        // Simulate an API call
+        return listOf(
+            AlarmInfo("08:00", "Good morning! Time to start your day!"),
+            AlarmInfo("09:00", "Don't forget to take a lunch break!"),
+            AlarmInfo("10:00", "Time to relax and unwind for the evening.")
+        )
     }
 
     companion object {

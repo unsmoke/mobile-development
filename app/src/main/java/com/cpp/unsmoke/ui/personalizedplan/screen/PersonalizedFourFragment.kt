@@ -15,6 +15,7 @@ import com.cpp.unsmoke.databinding.FragmentPersonalizedFiveBinding
 import com.cpp.unsmoke.databinding.FragmentPersonalizedFourBinding
 import com.cpp.unsmoke.databinding.FragmentPersonalizedOneBinding
 import com.cpp.unsmoke.ui.personalizedplan.PersonalizedViewModel
+import com.cpp.unsmoke.utils.helper.viewmodel.ObtainViewModelFactory
 import kotlin.properties.Delegates
 
 class PersonalizedFourFragment : Fragment() {
@@ -94,7 +95,7 @@ class PersonalizedFourFragment : Fragment() {
 
 
 
-        val personalizedViewModel = ViewModelProvider(requireActivity())[PersonalizedViewModel::class.java]
+        val personalizedViewModel = ObtainViewModelFactory.obtain<PersonalizedViewModel>(requireActivity())
 
         personalizedViewModel.cigarettesPerDay.observe(viewLifecycleOwner) { cigarettesPerDay ->
             if (cigarettesPerDay != 0) {

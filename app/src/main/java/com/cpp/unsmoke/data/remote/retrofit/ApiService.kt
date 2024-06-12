@@ -3,11 +3,14 @@ package com.cpp.unsmoke.data.remote.retrofit
 import com.cpp.unsmoke.data.remote.responses.auth.LoginResponse
 import com.cpp.unsmoke.data.remote.responses.auth.RefreshResponse
 import com.cpp.unsmoke.data.remote.responses.auth.RegisterResponse
+import com.cpp.unsmoke.data.remote.responses.personalized.CityResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.CreatePersonalizedResponse
+import com.cpp.unsmoke.data.remote.responses.personalized.ProvinceResponse
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface ApiService {
     @FormUrlEncoded
@@ -50,6 +53,14 @@ interface ApiService {
         @Field("city") city: String
     ): CreatePersonalizedResponse
 
-    @GET
+    @GET("health")
     suspend fun getPersonalizedPlan(): CreatePersonalizedResponse
+
+    @GET("location/province")
+    suspend fun getProvince(): ProvinceResponse
+
+    @GET("location/city/{provinceId}")
+    suspend fun getCity(
+        @Path("provinceId") provinceId: Int
+    ): CityResponse
 }

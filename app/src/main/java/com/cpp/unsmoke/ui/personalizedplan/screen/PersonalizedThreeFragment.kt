@@ -16,6 +16,7 @@ import com.cpp.unsmoke.databinding.FragmentPersonalizedOneBinding
 import com.cpp.unsmoke.databinding.FragmentPersonalizedThreeBinding
 import com.cpp.unsmoke.ui.personalizedplan.PersonalizedViewModel
 import com.cpp.unsmoke.utils.helper.ui.DateFormatter
+import com.cpp.unsmoke.utils.helper.viewmodel.ObtainViewModelFactory
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -43,7 +44,7 @@ class PersonalizedThreeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val personalizedViewModel = ViewModelProvider(requireActivity())[PersonalizedViewModel::class.java]
+        val personalizedViewModel = ObtainViewModelFactory.obtain<PersonalizedViewModel>(requireActivity())
 
         val today = MaterialDatePicker.todayInUtcMilliseconds()
 

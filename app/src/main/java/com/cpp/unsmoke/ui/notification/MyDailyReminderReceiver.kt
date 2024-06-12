@@ -23,11 +23,10 @@ import java.util.Locale
 class MyDailyReminderReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
         val type = intent.getStringExtra(EXTRA_TYPE)
         val message = intent.getStringExtra(EXTRA_MESSAGE)
         val title = if (type.equals(TYPE_ONE_TIME, ignoreCase = true)) TYPE_ONE_TIME else TYPE_REPEATING
-        val notifId = if (type.equals(TYPE_ONE_TIME, ignoreCase = true)) ID_ONETIME else ID_REPEATING
+        val notifId = intent.getIntExtra(EXTRA_NOTIF_ID, 0)
         if (message != null) {
             showAlarmNotification(context, title, message, notifId)
         }
@@ -48,9 +47,7 @@ class MyDailyReminderReceiver : BroadcastReceiver() {
             .setPriority(NotificationCompat.PRIORITY_HIGH)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(channelId,
-                channelName,
-                NotificationManager.IMPORTANCE_HIGH)
+            val channel = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH)
             channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
             channel.enableVibration(true)
             channel.vibrationPattern = longArrayOf(1000, 1000, 1000, 1000, 1000)
@@ -61,36 +58,42 @@ class MyDailyReminderReceiver : BroadcastReceiver() {
         notificationManagerCompat.notify(notifId, notification)
     }
 
-    fun setRepeatingAlarm(context: Context, type: String, time: String, message: String) {
-        // Validasi inputan waktu terlebih dahulu
-        if (isDateInvalid(time, TIME_FORMAT)) return
-
+    fun setRepeatingAlarms(context: Context, alarms: List<AlarmInfo>) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(context, MyDailyReminderReceiver::class.java)
-        intent.putExtra(EXTRA_MESSAGE, message)
-        intent.putExtra(EXTRA_TYPE, type)
 
-        val timeArray = time.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        for ((index, alarm) in alarms.withIndex()) {
+            if (isDateInvalid(alarm.time, TIME_FORMAT)) continue
 
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeArray[0]))
-        calendar.set(Calendar.MINUTE, Integer.parseInt(timeArray[1]))
-        calendar.set(Calendar.SECOND, 0)
+            val intent = Intent(context, MyDailyReminderReceiver::class.java).apply {
+                putExtra(EXTRA_MESSAGE, alarm.message)
+                putExtra(EXTRA_TYPE, TYPE_REPEATING)
+                putExtra(EXTRA_NOTIF_ID, ID_REPEATING + index)
+            }
 
-        val pendingIntent = PendingIntent.getBroadcast(
-            context,
-            ID_REPEATING,
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-        alarmManager.setInexactRepeating(
-            AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis,
-            AlarmManager.INTERVAL_DAY,
-            pendingIntent
-        )
+            val timeArray = alarm.time.split(":").map { it.toInt() }
 
-        Toast.makeText(context, "Repeating alarm set up", Toast.LENGTH_SHORT).show()
+            val calendar = Calendar.getInstance().apply {
+                set(Calendar.HOUR_OF_DAY, timeArray[0])
+                set(Calendar.MINUTE, timeArray[1])
+                set(Calendar.SECOND, 0)
+            }
+
+            val pendingIntent = PendingIntent.getBroadcast(
+                context,
+                ID_REPEATING + index,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+
+            alarmManager.setInexactRepeating(
+                AlarmManager.RTC_WAKEUP,
+                calendar.timeInMillis,
+                AlarmManager.INTERVAL_DAY,
+                pendingIntent
+            )
+        }
+
+        Toast.makeText(context, "Multiple repeating alarms set up", Toast.LENGTH_SHORT).show()
     }
 
     private fun isDateInvalid(date: String, format: String): Boolean {
@@ -109,6 +112,7 @@ class MyDailyReminderReceiver : BroadcastReceiver() {
         const val TYPE_REPEATING = "RepeatingAlarm"
         const val EXTRA_MESSAGE = "message"
         const val EXTRA_TYPE = "type"
+        const val EXTRA_NOTIF_ID = "notif_id"
 
         private const val DATE_FORMAT = "yyyy-MM-dd"
         private const val TIME_FORMAT = "HH:mm"
@@ -117,3 +121,5 @@ class MyDailyReminderReceiver : BroadcastReceiver() {
         private const val ID_REPEATING = 101
     }
 }
+
+data class AlarmInfo(val time: String, val message: String)

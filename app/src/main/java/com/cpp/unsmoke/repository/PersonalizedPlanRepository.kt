@@ -4,10 +4,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.cpp.unsmoke.data.local.preferences.LoginPreferences
+import com.cpp.unsmoke.data.remote.Result
+import com.cpp.unsmoke.data.remote.responses.personalized.CityResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.CreatePersonalizedResponse
+import com.cpp.unsmoke.data.remote.responses.personalized.ProvinceResponse
 import com.cpp.unsmoke.data.remote.retrofit.ApiService
 import kotlinx.coroutines.Dispatchers
-import com.cpp.unsmoke.data.remote.Result
 import org.json.JSONObject
 import retrofit2.HttpException
 
@@ -61,17 +63,48 @@ class PersonalizedPlanRepository(
         }
     }
 
-    fun getPersonalizedPlan(): LiveData<Result<CreatePersonalizedResponse>> = liveData(Dispatchers.IO) {
+    fun getPersonalizedPlan(): LiveData<Result<CreatePersonalizedResponse>> =
+        liveData(Dispatchers.IO) {
+            emit(Result.Loading)
+            try {
+                val response = apiService.getPersonalizedPlan()
+                emit(Result.Success(response))
+            } catch (e: HttpException) {
+                val errorResponse = parseError(e)
+                Log.e("GET_PERSONALIZED_PLAN", errorResponse)
+                emit(Result.Error(errorResponse))
+            } catch (e: Exception) {
+                Log.e("GET_PERSONALIZED_PLAN", e.message.toString())
+                emit(Result.Error(e.message ?: "An unknown error occurred"))
+            }
+        }
+
+    fun getProvince(): LiveData<Result<ProvinceResponse>> = liveData(Dispatchers.IO) {
         emit(Result.Loading)
         try {
-            val response = apiService.getPersonalizedPlan()
+            val response = apiService.getProvince()
             emit(Result.Success(response))
         } catch (e: HttpException) {
             val errorResponse = parseError(e)
-            Log.e("GET_PERSONALIZED_PLAN", errorResponse)
+            Log.e("GET_PROVINCE", errorResponse)
             emit(Result.Error(errorResponse))
         } catch (e: Exception) {
-            Log.e("GET_PERSONALIZED_PLAN", e.message.toString())
+            Log.e("GET_PROVINCE", e.message.toString())
+            emit(Result.Error(e.message ?: "An unknown error occurred"))
+        }
+    }
+
+    fun getCities(provinceId: Int): LiveData<Result<CityResponse>> = liveData(Dispatchers.IO) {
+        emit(Result.Loading)
+        try {
+            val response = apiService.getCity(provinceId)
+            emit(Result.Success(response))
+        } catch (e: HttpException) {
+            val errorResponse = parseError(e)
+            Log.e("GET_CITIES", errorResponse)
+            emit(Result.Error(errorResponse))
+        } catch (e: Exception) {
+            Log.e("GET_CITIES", e.message.toString())
             emit(Result.Error(e.message ?: "An unknown error occurred"))
         }
     }

@@ -9,6 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.cpp.unsmoke.R
 import com.cpp.unsmoke.databinding.ActivityPersonalizedBinding
+import com.cpp.unsmoke.utils.helper.viewmodel.ObtainViewModelFactory
 
 class PersonalizedActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPersonalizedBinding
@@ -24,7 +25,7 @@ class PersonalizedActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.fi_ss_arrow_small_left_black)
 
-        viewModel = ViewModelProvider(this)[PersonalizedViewModel::class.java]
+        viewModel = ObtainViewModelFactory.obtain<PersonalizedViewModel>(this)
 
         viewModel.currentProgress.observe(this){
             setProgressWithAnimation(it)

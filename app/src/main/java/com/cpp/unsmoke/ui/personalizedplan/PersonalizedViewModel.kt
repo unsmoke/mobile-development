@@ -4,8 +4,13 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.cpp.unsmoke.data.remote.Result
+import com.cpp.unsmoke.data.remote.responses.personalized.CityResponse
+import com.cpp.unsmoke.data.remote.responses.personalized.DataItemCity
+import com.cpp.unsmoke.data.remote.responses.personalized.ProvinceResponse
+import com.cpp.unsmoke.repository.PersonalizedPlanRepository
 
-class PersonalizedViewModel: ViewModel() {
+class PersonalizedViewModel(private val personalizedPlanRepository: PersonalizedPlanRepository): ViewModel() {
     /* TOOLBAR ANIMATION */
 
     private val _currentProgress = MutableLiveData<Int>()
@@ -16,11 +21,14 @@ class PersonalizedViewModel: ViewModel() {
     private val _dateOfBirth = MutableLiveData<String>()
     val dateOfBirth: LiveData<String> get() = _dateOfBirth
 
-    private val _province = MutableLiveData<String>()
-    val province: LiveData<String> get() = _province
+    private val _province = MutableLiveData<Int>()
+    val province: LiveData<Int> get() = _province
 
-    private val _city = MutableLiveData<String>()
-    val city: LiveData<String> get() = _city
+    private val _city = MutableLiveData<Int>()
+    val city: LiveData<Int> get() = _city
+
+    private val _cities = MutableLiveData<List<DataItemCity?>?>()
+    val cities: LiveData<List<DataItemCity?>?> get() = _cities
 
     /* FRAGMENT TWO */
 
@@ -79,6 +87,12 @@ class PersonalizedViewModel: ViewModel() {
     private val _isSpirit = MutableLiveData<Boolean>()
     val isSpirit: LiveData<Boolean> get() = _isSpirit
 
+    private val _provincesLiveData = MutableLiveData<Result<ProvinceResponse>>()
+    val provincesLiveData: LiveData<Result<ProvinceResponse>> get() = _provincesLiveData
+
+    private val _citiesLiveData = MutableLiveData<Result<CityResponse>>()
+    val citiesLiveData: LiveData<Result<CityResponse>> get() = _citiesLiveData
+
     init {
         _currentProgress.value = 10
     }
@@ -101,12 +115,12 @@ class PersonalizedViewModel: ViewModel() {
         _dateOfBirth.value = date
     }
 
-    fun setProvince(provinceName: String) {
-        _province.value = provinceName
+    fun setProvince(idProvince: Int) {
+        _province.value = idProvince
     }
 
-    fun setCity(cityName: String) {
-        _city.value = cityName
+    fun setCity(idCity: Int) {
+        _city.value = idCity
     }
 
     /* FRAGMENT TWO */
@@ -202,4 +216,21 @@ class PersonalizedViewModel: ViewModel() {
 
         Log.d("PERSONALIZED_VIEWMODEL", allData)
     }
+
+    fun loadProvinces() {
+        personalizedPlanRepository.getProvince().observeForever {
+            _provincesLiveData.postValue(it)
+        }
+    }
+
+    fun loadCities(provinceId: Int) {
+        personalizedPlanRepository.getCities(provinceId).observeForever {
+            _citiesLiveData.postValue(it)
+        }
+    }
+
+    fun setCities(cities: List<DataItemCity?>?){
+        _cities.value = cities
+    }
+
 }

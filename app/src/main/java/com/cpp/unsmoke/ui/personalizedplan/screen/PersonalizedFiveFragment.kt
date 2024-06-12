@@ -13,6 +13,7 @@ import com.cpp.unsmoke.R
 import com.cpp.unsmoke.databinding.FragmentPersonalizedFiveBinding
 import com.cpp.unsmoke.databinding.FragmentPersonalizedTwoBinding
 import com.cpp.unsmoke.ui.personalizedplan.PersonalizedViewModel
+import com.cpp.unsmoke.utils.helper.viewmodel.ObtainViewModelFactory
 
 
 class PersonalizedFiveFragment : Fragment() {
@@ -34,7 +35,7 @@ class PersonalizedFiveFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val personalizedViewModel = ViewModelProvider(requireActivity())[PersonalizedViewModel::class.java]
+        val personalizedViewModel = ObtainViewModelFactory.obtain<PersonalizedViewModel>(requireActivity())
 
         personalizedViewModel.isNicotineMed.observe(viewLifecycleOwner) { isNicotineMed ->
             if (isNicotineMed) {

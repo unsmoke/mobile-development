@@ -14,6 +14,7 @@ import com.cpp.unsmoke.R
 import com.cpp.unsmoke.databinding.FragmentPersonalizedOneBinding
 import com.cpp.unsmoke.databinding.FragmentPersonalizedTwoBinding
 import com.cpp.unsmoke.ui.personalizedplan.PersonalizedViewModel
+import com.cpp.unsmoke.utils.helper.viewmodel.ObtainViewModelFactory
 
 class PersonalizedTwoFragment : Fragment() {
     private var _binding: FragmentPersonalizedTwoBinding? = null
@@ -34,7 +35,7 @@ class PersonalizedTwoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val personalizedViewModel = ViewModelProvider(requireActivity())[PersonalizedViewModel::class.java]
+        val personalizedViewModel = ObtainViewModelFactory.obtain<PersonalizedViewModel>(requireActivity())
 
         binding.radioButtonGroup.setOnCheckedChangeListener { _, checkedId ->
             selectedGender = when (checkedId) {
