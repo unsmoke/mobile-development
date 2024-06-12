@@ -7,6 +7,7 @@ import com.cpp.unsmoke.data.local.preferences.LoginPreferences
 import com.cpp.unsmoke.data.remote.Result
 import com.cpp.unsmoke.data.remote.responses.personalized.CityResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.CreatePersonalizedResponse
+import com.cpp.unsmoke.data.remote.responses.personalized.GetPersonalizedResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.ProvinceResponse
 import com.cpp.unsmoke.data.remote.retrofit.ApiService
 import kotlinx.coroutines.Dispatchers
@@ -32,7 +33,9 @@ class PersonalizedPlanRepository(
         cigarettesPerPack: Int,
         packPrice: Float,
         province: String,
-        city: String
+        city: String,
+        last7Days: Boolean,
+        motivation: String
     ): LiveData<Result<CreatePersonalizedResponse>> = liveData(Dispatchers.IO) {
         emit(Result.Loading)
         try {
@@ -50,7 +53,9 @@ class PersonalizedPlanRepository(
                 cigarettesPerPack,
                 packPrice,
                 province,
-                city
+                city,
+                last7Days,
+                motivation
             )
             emit(Result.Success(response))
         } catch (e: HttpException) {
@@ -63,7 +68,7 @@ class PersonalizedPlanRepository(
         }
     }
 
-    fun getPersonalizedPlan(): LiveData<Result<CreatePersonalizedResponse>> =
+    fun getPersonalizedPlan(): LiveData<Result<GetPersonalizedResponse>> =
         liveData(Dispatchers.IO) {
             emit(Result.Loading)
             try {

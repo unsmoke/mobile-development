@@ -5,11 +5,15 @@ import com.cpp.unsmoke.data.remote.responses.auth.RefreshResponse
 import com.cpp.unsmoke.data.remote.responses.auth.RegisterResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.CityResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.CreatePersonalizedResponse
+import com.cpp.unsmoke.data.remote.responses.personalized.GetPersonalizedResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.ProvinceResponse
+import com.cpp.unsmoke.data.remote.responses.userplan.GetActiveUserPlanResponse
+import com.cpp.unsmoke.data.remote.responses.userplan.GetAllUserPlanResponse
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface ApiService {
@@ -50,11 +54,13 @@ interface ApiService {
         @Field("cigarettes_per_pack") cigarettesPerPack: Int,
         @Field("pack_price") packPrice: Float,
         @Field("province") province: String,
-        @Field("city") city: String
+        @Field("city") city: String,
+        @Field("last_7_days") last7Days: Boolean,
+        @Field("motivation") motivation: String,
     ): CreatePersonalizedResponse
 
     @GET("health")
-    suspend fun getPersonalizedPlan(): CreatePersonalizedResponse
+    suspend fun getPersonalizedPlan(): GetPersonalizedResponse
 
     @GET("location/province")
     suspend fun getProvince(): ProvinceResponse
@@ -63,4 +69,15 @@ interface ApiService {
     suspend fun getCity(
         @Path("provinceId") provinceId: Int
     ): CityResponse
+
+    @GET("user-plan/all")
+    suspend fun getAllUserPlan() : GetAllUserPlanResponse
+
+    @GET("user-plan")
+    suspend fun getActiveUserPlan() : GetActiveUserPlanResponse
+
+    @PUT("user-plan")
+    suspend fun updateUserPlan(
+        @Field("plan_id") planId: Int
+    ): GetActiveUserPlanResponse
 }

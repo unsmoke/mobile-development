@@ -108,5 +108,23 @@
         android:id="@+id/personalizedTwelveFragment"
         android:name="com.cpp.unsmoke.ui.personalizedplan.screen.PersonalizedTwelveFragment"
         android:label="fragment_personalized_twelve"
-        tools:layout="@layout/fragment_personalized_twelve" />
+        tools:layout="@layout/fragment_personalized_twelve" >
+        <action
+            android:id="@+id/action_personalizedTwelveFragment_to_personalizedThirteenFragment"
+            app:destination="@id/personalizedThirteenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalizedThirteenFragment"
+        android:name="com.cpp.unsmoke.ui.personalizedplan.screen.PersonalizedThirteenFragment"
+        android:label="fragment_personalized_thirteen"
+        tools:layout="@layout/fragment_personalized_thirteen" >
+        <action
+            android:id="@+id/action_personalizedThirteenFragment_to_personalizedFourteenFragment"
+            app:destination="@id/personalizedFourteenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalizedFourteenFragment"
+        android:name="com.cpp.unsmoke.ui.personalizedplan.screen.PersonalizedFourteenFragment"
+        android:label="fragment_personalized_fourteen"
+        tools:layout="@layout/fragment_personalized_fourteen" />
 </navigation>

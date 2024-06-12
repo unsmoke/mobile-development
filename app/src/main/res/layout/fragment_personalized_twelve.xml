@@ -3,12 +3,146 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@color/accent_white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.personalizedplan.screen.PersonalizedTwelveFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/tv_fragment_twelve"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:text="@string/what_is_your_motivation_to_quit_smoking"
+        style="@style/TextContent.Title"
+        android:textSize="19sp"
+        android:textColor="@color/normal_green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/rg_motivation_quit_smoking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_fragment_twelve">
+
+        <RadioButton
+            android:id="@+id/rb_a"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/radio_null_selector"
+            android:fontFamily="@font/poppins_semibold"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="3dp"
+            android:text="Health"
+            android:textColor="@drawable/radio_text_selector"
+            android:textSize="24sp" />
+
+        <RadioButton
+            android:id="@+id/rb_b"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/radio_null_selector"
+            android:fontFamily="@font/poppins_semibold"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="3dp"
+            android:text="Family and friends"
+            android:textColor="@drawable/radio_text_selector"
+            android:textSize="24sp" />
+
+        <RadioButton
+            android:id="@+id/rb_c"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/radio_null_selector"
+            android:fontFamily="@font/poppins_semibold"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="3dp"
+            android:text="Finance"
+            android:textColor="@drawable/radio_text_selector"
+            android:textSize="24sp" />
+
+        <RadioButton
+            android:id="@+id/rb_d"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/radio_null_selector"
+            android:fontFamily="@font/poppins_semibold"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="3dp"
+            android:text="Work demands"
+            android:textColor="@drawable/radio_text_selector"
+            android:textSize="24sp" />
+
+        <RadioButton
+            android:id="@+id/rb_e"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/radio_null_selector"
+            android:fontFamily="@font/poppins_semibold"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="3dp"
+            android:text="Medical program"
+            android:textColor="@drawable/radio_text_selector"
+            android:textSize="24sp" />
+
+        <RadioButton
+            android:id="@+id/rb_f"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/radio_null_selector"
+            android:fontFamily="@font/poppins_semibold"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="3dp"
+            android:text="Healthy lifestyle"
+            android:textColor="@drawable/radio_text_selector"
+            android:textSize="24sp" />
+
+        <RadioButton
+            android:id="@+id/rb_g"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/radio_null_selector"
+            android:fontFamily="@font/poppins_semibold"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="3dp"
+            android:text="More"
+            android:textColor="@drawable/radio_text_selector"
+            android:textSize="24sp" />
+
+    </RadioGroup>
+
+    <com.cpp.unsmoke.utils.customview.CustomButton
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@drawable/button_state"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="@string/next"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

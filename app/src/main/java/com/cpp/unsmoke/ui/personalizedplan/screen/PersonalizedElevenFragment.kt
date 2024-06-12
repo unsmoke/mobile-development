@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -22,6 +23,9 @@ class PersonalizedElevenFragment : Fragment() {
     private var _binding: FragmentPersonalizedElevenBinding? = null
     private val binding get() = _binding!!
 
+    private var isLast7DaysSet = false
+    private var isLast7DaysValue = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,40 +40,48 @@ class PersonalizedElevenFragment : Fragment() {
 
         val personalizedViewModel = ObtainViewModelFactory.obtain<PersonalizedViewModel>(requireActivity())
 
-        personalizedViewModel.currentProgress.observe(viewLifecycleOwner) { progress ->
-            if (progress > 100) {
-                hideProgressBar()
+        personalizedViewModel.isLast7Days.observe(viewLifecycleOwner) { isLast7Days ->
+            if (isLast7Days) {
+                binding.rgFragmentEleven.check(R.id.rb_yes_fragment_eleven)
             } else {
-                showProgressBar()
+                binding.rgFragmentEleven.check(R.id.rb_no_fragment_eleven)
+            }
+        }
+
+        binding.rgFragmentEleven.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.rb_yes_fragment_eleven -> {
+                    isLast7DaysSet = true
+                    isLast7DaysValue = true
+                }
+                R.id.rb_no_fragment_eleven -> {
+                    isLast7DaysSet = true
+                    isLast7DaysValue = false
+                }
+            }
+        }
+
+        binding.btnNext.setOnClickListener {
+            if(isLast7DaysSet){
+                personalizedViewModel.setIsLast7Days(isLast7DaysValue)
+                personalizedViewModel.increaseProgress()
+                Navigation.createNavigateOnClickListener(R.id.action_personalizedElevenFragment_to_personalizedTwelveFragment ).onClick(it)
+            } else {
+                showToast("Please select an option")
             }
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                showProgressBar()
                 personalizedViewModel.decreaseProgress()
                 isEnabled = false
                 requireActivity().onBackPressed()
             }
         })
-
-        binding.btnSubmitPlan.setOnClickListener {
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-        }
     }
 
-    private fun hideProgressBar() {
-        // Mendapatkan tampilan progress bar dari tata letak induk dan menyembunyikannya
-        val progressBar = requireActivity().findViewById<View>(R.id.progress_bar)
-        progressBar.visibility = View.GONE
-    }
-
-    private fun showProgressBar() {
-        // Mendapatkan tampilan progress bar dari tata letak induk dan menampilkannya
-        val progressBar = requireActivity().findViewById<View>(R.id.progress_bar)
-        progressBar.visibility = View.VISIBLE
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroy() {

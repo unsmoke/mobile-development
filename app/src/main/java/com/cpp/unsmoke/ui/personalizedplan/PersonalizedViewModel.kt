@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cpp.unsmoke.data.remote.Result
 import com.cpp.unsmoke.data.remote.responses.personalized.CityResponse
+import com.cpp.unsmoke.data.remote.responses.personalized.CreatePersonalizedResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.DataItemCity
 import com.cpp.unsmoke.data.remote.responses.personalized.ProvinceResponse
 import com.cpp.unsmoke.repository.PersonalizedPlanRepository
@@ -87,6 +88,16 @@ class PersonalizedViewModel(private val personalizedPlanRepository: Personalized
     private val _isSpirit = MutableLiveData<Boolean>()
     val isSpirit: LiveData<Boolean> get() = _isSpirit
 
+    /* FRAGMENT ELEVEN */
+
+    private val _isLast7Days = MutableLiveData<Boolean>()
+    val isLast7Days: LiveData<Boolean> get() = _isLast7Days
+
+    /* FRAGMENT TWELVE */
+
+    private val _motivation = MutableLiveData<String>()
+    val motivation: LiveData<String> get() = _motivation
+
     private val _provincesLiveData = MutableLiveData<Result<ProvinceResponse>>()
     val provincesLiveData: LiveData<Result<ProvinceResponse>> get() = _provincesLiveData
 
@@ -94,18 +105,18 @@ class PersonalizedViewModel(private val personalizedPlanRepository: Personalized
     val citiesLiveData: LiveData<Result<CityResponse>> get() = _citiesLiveData
 
     init {
-        _currentProgress.value = 10
+        _currentProgress.value = 8
     }
 
     /* TOOLBAR ANIMATION */
 
     fun increaseProgress() {
-        _currentProgress.value = _currentProgress.value?.plus(10)
+        _currentProgress.value = _currentProgress.value?.plus(8)
         Log.d("PERSONALIZED_VIEWMODEL", _currentProgress.value.toString())
     }
 
     fun decreaseProgress() {
-        _currentProgress.value = _currentProgress.value?.minus(10)
+        _currentProgress.value = _currentProgress.value?.minus(8)
         Log.d("PERSONALIZED_VIEWMODEL", _currentProgress.value.toString())
     }
 
@@ -193,6 +204,18 @@ class PersonalizedViewModel(private val personalizedPlanRepository: Personalized
         _isSpirit.value = value
     }
 
+    /* FRAGMENT ELEVEN */
+
+    fun setIsLast7Days(value: Boolean) {
+        _isLast7Days.value = value
+    }
+
+    /* FRAGMENT TWELVE */
+
+    fun setMotivation(value: String) {
+        _motivation.value = value
+    }
+
     /* GET ALL DATA */
     fun getAllData() {
         val allData = """
@@ -212,10 +235,16 @@ class PersonalizedViewModel(private val personalizedPlanRepository: Personalized
             Smoking Start Time: ${_smokingStartTime.value}
             Is Depressed: ${_isDepressed.value}
             Spirit: ${_isSpirit.value}
+            Province: ${_province.value.toString()}
+            City: ${_city.value.toString()}
+            Last 7 Days: ${_isLast7Days.value}
+            Motivation: ${_motivation.value}
         """.trimIndent()
 
         Log.d("PERSONALIZED_VIEWMODEL", allData)
     }
+
+    /* DROPDOWN */
 
     fun loadProvinces() {
         personalizedPlanRepository.getProvince().observeForever {
@@ -231,6 +260,46 @@ class PersonalizedViewModel(private val personalizedPlanRepository: Personalized
 
     fun setCities(cities: List<DataItemCity?>?){
         _cities.value = cities
+    }
+
+    /* SET PERSONALIZED */
+
+    fun setPersonalizedPlan(): LiveData<Result<CreatePersonalizedResponse>> {
+        val dateOfBirth = _dateOfBirth.value ?: ""
+        val gender = _gender.value ?: ""
+        val smokingStartTime = _smokingStartTime.value ?: 0
+        val isNicotineMed = _isNicotineMed.value ?: false
+        val isUsingECigarette = _isUsingECigarette.value ?: 0
+        val firstSmokeDate = _firstSmokeDate.value ?: ""
+        val isDepressed = _isDepressed.value ?: false
+        val isUsingOtherTobacco = _isUsingOtherTobacco.value ?: 0
+        val isSpirit = _isSpirit.value ?: false
+        val cigarettesPerDay = _cigarettesPerDay.value ?: 0
+        val cigarettesPerPack = _cigarettesPerPack.value ?: 0
+        val packPrice = _packPrice.value ?: 0.0f
+        val province = _province.value.toString() ?: ""
+        val city = _city.value.toString() ?: ""
+        val isLast7Days = _isLast7Days.value ?: false
+        val motivation = _motivation.value ?: ""
+
+        return personalizedPlanRepository.setPersonalizedPlan(
+            dateOfBirth,
+            gender,
+            smokingStartTime,
+            isNicotineMed,
+            isUsingECigarette,
+            firstSmokeDate,
+            isDepressed,
+            isUsingOtherTobacco,
+            isSpirit,
+            cigarettesPerDay,
+            cigarettesPerPack,
+            packPrice,
+            province,
+            city,
+            isLast7Days,
+            motivation
+        )
     }
 
 }

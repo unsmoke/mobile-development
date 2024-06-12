@@ -47,7 +47,7 @@ class PersonalizedFourFragment : Fragment() {
         binding.textInputLayoutPricePerpack.isErrorEnabled = false
 
         binding.edtTotalCigarettePerpack.doOnTextChanged { text, _, _, _ ->
-            if (text.toString().isNotEmpty()) {
+            if (text.toString().isNotEmpty() && text.toString().toInt() > 0) {
                 try {
                     cigarettesPerPackValue = text.toString().toInt()
                     isCigarettesPerPackSet = true
@@ -57,7 +57,7 @@ class PersonalizedFourFragment : Fragment() {
                     isCigarettesPerPackSet = false
                 }
             } else {
-                binding.textInputLayoutTotalCigarettePerpack.error = "Please fill in this field"
+                binding.textInputLayoutTotalCigarettePerpack.error = "Please fill in this field\nMinimum value is 1"
             }
         }
 
@@ -110,7 +110,7 @@ class PersonalizedFourFragment : Fragment() {
         }
 
         personalizedViewModel.cigarettesPerPack.observe(viewLifecycleOwner) { cigarettesPerPack ->
-            if (cigarettesPerPack != 0) {
+            if (cigarettesPerPack != null) {
                 binding.edtTotalCigarettePerpack.setText(cigarettesPerPack.toString())
                 cigarettesPerPackValue = cigarettesPerPack
                 isCigarettesPerPackSet = true

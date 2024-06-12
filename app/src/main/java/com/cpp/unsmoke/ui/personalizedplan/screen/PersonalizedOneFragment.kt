@@ -56,7 +56,11 @@ class PersonalizedOneFragment : Fragment() {
 
                 is com.cpp.unsmoke.data.remote.Result.Error -> Toast.makeText(requireContext(), "Failed to load provinces: ${result.error}", Toast.LENGTH_LONG).show()
                 com.cpp.unsmoke.data.remote.Result.Loading -> Toast.makeText(requireContext(), "Loading", Toast.LENGTH_LONG).show()
-                is com.cpp.unsmoke.data.remote.Result.Success -> setupProvinceDropdown(result.data.data)
+                is com.cpp.unsmoke.data.remote.Result.Success -> {
+                    isProvinceSet = true
+                    setupProvinceDropdown(result.data.data)
+                    updateButtonState()
+                }
             }
         }
 
@@ -74,6 +78,7 @@ class PersonalizedOneFragment : Fragment() {
                 binding.textInputLayoutCity.visibility = View.VISIBLE
                 binding.tvCity.visibility = View.VISIBLE
                 isProvinceSet = true
+                updateButtonState()
             }
         }
 
@@ -214,6 +219,7 @@ class PersonalizedOneFragment : Fragment() {
 
             if (selectedCity != null){
                 isCitySet = true
+                updateButtonState()
             }
         }
     }
