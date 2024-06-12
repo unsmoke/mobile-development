@@ -9,6 +9,8 @@ import com.cpp.unsmoke.data.remote.responses.personalized.CityResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.CreatePersonalizedResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.GetPersonalizedResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.ProvinceResponse
+import com.cpp.unsmoke.data.remote.responses.userplan.GetActiveUserPlanResponse
+import com.cpp.unsmoke.data.remote.responses.userplan.GetAllUserPlanResponse
 import com.cpp.unsmoke.data.remote.retrofit.ApiService
 import kotlinx.coroutines.Dispatchers
 import org.json.JSONObject
@@ -110,6 +112,36 @@ class PersonalizedPlanRepository(
             emit(Result.Error(errorResponse))
         } catch (e: Exception) {
             Log.e("GET_CITIES", e.message.toString())
+            emit(Result.Error(e.message ?: "An unknown error occurred"))
+        }
+    }
+
+    fun getAllUserPlan(): LiveData<Result<GetAllUserPlanResponse>> = liveData(Dispatchers.IO) {
+        emit(Result.Loading)
+        try {
+            val response = apiService.getAllUserPlan()
+            emit(Result.Success(response))
+        } catch (e: HttpException) {
+            val errorResponse = parseError(e)
+            Log.e("GET_ALL_USER_PLAN", errorResponse)
+            emit(Result.Error(errorResponse))
+        } catch (e: Exception) {
+            Log.e("GET_ALL_USER_PLAN", e.message.toString())
+            emit(Result.Error(e.message ?: "An unknown error occurred"))
+        }
+    }
+
+    fun updateUserPlan(idPlan: Int): LiveData<Result<GetActiveUserPlanResponse>> = liveData(Dispatchers.IO) {
+        emit(Result.Loading)
+        try {
+            val response = apiService.updateUserPlan(idPlan)
+            emit(Result.Success(response))
+        } catch (e: HttpException) {
+            val errorResponse = parseError(e)
+            Log.e("UPDATE_USER_PLAN", errorResponse)
+            emit(Result.Error(errorResponse))
+        } catch (e: Exception) {
+            Log.e("UPDATE_USER_PLAN", e.message.toString())
             emit(Result.Error(e.message ?: "An unknown error occurred"))
         }
     }

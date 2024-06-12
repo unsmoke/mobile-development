@@ -9,6 +9,8 @@ import com.cpp.unsmoke.data.remote.responses.personalized.CityResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.CreatePersonalizedResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.DataItemCity
 import com.cpp.unsmoke.data.remote.responses.personalized.ProvinceResponse
+import com.cpp.unsmoke.data.remote.responses.userplan.GetActiveUserPlanResponse
+import com.cpp.unsmoke.data.remote.responses.userplan.GetAllUserPlanResponse
 import com.cpp.unsmoke.repository.PersonalizedPlanRepository
 
 class PersonalizedViewModel(private val personalizedPlanRepository: PersonalizedPlanRepository): ViewModel() {
@@ -300,6 +302,18 @@ class PersonalizedViewModel(private val personalizedPlanRepository: Personalized
             isLast7Days,
             motivation
         )
+    }
+
+    /* GET ALL USER PLAN */
+
+    fun getUserPlan(): LiveData<Result<GetAllUserPlanResponse>> {
+        return personalizedPlanRepository.getAllUserPlan()
+    }
+
+    /* UPDATE USER PLAN */
+
+    fun updateUserPlan(planId: Int): LiveData<Result<GetActiveUserPlanResponse>> {
+        return personalizedPlanRepository.updateUserPlan(planId)
     }
 
 }
