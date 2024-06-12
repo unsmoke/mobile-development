@@ -7,4 +7,8 @@ class LeaderboardRepository(
     private var apiService: ApiService,
     private val loginPreferences: LoginPreferences
 ) {
+
+    fun getLeaderboard() {
+
+    }
 }
