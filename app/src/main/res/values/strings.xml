@@ -97,5 +97,11 @@
     <string name="description_list_plan">We\'ve made you a selection of quit smoking plans. The higher the percentage, the more suitable the plan is for you.</string>
     <string name="choose_the_plan_you_want">Choose the plan you want!</string>
 
-
+    <string name="journaling_quotes">Understand your emotions, commitments, and challenges during the process of quitting smoking. By getting to know yourself better, you can enhance your awareness and increase your chances of successfully quitting smoking.</string>
+    <string name="question_emotions">What is the main emotion you are feeling right now?</string>
+    <string name="question_challenges">What challenges are you facing in resisting the urge to smoke today?</string>
+    <string name="question_commitment">Write down your commitment to quit smoking for tomorrow!</string>
+    <string name="journaling_summary">Summary of your daily journal today</string>
+    <string name="helper_edt">Write your answer here...</string>
+    
 </resources>

@@ -1,14 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/accent_white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.journal.screen.JournalingTwoFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/journaling_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:background="@color/normal_green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/back"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/iv_assets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/journaling_toolbar"
+        app:srcCompat="@drawable/asset_journaling_two" />
+
+    <TextView
+        android:id="@+id/tv_question_emotions"
+        style="@style/TextContent.TitleSecondaryGreen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/question_emotions"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:layout_marginHorizontal="16dp"
+        android:textColor="@color/dark_green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_assets" />
+
+    <com.cpp.unsmoke.utils.customview.CustomButton
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/button_state"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="@string/next"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/rg_fragment_nine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_question_emotions">
+
+        <RadioButton
+            android:id="@+id/rb_angry_fragment_two"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/radio_null_selector"
+            android:fontFamily="@font/poppins_regular"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="3dp"
+            android:text="Angry"
+            android:textColor="@drawable/radio_text_selector"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/rb_happy_fragment_two"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/radio_null_selector"
+            android:fontFamily="@font/poppins_regular"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="3dp"
+            android:text="Happy"
+            android:textColor="@drawable/radio_text_selector"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/rb_fear_fragment_two"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/radio_null_selector"
+            android:fontFamily="@font/poppins_regular"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="3dp"
+            android:text="Fear/anxiety"
+            android:textColor="@drawable/radio_text_selector"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/rb_sad_fragment_two"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/radio_null_selector"
+            android:fontFamily="@font/poppins_regular"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="3dp"
+            android:text="Sad"
+            android:textColor="@drawable/radio_text_selector"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/rb_calm_fragment_two"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/radio_null_selector"
+            android:fontFamily="@font/poppins_regular"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="3dp"
+            android:text="Calm"
+            android:textColor="@drawable/radio_text_selector"
+            android:textSize="18sp" />
+    </RadioGroup>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
