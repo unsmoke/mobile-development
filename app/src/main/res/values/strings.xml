@@ -94,5 +94,10 @@
     <string name="what_is_your_motivation_to_quit_smoking">What is your motivation to quit smoking</string>
     <string name="empty_name">Field Cannot Be Empty</string>
 
-
+    <string name="journaling_quotes">Understand your emotions, commitments, and challenges during the process of quitting smoking. By getting to know yourself better, you can enhance your awareness and increase your chances of successfully quitting smoking.</string>
+    <string name="question_emotions">What is the main emotion you are feeling right now?</string>
+    <string name="question_challenges">What challenges are you facing in resisting the urge to smoke today?</string>
+    <string name="question_commitment">Write down your commitment to quit smoking for tomorrow!</string>
+    <string name="journaling_summary">Summary of your daily journal today</string>
+    
 </resources>
