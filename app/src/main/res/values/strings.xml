@@ -100,5 +100,9 @@
     <string name="question_commitment">Write down your commitment to quit smoking for tomorrow!</string>
     <string name="journaling_summary">Summary of your daily journal today</string>
     <string name="helper_edt">Write your answer here...</string>
+
+    <string name="summary_emotions">Today you feel %1$s</string>
+    <string name="summary_challenges">The challenge you face today is %1$s</string>
+    <string name="summary_commitment">Your commitment for tomorrow is %1$s</string>
     
 </resources>
