@@ -14,6 +14,8 @@ import com.cpp.unsmoke.ui.auth.register.RegisterActivity
 import com.cpp.unsmoke.ui.main.MainActivity
 import com.cpp.unsmoke.ui.personalizedplan.PersonalizedActivity
 import com.cpp.unsmoke.utils.helper.viewmodel.ObtainViewModelFactory
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -24,6 +26,14 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val viewModel = ObtainViewModelFactory.obtain<LoginViewModel>(this)
+
+        val isLogin = runBlocking {
+            viewModel.getLoginStatus().first()
+        }
+
+        if (isLogin){
+            toHome()
+        }
 
         val alertBuilder = AlertDialog.Builder(this)
 
@@ -63,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
                                                 binding.btnLogin.isClickable = false
                                             }
                                             is Result.Error -> {
-                                                if(resultPlan.error == "Personalized Plan Not Found"){
+                                                if(resultPlan.error.contains("not found")){
                                                     toPersonalized()
                                                 }
 

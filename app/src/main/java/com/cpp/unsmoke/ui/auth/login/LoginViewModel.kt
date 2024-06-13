@@ -16,4 +16,6 @@ class LoginViewModel(private val authRepos: AuthRepository, private val personal
     fun getPersonalizedPlan(): LiveData<Result<GetPersonalizedResponse>> {
         return personalizedPlanRepository.getPersonalizedPlan()
     }
+
+    fun getLoginStatus() = authRepos.getLoginStatus()
 }

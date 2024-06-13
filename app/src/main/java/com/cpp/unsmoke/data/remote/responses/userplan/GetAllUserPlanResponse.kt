@@ -8,13 +8,13 @@ data class GetAllUserPlanResponse(
 	val code: Int? = null,
 
 	@field:SerializedName("data")
-	val data: List<DataItem?>? = null,
+	val data: List<DataItemPlan?>? = null,
 
 	@field:SerializedName("status")
 	val status: String? = null
 )
 
-data class DataItem(
+data class DataItemPlan(
 
 	@field:SerializedName("duration")
 	val duration: Int? = null,

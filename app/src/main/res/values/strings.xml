@@ -93,6 +93,9 @@
     <string name="did_you_smoke_during_the_previous_7_days">Did you smoke during the previous 7 days?</string>
     <string name="what_is_your_motivation_to_quit_smoking">What is your motivation to quit smoking</string>
     <string name="empty_name">Field Cannot Be Empty</string>
+    <string name="title_list_plan">Step 2: choose the plan that best suits your needs to achieve a great position there.</string>
+    <string name="description_list_plan">We\'ve made you a selection of quit smoking plans. The higher the percentage, the more suitable the plan is for you.</string>
+    <string name="choose_the_plan_you_want">Choose the plan you want!</string>
 
     <string name="journaling_quotes">Understand your emotions, commitments, and challenges during the process of quitting smoking. By getting to know yourself better, you can enhance your awareness and increase your chances of successfully quitting smoking.</string>
     <string name="question_emotions">What is the main emotion you are feeling right now?</string>

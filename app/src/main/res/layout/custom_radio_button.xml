@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="96dp"
+    android:background="@drawable/radio_selector"
+    android:paddingEnd="3dp"
+    android:paddingTop="3dp"
+    android:paddingStart="12dp"
+    android:layout_marginBottom="12dp"
+    tools:ignore="RtlSymmetry">
+
+    <TextView
+        android:id="@+id/radio_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Plan"
+        android:textColor="@drawable/radio_text_selector"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/recommended_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/label_backgorund"
+        android:padding="4dp"
+        android:text="Recommended by AI"
+        android:textColor="@android:color/white"
+        android:fontFamily="@font/poppins_semibold"/>
+
+</RelativeLayout>

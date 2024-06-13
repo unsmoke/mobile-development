@@ -2,17 +2,21 @@ package com.cpp.unsmoke.ui.personalizedplan.screen
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.cpp.unsmoke.R
 import com.cpp.unsmoke.data.remote.Result
-import com.cpp.unsmoke.databinding.FragmentPersonalizedElevenBinding
+import com.cpp.unsmoke.data.remote.responses.userplan.DataItemPlan
 import com.cpp.unsmoke.databinding.FragmentPersonalizedThirteenBinding
-import com.cpp.unsmoke.ui.auth.login.LoginActivity
+import com.cpp.unsmoke.ui.main.MainActivity
 import com.cpp.unsmoke.ui.personalizedplan.PersonalizedViewModel
+import com.cpp.unsmoke.ui.personalizedplan.adapter.PersonalizedAdapter
 import com.cpp.unsmoke.utils.helper.viewmodel.ObtainViewModelFactory
 
 
@@ -33,21 +37,44 @@ class PersonalizedThirteenFragment : Fragment() {
 
         val personalizedViewModel = ObtainViewModelFactory.obtain<PersonalizedViewModel>(requireActivity())
 
+        binding.rvPlan.layoutManager = LinearLayoutManager(requireContext())
+
+        setUpRecyclerView(personalizedViewModel)
+
         personalizedViewModel.setPersonalizedPlan().observe(viewLifecycleOwner) { result ->
             if (result != null) {
                 when(result) {
                     is Result.Success -> {
-                        binding.btnSubmitPlan.visibility = View.VISIBLE
+                        personalizedViewModel.getUserPlan().observe(viewLifecycleOwner) { resultPlan ->
+                            if (resultPlan != null) {
+                                when(resultPlan) {
+                                    is Result.Success -> {
+                                        val plans = resultPlan.data.data
+                                        Log.d("PersonalizedFragment", "Plans received: $plans")
+                                        val lastThreePlans = plans?.takeLast(3)
+                                        setUserData(lastThreePlans)
+                                    }
+                                    is Result.Error -> {
+                                        Toast.makeText(requireContext(), "Failed to get personalized all plan", Toast.LENGTH_SHORT).show()
+                                    }
+                                    is Result.Loading -> {
+                                        Toast.makeText(requireContext(), "Loading personalized plan", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                            } else {
+                                Toast.makeText(requireContext(), "resultPlan null", Toast.LENGTH_SHORT).show()
+                            }
+                        }
                     }
                     is Result.Error -> {
-                        binding.btnSubmitPlan.visibility = View.GONE
+                        Toast.makeText(requireContext(), "Failed to get personalized plan", Toast.LENGTH_SHORT).show()
                     }
                     is Result.Loading -> {
-                        binding.btnSubmitPlan.visibility = View.GONE
+                        Toast.makeText(requireContext(), "Loading personalized plan", Toast.LENGTH_SHORT).show()
                     }
                 }
             } else {
-                binding.btnSubmitPlan.visibility = View.GONE
+                Toast.makeText(requireContext(), "result null", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -67,13 +94,38 @@ class PersonalizedThirteenFragment : Fragment() {
                 requireActivity().onBackPressed()
             }
         })
-
-        binding.btnSubmitPlan.setOnClickListener {
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-        }
     }
+
+    private fun setUpRecyclerView(personalizedViewModel: PersonalizedViewModel) {
+        val adapter = PersonalizedAdapter { plan ->
+            plan.planId?.let {
+                personalizedViewModel.updateUserPlan(it).observe(viewLifecycleOwner) { result ->
+                    when (result) {
+                        is Result.Success -> {
+                            val intent = Intent(requireActivity(), MainActivity::class.java)
+                            startActivity(intent)
+                        }
+
+                        is Result.Error -> {
+                            Toast.makeText(requireContext(), "Failed to update plan", Toast.LENGTH_SHORT).show()
+                        }
+
+                        is Result.Loading -> {
+                            // Handle loading if necessary
+                        }
+                    }
+                }
+            }
+        }
+        binding.rvPlan.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvPlan.adapter = adapter
+    }
+
+    private fun setUserData(plans: List<DataItemPlan?>?) {
+        val adapter = binding.rvPlan.adapter as PersonalizedAdapter
+        adapter.submitList(plans)
+    }
+
 
     private fun hideProgressBar() {
         // Mendapatkan tampilan progress bar dari tata letak induk dan menyembunyikannya

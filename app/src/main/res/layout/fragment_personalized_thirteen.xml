@@ -1,104 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:background="@color/accent_white"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
     tools:context=".ui.personalizedplan.screen.PersonalizedThirteenFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_plan"
+        <ImageView
+            android:id="@+id/iv_list_plan"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp">
-
-                <ImageView
-                    android:id="@+id/icon_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/fi_rr_smoke" />
-
-                <TextView
-                    android:id="@+id/tv_plan_name"
-                    style="@style/TextContent.TitleSecondaryBlack"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/plan_detail_title"
-                    app:layout_constraintStart_toEndOf="@id/icon_2"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_plan_duration"
-                    style="@style/TextContent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="@string/plan_duration"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/icon_2"
-                    app:layout_constraintTop_toBottomOf="@id/tv_plan_name" />
-
-                <TextView
-                    android:id="@+id/tv_percentage"
-                    style="@style/TextContent.TitleSecondaryGreen"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="@string/plan_percentage"
-                    android:textSize="27sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <com.cpp.unsmoke.utils.customview.CustomButton
-            android:id="@+id/btn_submit_plan"
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:background="@drawable/button_state"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="Submit Plan"
-            android:textAllCaps="false"
-            android:textSize="16sp"
-            android:layout_marginTop="20dp"
+            android:layout_height="250dp"
+            android:src="@drawable/amico"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cv_plan" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/tv_subtitle"
-            style="@style/TextContent.TitleSecondaryBlack"
+            android:id="@+id/tv_title"
+            style="@style/TextContent.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@string/plan_detail_progress"
+            android:textSize="19sp"
+            android:text="@string/title_list_plan"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_submit_plan" />
+            app:layout_constraintTop_toBottomOf="@id/iv_list_plan" />
+
+        <TextView
+            android:id="@+id/tv_description_list_plan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textSize="16sp"
+            android:text="@string/description_list_plan"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+        <TextView
+            android:id="@+id/tv_subtitle_list_plan"
+            style="@style/TextContent.TitleSecondaryGreen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textSize="16sp"
+            android:text="@string/choose_the_plan_you_want"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_description_list_plan" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_plan"
@@ -107,8 +64,9 @@
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_subtitle"
-            tools:listitem="@layout/detail_plan_row" />
+            app:layout_constraintTop_toBottomOf="@id/tv_subtitle_list_plan"
+            tools:listitem="@layout/custom_radio_button" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -76,6 +76,7 @@ interface ApiService {
     @GET("user-plan")
     suspend fun getActiveUserPlan() : GetActiveUserPlanResponse
 
+    @FormUrlEncoded
     @PUT("user-plan")
     suspend fun updateUserPlan(
         @Field("plan_id") planId: Int
