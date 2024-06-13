@@ -63,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
                                                 binding.btnLogin.isClickable = false
                                             }
                                             is Result.Error -> {
-                                                if(resultPlan.error == "Personalized Plan Not Found"){
+                                                if(resultPlan.error.contains("not found")){
                                                     toPersonalized()
                                                 }
 
