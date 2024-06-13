@@ -62,7 +62,6 @@ class PersonalizedTenFragment : Fragment() {
         binding.btnNext.setOnClickListener {
             if(isDemoralizedSet){
                 personalizedViewModel.setIsSpirit(isDemoralizedValue)
-                personalizedViewModel.getAllData()
                 personalizedViewModel.increaseProgress()
                 Navigation.createNavigateOnClickListener(R.id.action_personalizedTenFragment_to_personalizedElevenFragment ).onClick(it)
             } else {

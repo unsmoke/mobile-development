@@ -83,6 +83,7 @@ class PersonalizedTwelveFragment : Fragment() {
             if (isMotivatedSet) {
                 personalizedViewModel.setMotivation(isMotivatedValue)
                 personalizedViewModel.increaseProgress()
+                personalizedViewModel.getAllData()
                 Navigation.createNavigateOnClickListener(R.id.action_personalizedTwelveFragment_to_personalizedThirteenFragment ).onClick(it)
             } else {
                 showToast("Please select an option")

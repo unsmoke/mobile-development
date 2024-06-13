@@ -11,6 +11,7 @@ import com.cpp.unsmoke.data.remote.responses.auth.RefreshResponse
 import com.cpp.unsmoke.data.remote.responses.auth.RegisterResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import retrofit2.HttpException
@@ -59,7 +60,7 @@ class AuthRepository(
     fun refresh(): LiveData<Result<RefreshResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val refreshToken = withContext(Dispatchers.IO) { getRefreshToken().first() }
+            val refreshToken = runBlocking { getRefreshToken().first() }
             val response = apiService.refresh(refreshToken.toString())
             if (refreshToken.isNullOrEmpty()) {
                 emit(Result.Error("Refresh token is missing"))

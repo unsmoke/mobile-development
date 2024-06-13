@@ -63,7 +63,25 @@ class LoginActivity : AppCompatActivity() {
                                                 binding.btnLogin.isClickable = false
                                             }
                                             is Result.Error -> {
-                                                toPersonalized()
+                                                if(resultPlan.error == "Personalized Plan Not Found"){
+                                                    toPersonalized()
+                                                }
+
+                                                if(resultPlan.error == "Unauthorized") {
+                                                    alertBuilder.setTitle("Unauthorized")
+                                                    alertBuilder.setMessage("Please Login Again")
+                                                    alertBuilder.setPositiveButton("OK") { _, _ ->
+                                                        val intent =
+                                                            Intent(this, LoginActivity::class.java)
+                                                        startActivity(intent)
+                                                        finish()
+                                                    }
+                                                    alertBuilder.show()
+                                                } else {
+                                                    binding.loginEmailEditTextLayout.error = resultPlan.error
+                                                    binding.loginPasswordEditTextLayout.error = resultPlan.error
+                                                    binding.btnLogin.isClickable = true
+                                                }
                                             }
                                             is Result.Success -> {
                                                 binding.btnLogin.isClickable = true

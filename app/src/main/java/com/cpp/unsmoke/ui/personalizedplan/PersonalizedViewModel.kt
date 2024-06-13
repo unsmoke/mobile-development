@@ -267,14 +267,14 @@ class PersonalizedViewModel(private val personalizedPlanRepository: Personalized
     /* SET PERSONALIZED */
 
     fun setPersonalizedPlan(): LiveData<Result<CreatePersonalizedResponse>> {
-        val dateOfBirth = _dateOfBirth.value ?: ""
-        val gender = _gender.value ?: ""
+        val dateOfBirth = _dateOfBirth.value.toString() ?: ""
+        val gender = _gender.value.toString() ?: ""
         val smokingStartTime = _smokingStartTime.value ?: 0
         val isNicotineMed = _isNicotineMed.value ?: false
         val isUsingECigarette = _isUsingECigarette.value ?: 0
-        val firstSmokeDate = _firstSmokeDate.value ?: ""
+        val firstSmokeDate = _firstSmokeDate.value.toString() ?: ""
         val isDepressed = _isDepressed.value ?: false
-        val isUsingOtherTobacco = _isUsingOtherTobacco.value ?: 0
+        val isUsingOtherTobacco = _isUsingOtherTobacco.value ?: 4
         val isSpirit = _isSpirit.value ?: false
         val cigarettesPerDay = _cigarettesPerDay.value ?: 0
         val cigarettesPerPack = _cigarettesPerPack.value ?: 0
@@ -282,7 +282,7 @@ class PersonalizedViewModel(private val personalizedPlanRepository: Personalized
         val province = _province.value.toString() ?: ""
         val city = _city.value.toString() ?: ""
         val isLast7Days = _isLast7Days.value ?: false
-        val motivation = _motivation.value ?: ""
+        val motivation = _motivation.value.toString() ?: ""
 
         return personalizedPlanRepository.setPersonalizedPlan(
             dateOfBirth,

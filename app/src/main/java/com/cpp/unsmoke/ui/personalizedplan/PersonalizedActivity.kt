@@ -2,14 +2,19 @@ package com.cpp.unsmoke.ui.personalizedplan
 
 import android.animation.ObjectAnimator
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.cpp.unsmoke.R
+import com.cpp.unsmoke.data.local.preferences.LoginPreferences
+import com.cpp.unsmoke.data.local.preferences.dataStore
 import com.cpp.unsmoke.databinding.ActivityPersonalizedBinding
 import com.cpp.unsmoke.utils.helper.viewmodel.ObtainViewModelFactory
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 
 class PersonalizedActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPersonalizedBinding
@@ -29,6 +34,18 @@ class PersonalizedActivity : AppCompatActivity() {
 
         viewModel.currentProgress.observe(this){
             setProgressWithAnimation(it)
+        }
+
+        val loginPreferences = LoginPreferences.getInstance(applicationContext.dataStore)
+        checkTokens(loginPreferences)
+    }
+
+    private fun checkTokens(loginPreferences: LoginPreferences) {
+        runBlocking {
+            val accessToken = loginPreferences.getToken().first()
+            val refreshToken = loginPreferences.getRefreshToken().first()
+            Log.d("CheckToken", "Access Token: $accessToken")
+            Log.d("CheckToken", "Refresh Token: $refreshToken")
         }
     }
 

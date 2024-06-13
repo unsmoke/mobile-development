@@ -11,8 +11,11 @@ import com.cpp.unsmoke.data.remote.responses.personalized.GetPersonalizedRespons
 import com.cpp.unsmoke.data.remote.responses.personalized.ProvinceResponse
 import com.cpp.unsmoke.data.remote.responses.userplan.GetActiveUserPlanResponse
 import com.cpp.unsmoke.data.remote.responses.userplan.GetAllUserPlanResponse
+import com.cpp.unsmoke.data.remote.retrofit.ApiConfig
 import com.cpp.unsmoke.data.remote.retrofit.ApiService
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
 import retrofit2.HttpException
 
@@ -38,7 +41,7 @@ class PersonalizedPlanRepository(
         city: String,
         last7Days: Boolean,
         motivation: String
-    ): LiveData<Result<CreatePersonalizedResponse>> = liveData(Dispatchers.IO) {
+    ): LiveData<Result<CreatePersonalizedResponse>> = liveData {
         emit(Result.Loading)
         try {
             val response = apiService.createPersonalized(
@@ -71,7 +74,7 @@ class PersonalizedPlanRepository(
     }
 
     fun getPersonalizedPlan(): LiveData<Result<GetPersonalizedResponse>> =
-        liveData(Dispatchers.IO) {
+        liveData {
             emit(Result.Loading)
             try {
                 val response = apiService.getPersonalizedPlan()
@@ -86,7 +89,7 @@ class PersonalizedPlanRepository(
             }
         }
 
-    fun getProvince(): LiveData<Result<ProvinceResponse>> = liveData(Dispatchers.IO) {
+    fun getProvince(): LiveData<Result<ProvinceResponse>> = liveData {
         emit(Result.Loading)
         try {
             val response = apiService.getProvince()
@@ -101,7 +104,7 @@ class PersonalizedPlanRepository(
         }
     }
 
-    fun getCities(provinceId: Int): LiveData<Result<CityResponse>> = liveData(Dispatchers.IO) {
+    fun getCities(provinceId: Int): LiveData<Result<CityResponse>> = liveData {
         emit(Result.Loading)
         try {
             val response = apiService.getCity(provinceId)
@@ -116,7 +119,7 @@ class PersonalizedPlanRepository(
         }
     }
 
-    fun getAllUserPlan(): LiveData<Result<GetAllUserPlanResponse>> = liveData(Dispatchers.IO) {
+    fun getAllUserPlan(): LiveData<Result<GetAllUserPlanResponse>> = liveData {
         emit(Result.Loading)
         try {
             val response = apiService.getAllUserPlan()
@@ -131,7 +134,7 @@ class PersonalizedPlanRepository(
         }
     }
 
-    fun updateUserPlan(idPlan: Int): LiveData<Result<GetActiveUserPlanResponse>> = liveData(Dispatchers.IO) {
+    fun updateUserPlan(idPlan: Int): LiveData<Result<GetActiveUserPlanResponse>> = liveData {
         emit(Result.Loading)
         try {
             val response = apiService.updateUserPlan(idPlan)
@@ -154,6 +157,7 @@ class PersonalizedPlanRepository(
                 when (e.code()) {
                     400 -> json.getString("message")
                     500 -> json.getString("errors")
+                    404 -> json.getString("errors")
                     else -> "Unexpected error: ${e.message()}"
                 }
             } else {
