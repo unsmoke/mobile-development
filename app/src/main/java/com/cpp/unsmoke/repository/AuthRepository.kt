@@ -28,6 +28,7 @@ class AuthRepository(
             if (response.code == 200) { // Assuming 200 is the success code
                 response.data?.let { loginData ->
                     saveToken(loginData.accessToken ?: "", loginData.refreshToken ?: "")
+                    loginPref()
                 }
             }
             emit(Result.Success(response))
@@ -86,7 +87,7 @@ class AuthRepository(
 
     private suspend fun saveToken(token: String, refreshToken: String) = loginPreferences.saveToken(token, refreshToken)
 
-    suspend fun loginPref() = loginPreferences.loginPref()
+    private suspend fun loginPref() = loginPreferences.loginPref()
 
     fun getLoginStatus() = loginPreferences.getLoginStatus()
 
