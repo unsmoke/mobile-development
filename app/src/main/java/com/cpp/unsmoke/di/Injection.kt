@@ -1,6 +1,7 @@
 package com.cpp.unsmoke.di
 
 import android.content.Context
+import android.util.Log
 import com.cpp.unsmoke.data.local.preferences.LoginPreferences
 import com.cpp.unsmoke.data.local.preferences.dataStore
 import com.cpp.unsmoke.data.remote.retrofit.ApiConfig
@@ -13,16 +14,9 @@ import kotlinx.coroutines.runBlocking
 object Injection {
     fun provideAuthRepository(context: Context): AuthRepository {
         val pref = LoginPreferences.getInstance(context.dataStore)
-        val user = runBlocking { pref.getToken().first() }
 
         // Step 1: Create temporary ApiService without TokenAuthenticator
-        val tempApiService = ApiConfig.getApiServiceWithoutAuth()
-
-        // Step 2: Create AuthRepository with temporary ApiService
-        val authRepository = AuthRepository.getInstance(tempApiService, pref)
-
-        // Step 3: Create final ApiService with TokenAuthenticator
-        val apiService = ApiConfig.getApiService(user ?: "", authRepository, pref)
+        val apiService = ApiConfig.getApiServiceWithoutAuth()
 
         // Update AuthRepository to use final ApiService
         return AuthRepository.getInstance(apiService, pref)
@@ -30,13 +24,13 @@ object Injection {
 
     fun providePersonalizedPlanRepository(context: Context): PersonalizedPlanRepository {
         val pref = LoginPreferences.getInstance(context.dataStore)
-        val user = runBlocking { pref.getToken().first() }
 
-        // Use the same method to get AuthRepository
-        val authRepository = provideAuthRepository(context)
+        val userAfter = runBlocking { pref.getToken().first() }
+
+        Log.d("Injection", "providePersonalizedPlanRepository: $userAfter")
 
         // Create ApiService with AuthRepository and TokenAuthenticator
-        val apiService = ApiConfig.getApiService(user ?: "", authRepository, pref)
+        val apiService = ApiConfig.getApiService(userAfter ?: "", pref)
 
         return PersonalizedPlanRepository.getInstance(apiService, pref)
     }

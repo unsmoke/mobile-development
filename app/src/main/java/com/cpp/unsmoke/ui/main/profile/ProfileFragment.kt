@@ -30,9 +30,6 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val profileViewModel =
-            ViewModelProvider(this)[ProfileViewModel::class.java]
-
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
         return root
@@ -41,7 +38,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val profileViewModel = ObtainViewModelFactory.obtain<ProfileViewModel>(requireActivity())
+        val profileViewModel = ObtainViewModelFactory.obtainAuth<ProfileViewModel>(requireActivity())
 
         val alertBuilder = AlertDialog.Builder(requireActivity())
 
@@ -50,11 +47,11 @@ class ProfileFragment : Fragment() {
             alertBuilder.setTitle(getString(R.string.logout))
             alertBuilder.setMessage("Are You Sure?")
             alertBuilder.setPositiveButton("Ok") { _, _ ->
+                profileViewModel.logout()
                 val intent = Intent(requireActivity(), LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 requireActivity().finishAffinity()
-                profileViewModel.logout()
             }.create().show()
         }
     }

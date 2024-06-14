@@ -1,6 +1,7 @@
 package com.cpp.unsmoke.data.local.preferences
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -22,6 +23,7 @@ class LoginPreferences private constructor(private val dataStore: DataStore<Pref
 
     // save auth token and refresh token
     suspend fun saveToken(token: String, refresh: String) {
+        Log.d("LOGIN_PREFERENCES", "save token dipanggil: $token, $refresh")
         dataStore.edit { preferences ->
             preferences[loginToken] = token
             preferences[refreshToken] = refresh

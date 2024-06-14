@@ -30,7 +30,7 @@ class PersonalizedActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.fi_ss_arrow_small_left_black)
 
-        viewModel = ObtainViewModelFactory.obtain<PersonalizedViewModel>(this)
+        viewModel = ObtainViewModelFactory.obtainAuth<PersonalizedViewModel>(this)
 
         viewModel.currentProgress.observe(this){
             setProgressWithAnimation(it)

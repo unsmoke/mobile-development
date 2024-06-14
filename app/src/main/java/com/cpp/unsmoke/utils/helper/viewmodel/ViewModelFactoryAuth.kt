@@ -12,20 +12,20 @@ import com.cpp.unsmoke.ui.auth.register.RegisterViewModel
 import com.cpp.unsmoke.ui.main.profile.ProfileViewModel
 import com.cpp.unsmoke.ui.personalizedplan.PersonalizedViewModel
 
-class ViewModelFactory private constructor(
-    private val authRepository: AuthRepository,
+class ViewModelFactoryAuth private constructor(
+    private val personalizedPlanRepository: PersonalizedPlanRepository,
     private val settingRepository: SettingRepository
 ) : ViewModelProvider.NewInstanceFactory() {
 
     companion object {
         @Volatile
-        private var INSTANCE: ViewModelFactory? = null
+        private var INSTANCE: ViewModelFactoryAuth? = null
 
         @JvmStatic
-        fun getInstance(context: Context): ViewModelFactory {
+        fun getInstance(context: Context): ViewModelFactoryAuth {
             return INSTANCE ?: synchronized(this) {
-                INSTANCE ?: ViewModelFactory(
-                    Injection.provideAuthRepository(context),
+                INSTANCE ?: ViewModelFactoryAuth(
+                    Injection.providePersonalizedPlanRepository(context),
                     Injection.provideSettingRepository(context)
                 ).also {
                     INSTANCE = it
@@ -36,11 +36,11 @@ class ViewModelFactory private constructor(
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel(authRepository, settingRepository) as T
-        } else if (modelClass.isAssignableFrom(RegisterViewModel::class.java)){
-            return RegisterViewModel(authRepository) as T
+        return when (modelClass) {
+            PersonalizedViewModel::class.java -> PersonalizedViewModel(personalizedPlanRepository, settingRepository) as T
+            ProfileViewModel::class.java -> ProfileViewModel(settingRepository) as T
+            else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
-        throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
     }
+
 }

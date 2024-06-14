@@ -36,7 +36,7 @@ class PersonalizedTenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val personalizedViewModel = ObtainViewModelFactory.obtain<PersonalizedViewModel>(requireActivity())
+        val personalizedViewModel = ObtainViewModelFactory.obtainAuth<PersonalizedViewModel>(requireActivity())
 
         personalizedViewModel.isSpirit.observe(viewLifecycleOwner) { isSpirit ->
             if (isSpirit) {

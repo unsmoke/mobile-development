@@ -32,7 +32,7 @@ class PersonalizedTwelveFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val personalizedViewModel = ObtainViewModelFactory.obtain<PersonalizedViewModel>(requireActivity())
+        val personalizedViewModel = ObtainViewModelFactory.obtainAuth<PersonalizedViewModel>(requireActivity())
 
         personalizedViewModel.motivation.observe(viewLifecycleOwner) { motivation ->
             when (motivation) {

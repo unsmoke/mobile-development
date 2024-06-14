@@ -4,16 +4,24 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.cpp.unsmoke.data.remote.Result
 import com.cpp.unsmoke.data.remote.responses.personalized.CityResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.CreatePersonalizedResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.DataItemCity
+import com.cpp.unsmoke.data.remote.responses.personalized.GetPersonalizedResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.ProvinceResponse
 import com.cpp.unsmoke.data.remote.responses.userplan.GetActiveUserPlanResponse
 import com.cpp.unsmoke.data.remote.responses.userplan.GetAllUserPlanResponse
 import com.cpp.unsmoke.repository.PersonalizedPlanRepository
+import com.cpp.unsmoke.repository.SettingRepository
+import kotlinx.coroutines.launch
 
-class PersonalizedViewModel(private val personalizedPlanRepository: PersonalizedPlanRepository): ViewModel() {
+class PersonalizedViewModel(
+    private val personalizedPlanRepository: PersonalizedPlanRepository,
+    private val settingRepository: SettingRepository
+) :
+    ViewModel() {
     /* TOOLBAR ANIMATION */
 
     private val _currentProgress = MutableLiveData<Int>()
@@ -260,7 +268,7 @@ class PersonalizedViewModel(private val personalizedPlanRepository: Personalized
         }
     }
 
-    fun setCities(cities: List<DataItemCity?>?){
+    fun setCities(cities: List<DataItemCity?>?) {
         _cities.value = cities
     }
 
@@ -315,5 +323,17 @@ class PersonalizedViewModel(private val personalizedPlanRepository: Personalized
     fun updateUserPlan(planId: Int): LiveData<Result<GetActiveUserPlanResponse>> {
         return personalizedPlanRepository.updateUserPlan(planId)
     }
+
+    fun getPersonalizedPlan(): LiveData<Result<GetPersonalizedResponse>> {
+        return personalizedPlanRepository.getPersonalizedPlan()
+    }
+
+    fun logout() {
+        viewModelScope.launch {
+            settingRepository.logout()
+        }
+    }
+
+    fun getLoginStatus() = settingRepository.getLoginStatus()
 
 }

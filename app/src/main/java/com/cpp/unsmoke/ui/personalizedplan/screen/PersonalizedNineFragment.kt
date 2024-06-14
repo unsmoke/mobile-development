@@ -35,7 +35,7 @@ class PersonalizedNineFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val personalizedViewModel = ObtainViewModelFactory.obtain<PersonalizedViewModel>(requireActivity())
+        val personalizedViewModel = ObtainViewModelFactory.obtainAuth<PersonalizedViewModel>(requireActivity())
 
         personalizedViewModel.isDepressed.observe(viewLifecycleOwner) { isDepressed ->
             if (isDepressed) {

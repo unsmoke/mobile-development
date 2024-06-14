@@ -38,7 +38,7 @@ class PersonalizedElevenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val personalizedViewModel = ObtainViewModelFactory.obtain<PersonalizedViewModel>(requireActivity())
+        val personalizedViewModel = ObtainViewModelFactory.obtainAuth<PersonalizedViewModel>(requireActivity())
 
         personalizedViewModel.isLast7Days.observe(viewLifecycleOwner) { isLast7Days ->
             if (isLast7Days) {

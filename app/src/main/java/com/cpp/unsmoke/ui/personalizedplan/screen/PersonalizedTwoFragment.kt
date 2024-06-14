@@ -35,7 +35,7 @@ class PersonalizedTwoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val personalizedViewModel = ObtainViewModelFactory.obtain<PersonalizedViewModel>(requireActivity())
+        val personalizedViewModel = ObtainViewModelFactory.obtainAuth<PersonalizedViewModel>(requireActivity())
 
         binding.radioButtonGroup.setOnCheckedChangeListener { _, checkedId ->
             selectedGender = when (checkedId) {

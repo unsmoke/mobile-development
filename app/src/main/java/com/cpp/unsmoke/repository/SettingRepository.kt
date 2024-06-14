@@ -8,6 +8,8 @@ class SettingRepository(
 ) {
     suspend fun logout() = loginPreferences.logout()
 
+    fun getLoginStatus() = loginPreferences.getLoginStatus()
+
     companion object {
         @Volatile
         private var instance: SettingRepository? = null

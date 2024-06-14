@@ -77,9 +77,20 @@ class PersonalizedPlanRepository(
         liveData {
             emit(Result.Loading)
             try {
+                val token = runBlocking {
+                    loginPreferences.getToken().first()
+                }
+
+                Log.d("PersonalizedPlanRepository", "getPersonalizedPlan: token: $token")
+
                 val response = apiService.getPersonalizedPlan()
                 emit(Result.Success(response))
             } catch (e: HttpException) {
+                val token = runBlocking {
+                    loginPreferences.getToken().first()
+                }
+
+                Log.d("PersonalizedPlanRepository", "getPersonalizedPlan: token: $token")
                 val errorResponse = parseError(e)
                 Log.e("GET_PERSONALIZED_PLAN", errorResponse)
                 emit(Result.Error(errorResponse))

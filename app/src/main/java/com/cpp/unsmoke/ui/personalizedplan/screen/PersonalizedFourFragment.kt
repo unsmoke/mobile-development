@@ -95,7 +95,7 @@ class PersonalizedFourFragment : Fragment() {
 
 
 
-        val personalizedViewModel = ObtainViewModelFactory.obtain<PersonalizedViewModel>(requireActivity())
+        val personalizedViewModel = ObtainViewModelFactory.obtainAuth<PersonalizedViewModel>(requireActivity())
 
         personalizedViewModel.cigarettesPerDay.observe(viewLifecycleOwner) { cigarettesPerDay ->
             if (cigarettesPerDay != 0) {
