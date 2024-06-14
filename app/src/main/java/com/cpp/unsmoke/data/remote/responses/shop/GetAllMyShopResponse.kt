@@ -2,25 +2,19 @@ package com.cpp.unsmoke.data.remote.responses.shop
 
 import com.google.gson.annotations.SerializedName
 
-data class GetAllItemResponse(
+data class GetAllMyShopResponse(
 
 	@field:SerializedName("code")
 	val code: Int? = null,
 
 	@field:SerializedName("data")
-	val data: DataListItem? = null,
+	val data: List<DataItem?>? = null,
 
 	@field:SerializedName("status")
 	val status: String? = null
 )
 
-data class DataListItem(
-
-	@field:SerializedName("items")
-	val items: List<ItemsItem?>? = null
-)
-
-data class ItemsItem(
+data class DataItem(
 
 	@field:SerializedName("updated_at")
 	val updatedAt: String? = null,

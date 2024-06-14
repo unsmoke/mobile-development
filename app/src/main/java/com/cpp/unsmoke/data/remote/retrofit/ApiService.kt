@@ -7,6 +7,8 @@ import com.cpp.unsmoke.data.remote.responses.personalized.CityResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.CreatePersonalizedResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.GetPersonalizedResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.ProvinceResponse
+import com.cpp.unsmoke.data.remote.responses.shop.CreateItemResponse
+import com.cpp.unsmoke.data.remote.responses.shop.GetAllMyShopResponse
 import com.cpp.unsmoke.data.remote.responses.userplan.GetActiveUserPlanResponse
 import com.cpp.unsmoke.data.remote.responses.userplan.GetAllUserPlanResponse
 import retrofit2.http.Field
@@ -81,4 +83,17 @@ interface ApiService {
     suspend fun updateUserPlan(
         @Field("plan_id") planId: Int
     ): GetActiveUserPlanResponse
+
+    @GET("shop")
+    suspend fun getAllMyShop(): GetAllMyShopResponse
+
+    @GET("inventory")
+    suspend fun getAllMyItems(): GetAllMyShopResponse
+
+    @FormUrlEncoded
+    @POST("inventory")
+    suspend fun buyItem(
+        @Field("user_id") userId: String,
+        @Field("item_id") itemId: String
+    ): CreateItemResponse
 }
