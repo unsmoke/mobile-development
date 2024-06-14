@@ -7,6 +7,7 @@ import com.cpp.unsmoke.data.remote.Result
 import com.cpp.unsmoke.data.remote.responses.shop.CreateItemResponse
 import com.cpp.unsmoke.data.remote.responses.shop.GetAllMyShopResponse
 import com.cpp.unsmoke.data.remote.retrofit.ApiService
+import kotlinx.coroutines.flow.Flow
 import org.json.JSONObject
 import retrofit2.HttpException
 
@@ -50,6 +51,8 @@ class ShopRepository(
         }
     }
 
+    fun getUserId() = loginPreferences.getUserId()
+
     private fun parseError(e: HttpException): String {
         return try {
             val errorBody = e.response()?.errorBody()?.string()
@@ -71,14 +74,14 @@ class ShopRepository(
 
     companion object {
         @Volatile
-        private var instance: PersonalizedPlanRepository? = null
+        private var instance: ShopRepository? = null
 
         fun getInstance(
             apiService: ApiService,
             preferences: LoginPreferences
-        ): PersonalizedPlanRepository =
+        ): ShopRepository =
             instance ?: synchronized(this) {
-                instance ?: PersonalizedPlanRepository(apiService, preferences).also {
+                instance ?: ShopRepository(apiService, preferences).also {
                     instance = it
                 }
             }

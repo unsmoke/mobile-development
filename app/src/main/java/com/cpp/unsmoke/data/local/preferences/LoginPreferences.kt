@@ -20,6 +20,7 @@ class LoginPreferences private constructor(private val dataStore: DataStore<Pref
     private val loginToken = stringPreferencesKey("token")
     private val loginStatus = booleanPreferencesKey("status")
     private val refreshToken = stringPreferencesKey("refresh")
+    private val userId = stringPreferencesKey("userid")
 
     // save auth token and refresh token
     suspend fun saveToken(token: String, refresh: String) {
@@ -27,6 +28,13 @@ class LoginPreferences private constructor(private val dataStore: DataStore<Pref
         dataStore.edit { preferences ->
             preferences[loginToken] = token
             preferences[refreshToken] = refresh
+        }
+    }
+
+    // save user id
+    suspend fun saveUserId(id: String) {
+        dataStore.edit { preferences ->
+            preferences[userId] = id
         }
     }
 
@@ -82,6 +90,21 @@ class LoginPreferences private constructor(private val dataStore: DataStore<Pref
             }
     }
 
+    // get user id
+    fun getUserId(): Flow<String?> {
+        return dataStore.data
+            .catch { exception ->
+                if (exception is IOException) {
+                    emit(emptyPreferences())
+                } else {
+                    throw exception
+                }
+            }
+            .map { preferences ->
+                preferences[userId]
+            }
+    }
+
     // update token
     suspend fun updateToken(token: String) {
         dataStore.edit { preferences ->
@@ -95,6 +118,7 @@ class LoginPreferences private constructor(private val dataStore: DataStore<Pref
             preferences[loginStatus] = false
             preferences[loginToken] = ""
             preferences[refreshToken] = ""
+            preferences[userId] = ""
         }
     }
 

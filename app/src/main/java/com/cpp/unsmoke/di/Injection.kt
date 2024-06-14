@@ -8,6 +8,7 @@ import com.cpp.unsmoke.data.remote.retrofit.ApiConfig
 import com.cpp.unsmoke.repository.AuthRepository
 import com.cpp.unsmoke.repository.PersonalizedPlanRepository
 import com.cpp.unsmoke.repository.SettingRepository
+import com.cpp.unsmoke.repository.ShopRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
@@ -33,6 +34,13 @@ object Injection {
         val apiService = ApiConfig.getApiService(userAfter ?: "", pref)
 
         return PersonalizedPlanRepository.getInstance(apiService, pref)
+    }
+
+    fun provideShopRepository(context: Context): ShopRepository {
+        val pref = LoginPreferences.getInstance(context.dataStore)
+        val userAfter = runBlocking { pref.getToken().first() }
+        val apiService = ApiConfig.getApiService(userAfter ?: "", pref)
+        return ShopRepository.getInstance(apiService, pref)
     }
 
     fun provideSettingRepository(context: Context): SettingRepository {

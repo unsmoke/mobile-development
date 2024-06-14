@@ -29,6 +29,7 @@ class AuthRepository(
                 response.data?.let { loginData ->
                     Log.d("LOGIN", "save token dipanggil")
                     saveToken(loginData.accessToken ?: "", loginData.refreshToken ?: "")
+                    saveUserId(loginData.userId ?: "")
                     loginPref()
                 }
             }
@@ -63,6 +64,10 @@ class AuthRepository(
         runBlocking {
             loginPreferences.saveToken(token, refreshToken)
         }
+
+    private suspend fun saveUserId(id: String) = runBlocking {
+        loginPreferences.saveUserId(id)
+    }
 
     private suspend fun loginPref() = loginPreferences.loginPref()
 

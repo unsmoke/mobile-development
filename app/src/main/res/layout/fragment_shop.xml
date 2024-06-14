@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/accent_white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.shop.screen.ShopFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
@@ -117,7 +118,10 @@
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_shop_title" />
+            app:layout_constraintTop_toBottomOf="@id/tv_shop_title"
+            tools:listitem="@layout/shop_item_row"
+            app:spanCount="2"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
