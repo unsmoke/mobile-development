@@ -68,6 +68,7 @@
             android:padding="16dp">
 
             <TextView
+                android:id="@+id/tv_feeling"
                 style="@style/TextContent.Description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -77,6 +78,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tv_challenge"
                 style="@style/TextContent.Description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -86,6 +88,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tv_commitment"
                 style="@style/TextContent.Description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

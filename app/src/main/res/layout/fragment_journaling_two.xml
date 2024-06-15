@@ -68,7 +68,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <RadioGroup
-        android:id="@+id/rg_fragment_nine"
+        android:id="@+id/rg_journaling_one"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
