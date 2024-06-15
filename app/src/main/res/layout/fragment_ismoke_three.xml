@@ -80,7 +80,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/smoke_consumed"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/dark_green"
+                    />
 
                 <TextView
                     android:id="@+id/tv_smoke_consume"
@@ -89,7 +91,9 @@
                     android:layout_height="wrap_content"
                     android:text="5"
                     android:textAlignment="center"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textColor="@color/dark_green"
+                    />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -113,7 +117,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/smoke_limit"
                     android:textAlignment="center"
-                    android:textColor="@color/dark_green" />
+                    />
 
                 <TextView
                     android:id="@+id/tv_smoke_quota"
@@ -122,7 +126,6 @@
                     android:layout_height="wrap_content"
                     android:text="5"
                     android:textAlignment="center"
-                    android:textColor="@color/dark_green"
                     android:textSize="18sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -136,15 +139,11 @@
         android:layout_marginBottom="40dp"
         android:background="@drawable/button_state"
         android:fontFamily="@font/poppins_semibold"
-        android:text="@string/ok"
+        android:text="@string/next"
         android:textAllCaps="false"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

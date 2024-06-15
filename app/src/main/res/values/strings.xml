@@ -122,4 +122,7 @@
 
     <string name="result_success_recorded_title">Log has been saved!</string>
     <string name="result_success_recorded_description">Remember not to exceed the daily smoking limit that has been set. If you fail, you will lose your streak and fail to gain XP, which will affect the condition of your virtual lungs!</string>
+
+    <string name="result_failed_recorded_title">You failed to get streak and XP!</string>
+    <string name="result_failed_recorded_description">You have exceeded the allowed cigarette consumption limit for today, so your streak will be lost and you won\'t gain XP. Don\'t give up, try again tomorrow!</string>
 </resources>
