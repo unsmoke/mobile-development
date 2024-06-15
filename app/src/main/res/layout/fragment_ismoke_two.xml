@@ -1,14 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/accent_white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.ismoke.screen.IsmokeTwoFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/ismoke_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:background="@color/normal_green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/back"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/tv_smoking_reason_question"
+        style="@style/TextContent.TitleSecondaryGreen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/smoking_reason_question"
+        android:textColor="@color/dark_green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ismoke_toolbar"/>
+
+    <RadioGroup
+        android:id="@+id/rg_ismoke_two"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_smoking_reason_question">
+
+        <RadioButton
+            android:id="@+id/rb_reason_1"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/radio_null_selector"
+            android:fontFamily="@font/poppins_regular"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="3dp"
+            android:text="I just woke up"
+            android:textColor="@drawable/radio_text_selector"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/rb_reason_2"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/radio_null_selector"
+            android:fontFamily="@font/poppins_regular"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="3dp"
+            android:text="I am drinking tea/coffee"
+            android:textColor="@drawable/radio_text_selector"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/rb_reason_3"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/radio_null_selector"
+            android:fontFamily="@font/poppins_regular"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="3dp"
+            android:text="I just finished eating"
+            android:textColor="@drawable/radio_text_selector"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/rb_reason_4"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/radio_null_selector"
+            android:fontFamily="@font/poppins_regular"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="3dp"
+            android:text="I am with other smokers"
+            android:textColor="@drawable/radio_text_selector"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/rb_reason_5"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/radio_null_selector"
+            android:fontFamily="@font/poppins_regular"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="3dp"
+            android:text="I am working"
+            android:textColor="@drawable/radio_text_selector"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/rb_reason_6"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/radio_null_selector"
+            android:fontFamily="@font/poppins_regular"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="3dp"
+            android:text="I am drinking a glass of alcohol"
+            android:textColor="@drawable/radio_text_selector"
+            android:textSize="18sp"/>
+
+        <RadioButton
+            android:id="@+id/rb_reason_7"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/radio_null_selector"
+            android:fontFamily="@font/poppins_regular"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="3dp"
+            android:text="I wanted to have something in my mouth"
+            android:textColor="@drawable/radio_text_selector"
+            android:textSize="18sp"/>
+
+        <RadioButton
+            android:id="@+id/rb_reason_8"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/radio_null_selector"
+            android:fontFamily="@font/poppins_regular"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="3dp"
+            android:text="Nothing special"
+            android:textColor="@drawable/radio_text_selector"
+            android:textSize="18sp"/>
+
+        <RadioButton
+            android:id="@+id/rb_reason_9"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/radio_null_selector"
+            android:fontFamily="@font/poppins_regular"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="3dp"
+            android:text="Others"
+            android:textColor="@drawable/radio_text_selector"
+            android:textSize="18sp"/>
+    </RadioGroup>
+
+    <com.cpp.unsmoke.utils.customview.CustomButton
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/button_state"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="@string/save"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
