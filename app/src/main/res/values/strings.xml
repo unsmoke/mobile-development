@@ -3,7 +3,6 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="button">Button</string>
     <string name="login">Login</string>
@@ -31,6 +30,7 @@
     <string name="new_password_description">Your new password must be different from previous used password</string>
     <string name="back">Back</string>
     <string name="next">Next</string>
+    <string name="ok">Ok</string>
     <string name="title_plan">Plan</string>
     <string name="title_rank">Rank</string>
     <string name="title_profile">Profile</string>
@@ -121,4 +121,9 @@
     <string name="smoking_reason_question">What made you want to smoke?</string>
     <string name="retry">Retry</string>
 
+    <string name="result_success_recorded_title">Log has been saved!</string>
+    <string name="result_success_recorded_description">Remember not to exceed the daily smoking limit that has been set. If you fail, you will lose your streak and fail to gain XP, which will affect the condition of your virtual lungs!</string>
+
+    <string name="result_failed_recorded_title">You failed to get streak and XP!</string>
+    <string name="result_failed_recorded_description">You have exceeded the allowed cigarette consumption limit for today, so your streak will be lost and you won\'t gain XP. Don\'t give up, try again tomorrow!</string>
 </resources>
