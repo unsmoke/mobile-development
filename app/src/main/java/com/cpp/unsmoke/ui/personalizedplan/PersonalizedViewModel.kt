@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.cpp.unsmoke.data.local.preferences.UserPreferences
 import com.cpp.unsmoke.data.remote.Result
 import com.cpp.unsmoke.data.remote.responses.personalized.CityResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.CreatePersonalizedResponse
@@ -331,6 +332,18 @@ class PersonalizedViewModel(
     fun logout() {
         viewModelScope.launch {
             settingRepository.logout()
+        }
+    }
+
+    fun setProvId(provId: Int) {
+        viewModelScope.launch {
+            personalizedPlanRepository.setProv(provId.toString())
+        }
+    }
+
+    fun setCityId(cityId: Int) {
+        viewModelScope.launch {
+            personalizedPlanRepository.setCity(cityId.toString())
         }
     }
 

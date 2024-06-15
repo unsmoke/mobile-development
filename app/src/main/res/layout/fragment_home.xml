@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="24dp">
+        android:paddingBottom="120dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/shop_btn"
@@ -453,35 +453,41 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/book_journal" />
 
-                <TextView
-                    android:id="@+id/tv_title_journal"
-                    style="@style/TextContent.TitleSecondaryBlack"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/journaling_title"
-                    android:textColor="@color/white"
-                    app:layout_constraintStart_toEndOf="@id/icon_3"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_description_journal"
-                    style="@style/TextContent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="@string/journaling_description"
-                    android:textColor="@color/white"
+                    android:orientation="vertical"
+                    android:paddingVertical="16dp"
+                    android:paddingStart="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/icon_3"
-                    app:layout_constraintTop_toBottomOf="@id/tv_title_journal" />
+                    app:layout_constraintStart_toEndOf="@+id/icon_3"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_title_journal"
+                        style="@style/TextContent.TitleSecondaryBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/journaling_title"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tv_description_journal"
+                        style="@style/TextContent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="3"
+                        android:text="@string/journaling_description"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

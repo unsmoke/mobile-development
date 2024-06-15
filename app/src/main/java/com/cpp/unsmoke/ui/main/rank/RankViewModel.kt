@@ -1,13 +1,15 @@
 package com.cpp.unsmoke.ui.main.rank
 
+import LeaderboardRepository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.cpp.unsmoke.data.remote.responses.leaderboard.LeaderboardItem
 
-class RankViewModel: ViewModel() {
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is rank Fragment"
-    }
+class RankViewModel(private val leaderboardRepository: LeaderboardRepository): ViewModel() {
 
-    val text: LiveData<String> = _text
+    val rank: LiveData<PagingData<LeaderboardItem>> = leaderboardRepository.getLeaderboard().cachedIn(viewModelScope)
 }

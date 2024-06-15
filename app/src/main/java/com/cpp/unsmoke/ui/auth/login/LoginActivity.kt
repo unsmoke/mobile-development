@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val viewModel = ObtainViewModelFactory.obtain<LoginViewModel>(this)
+        val viewModel = ObtainViewModelFactory.obtainAuth<LoginViewModel>(this)
 
         val isLogin = runBlocking {
             viewModel.getLoginStatus().first()

@@ -1,23 +1,30 @@
 package com.cpp.unsmoke.utils.helper.viewmodel
 
+import LeaderboardRepository
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.cpp.unsmoke.di.Injection
 import com.cpp.unsmoke.repository.AuthRepository
+import com.cpp.unsmoke.repository.JournalRepository
 import com.cpp.unsmoke.repository.PersonalizedPlanRepository
 import com.cpp.unsmoke.repository.SettingRepository
 import com.cpp.unsmoke.repository.ShopRepository
 import com.cpp.unsmoke.ui.auth.login.LoginViewModel
 import com.cpp.unsmoke.ui.auth.register.RegisterViewModel
+import com.cpp.unsmoke.ui.journal.JournalViewModel
 import com.cpp.unsmoke.ui.main.profile.ProfileViewModel
+import com.cpp.unsmoke.ui.main.rank.RankViewModel
 import com.cpp.unsmoke.ui.personalizedplan.PersonalizedViewModel
 import com.cpp.unsmoke.ui.shop.ShopViewModel
 
 class ViewModelFactoryAuth private constructor(
+    private val authRepository: AuthRepository,
     private val personalizedPlanRepository: PersonalizedPlanRepository,
     private val settingRepository: SettingRepository,
-    private val shopRepository: ShopRepository
+    private val shopRepository: ShopRepository,
+    private val journalRepository: JournalRepository,
+    private val leaderboardRepository: LeaderboardRepository
 ) : ViewModelProvider.NewInstanceFactory() {
 
     companion object {
@@ -28,9 +35,12 @@ class ViewModelFactoryAuth private constructor(
         fun getInstance(context: Context): ViewModelFactoryAuth {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: ViewModelFactoryAuth(
+                    Injection.provideAuthRepository(context),
                     Injection.providePersonalizedPlanRepository(context),
                     Injection.provideSettingRepository(context),
-                    Injection.provideShopRepository(context)
+                    Injection.provideShopRepository(context),
+                    Injection.provideJournalRepository(context),
+                    Injection.provideLeaderboardRepository(context)
                 ).also {
                     INSTANCE = it
                 }
@@ -41,9 +51,13 @@ class ViewModelFactoryAuth private constructor(
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when (modelClass) {
+            LoginViewModel::class.java -> LoginViewModel(authRepository, settingRepository) as T
+            RegisterViewModel::class.java -> RegisterViewModel(authRepository) as T
             PersonalizedViewModel::class.java -> PersonalizedViewModel(personalizedPlanRepository, settingRepository) as T
             ProfileViewModel::class.java -> ProfileViewModel(settingRepository) as T
             ShopViewModel::class.java -> ShopViewModel(shopRepository, settingRepository) as T
+            JournalViewModel::class.java -> JournalViewModel(journalRepository) as T
+            RankViewModel::class.java -> RankViewModel(leaderboardRepository) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
     }

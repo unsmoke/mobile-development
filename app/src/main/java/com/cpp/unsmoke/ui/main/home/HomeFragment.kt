@@ -12,6 +12,7 @@ import com.cpp.unsmoke.R
 import com.cpp.unsmoke.databinding.FragmentHomeBinding
 import com.cpp.unsmoke.ui.healtimprovement.holdbreath.HoldBreathActivity
 import com.cpp.unsmoke.ui.healtimprovement.holdbreath.screen.HoldBreathFragment
+import com.cpp.unsmoke.ui.journal.JournalActivity
 import com.cpp.unsmoke.ui.shop.ShopActivity
 
 class HomeFragment : Fragment() {
@@ -45,6 +46,11 @@ class HomeFragment : Fragment() {
 
         binding.cvChallenge2.setOnClickListener {
             val intent = Intent(requireActivity(), HoldBreathActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.cvDailyJournal.setOnClickListener {
+            val intent = Intent(requireActivity(), JournalActivity::class.java)
             startActivity(intent)
         }
     }

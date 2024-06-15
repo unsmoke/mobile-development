@@ -1,5 +1,6 @@
 package com.cpp.unsmoke.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.cpp.unsmoke.data.local.preferences.LoginPreferences
@@ -8,6 +9,8 @@ import com.cpp.unsmoke.data.remote.responses.shop.CreateItemResponse
 import com.cpp.unsmoke.data.remote.responses.shop.GetAllMyShopResponse
 import com.cpp.unsmoke.data.remote.retrofit.ApiService
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
 import retrofit2.HttpException
 
@@ -18,7 +21,13 @@ class ShopRepository(
     fun getMyShop(): LiveData<Result<GetAllMyShopResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val response = apiService.getAllMyShop()
+            val accessToken = runBlocking {
+                loginPreferences.getToken().first()
+            }
+
+            Log.d("PersonalizedPlanRepository", "setPersonalizedPlan: $accessToken)")
+
+            val response = apiService.getAllMyShop("Bearer $accessToken")
             emit(Result.Success(response))
         } catch (e: HttpException) {
             emit(Result.Error(parseError(e)))
@@ -30,7 +39,13 @@ class ShopRepository(
     fun getMyItems(): LiveData<Result<GetAllMyShopResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val response = apiService.getAllMyItems()
+            val accessToken = runBlocking {
+                loginPreferences.getToken().first()
+            }
+
+            Log.d("PersonalizedPlanRepository", "setPersonalizedPlan: $accessToken)")
+
+            val response = apiService.getAllMyItems("Bearer $accessToken")
             emit(Result.Success(response))
         } catch (e: HttpException) {
             emit(Result.Error(parseError(e)))
@@ -42,7 +57,13 @@ class ShopRepository(
     fun buyItem(userId: String, itemId: String): LiveData<Result<CreateItemResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val response = apiService.buyItem(userId, itemId)
+            val accessToken = runBlocking {
+                loginPreferences.getToken().first()
+            }
+
+            Log.d("PersonalizedPlanRepository", "setPersonalizedPlan: $accessToken)")
+
+            val response = apiService.buyItem("Bearer $accessToken", userId, itemId)
             emit(Result.Success(response))
         } catch (e: HttpException) {
             emit(Result.Error(parseError(e)))

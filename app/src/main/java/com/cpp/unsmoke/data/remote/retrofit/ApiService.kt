@@ -3,6 +3,7 @@ package com.cpp.unsmoke.data.remote.retrofit
 import com.cpp.unsmoke.data.remote.responses.auth.LoginResponse
 import com.cpp.unsmoke.data.remote.responses.auth.RefreshResponse
 import com.cpp.unsmoke.data.remote.responses.auth.RegisterResponse
+import com.cpp.unsmoke.data.remote.responses.leaderboard.LeaderboardResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.CityResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.CreatePersonalizedResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.GetPersonalizedResponse
@@ -19,6 +20,7 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
     @FormUrlEncoded
@@ -39,13 +41,13 @@ interface ApiService {
     @FormUrlEncoded
     @POST("refresh")
     suspend fun refresh(
-        @Header("Authorization") authHeader: String,
-        @Field("refresh_token") refreshToken: String
+        @Field("refreshToken") refreshToken: String
     ): RefreshResponse
 
     @FormUrlEncoded
     @POST("health")
     suspend fun createPersonalized(
+        @Header("Authorization") authHeader: String,
         @Field("date_of_birth") dateOfBirth: String,
         @Field("gender") gender: String,
         @Field("smoking_start_time") smokingStartTime: Int,
@@ -65,7 +67,9 @@ interface ApiService {
     ): CreatePersonalizedResponse
 
     @GET("health")
-    suspend fun getPersonalizedPlan(): GetPersonalizedResponse
+    suspend fun getPersonalizedPlan(
+        @Header("Authorization") authHeader: String,
+    ): GetPersonalizedResponse
 
     @GET("location/province")
     suspend fun getProvince(): ProvinceResponse
@@ -76,27 +80,45 @@ interface ApiService {
     ): CityResponse
 
     @GET("user-plan/all")
-    suspend fun getAllUserPlan() : GetAllUserPlanResponse
+    suspend fun getAllUserPlan(
+        @Header("Authorization") authHeader: String,
+    ) : GetAllUserPlanResponse
 
     @GET("user-plan")
-    suspend fun getActiveUserPlan() : GetActiveUserPlanResponse
+    suspend fun getActiveUserPlan(
+        @Header("Authorization") authHeader: String,
+    ) : GetActiveUserPlanResponse
 
     @FormUrlEncoded
     @PUT("user-plan")
     suspend fun updateUserPlan(
+        @Header("Authorization") authHeader: String,
         @Field("plan_id") planId: Int
     ): GetActiveUserPlanResponse
 
     @GET("shop")
-    suspend fun getAllMyShop(): GetAllMyShopResponse
+    suspend fun getAllMyShop(
+        @Header("Authorization") authHeader: String,
+    ): GetAllMyShopResponse
 
     @GET("inventory")
-    suspend fun getAllMyItems(): GetAllMyShopResponse
+    suspend fun getAllMyItems(
+        @Header("Authorization") authHeader: String,
+    ): GetAllMyShopResponse
 
     @FormUrlEncoded
     @POST("inventory")
     suspend fun buyItem(
+        @Header("Authorization") authHeader: String,
         @Field("user_id") userId: String,
         @Field("item_id") itemId: String
     ): CreateItemResponse
+
+    @GET("province/{provinceId}")
+    suspend fun getLeaderboardByProvince(
+        @Header("Authorization") authHeader: String,
+        @Path("provinceId") provinceId: Int,
+        @Query("page") page: Int = 1,
+        @Query("size") size: Int = 20
+    ): LeaderboardResponse
 }

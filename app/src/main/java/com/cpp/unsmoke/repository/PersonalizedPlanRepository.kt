@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.cpp.unsmoke.data.local.preferences.LoginPreferences
+import com.cpp.unsmoke.data.local.preferences.UserPreferences
 import com.cpp.unsmoke.data.remote.Result
 import com.cpp.unsmoke.data.remote.responses.personalized.CityResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.CreatePersonalizedResponse
@@ -21,7 +22,8 @@ import retrofit2.HttpException
 
 class PersonalizedPlanRepository(
     private var apiService: ApiService,
-    private val loginPreferences: LoginPreferences
+    private val loginPreferences: LoginPreferences,
+    private val userPreferences: UserPreferences
 ) {
 
     fun setPersonalizedPlan(
@@ -44,7 +46,14 @@ class PersonalizedPlanRepository(
     ): LiveData<Result<CreatePersonalizedResponse>> = liveData {
         emit(Result.Loading)
         try {
+            val accessToken = runBlocking {
+                loginPreferences.getToken().first()
+            }
+
+            Log.d("PersonalizedPlanRepository", "setPersonalizedPlan: $accessToken)")
+
             val response = apiService.createPersonalized(
+                "Bearer $accessToken",
                 dateOfBirth,
                 gender,
                 smokingStartTime,
@@ -77,13 +86,13 @@ class PersonalizedPlanRepository(
         liveData {
             emit(Result.Loading)
             try {
-                val token = runBlocking {
+                val accessToken = runBlocking {
                     loginPreferences.getToken().first()
                 }
 
-                Log.d("PersonalizedPlanRepository", "getPersonalizedPlan: token: $token")
+                Log.d("PersonalizedPlanRepository", "setPersonalizedPlan: $accessToken)")
 
-                val response = apiService.getPersonalizedPlan()
+                val response = apiService.getPersonalizedPlan("Bearer $accessToken")
                 emit(Result.Success(response))
             } catch (e: HttpException) {
                 val token = runBlocking {
@@ -133,7 +142,13 @@ class PersonalizedPlanRepository(
     fun getAllUserPlan(): LiveData<Result<GetAllUserPlanResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val response = apiService.getAllUserPlan()
+            val accessToken = runBlocking {
+                loginPreferences.getToken().first()
+            }
+
+            Log.d("PersonalizedPlanRepository", "setPersonalizedPlan: $accessToken)")
+
+            val response = apiService.getAllUserPlan("Bearer $accessToken")
             emit(Result.Success(response))
         } catch (e: HttpException) {
             val errorResponse = parseError(e)
@@ -148,7 +163,13 @@ class PersonalizedPlanRepository(
     fun updateUserPlan(idPlan: Int): LiveData<Result<GetActiveUserPlanResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val response = apiService.updateUserPlan(idPlan)
+            val accessToken = runBlocking {
+                loginPreferences.getToken().first()
+            }
+
+            Log.d("PersonalizedPlanRepository", "setPersonalizedPlan: $accessToken)")
+
+            val response = apiService.updateUserPlan("Bearer $accessToken", idPlan)
             emit(Result.Success(response))
         } catch (e: HttpException) {
             val errorResponse = parseError(e)
@@ -158,6 +179,14 @@ class PersonalizedPlanRepository(
             Log.e("UPDATE_USER_PLAN", e.message.toString())
             emit(Result.Error(e.message ?: "An unknown error occurred"))
         }
+    }
+
+    suspend fun setProv(provId: String) = runBlocking {
+        userPreferences.setProv(provId)
+    }
+
+    suspend fun setCity(cityId: String) = runBlocking {
+        userPreferences.setCity(cityId)
     }
 
     private fun parseError(e: HttpException): String {
@@ -185,10 +214,11 @@ class PersonalizedPlanRepository(
 
         fun getInstance(
             apiService: ApiService,
-            preferences: LoginPreferences
+            loginPreferences: LoginPreferences,
+            userPreferences: UserPreferences
         ): PersonalizedPlanRepository =
             instance ?: synchronized(this) {
-                instance ?: PersonalizedPlanRepository(apiService, preferences).also {
+                instance ?: PersonalizedPlanRepository(apiService, loginPreferences, userPreferences).also {
                     instance = it
                 }
             }
