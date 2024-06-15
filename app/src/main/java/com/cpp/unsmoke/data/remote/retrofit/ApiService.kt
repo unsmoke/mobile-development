@@ -39,13 +39,13 @@ interface ApiService {
     @FormUrlEncoded
     @POST("refresh")
     suspend fun refresh(
-        @Header("Authorization") authHeader: String,
-        @Field("refresh_token") refreshToken: String
+        @Field("refreshToken") refreshToken: String
     ): RefreshResponse
 
     @FormUrlEncoded
     @POST("health")
     suspend fun createPersonalized(
+        @Header("Authorization") authHeader: String,
         @Field("date_of_birth") dateOfBirth: String,
         @Field("gender") gender: String,
         @Field("smoking_start_time") smokingStartTime: Int,
@@ -65,7 +65,9 @@ interface ApiService {
     ): CreatePersonalizedResponse
 
     @GET("health")
-    suspend fun getPersonalizedPlan(): GetPersonalizedResponse
+    suspend fun getPersonalizedPlan(
+        @Header("Authorization") authHeader: String,
+    ): GetPersonalizedResponse
 
     @GET("location/province")
     suspend fun getProvince(): ProvinceResponse
@@ -76,26 +78,36 @@ interface ApiService {
     ): CityResponse
 
     @GET("user-plan/all")
-    suspend fun getAllUserPlan() : GetAllUserPlanResponse
+    suspend fun getAllUserPlan(
+        @Header("Authorization") authHeader: String,
+    ) : GetAllUserPlanResponse
 
     @GET("user-plan")
-    suspend fun getActiveUserPlan() : GetActiveUserPlanResponse
+    suspend fun getActiveUserPlan(
+        @Header("Authorization") authHeader: String,
+    ) : GetActiveUserPlanResponse
 
     @FormUrlEncoded
     @PUT("user-plan")
     suspend fun updateUserPlan(
+        @Header("Authorization") authHeader: String,
         @Field("plan_id") planId: Int
     ): GetActiveUserPlanResponse
 
     @GET("shop")
-    suspend fun getAllMyShop(): GetAllMyShopResponse
+    suspend fun getAllMyShop(
+        @Header("Authorization") authHeader: String,
+    ): GetAllMyShopResponse
 
     @GET("inventory")
-    suspend fun getAllMyItems(): GetAllMyShopResponse
+    suspend fun getAllMyItems(
+        @Header("Authorization") authHeader: String,
+    ): GetAllMyShopResponse
 
     @FormUrlEncoded
     @POST("inventory")
     suspend fun buyItem(
+        @Header("Authorization") authHeader: String,
         @Field("user_id") userId: String,
         @Field("item_id") itemId: String
     ): CreateItemResponse

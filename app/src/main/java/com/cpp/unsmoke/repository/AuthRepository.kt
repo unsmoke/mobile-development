@@ -29,6 +29,7 @@ class AuthRepository(
                 response.data?.let { loginData ->
                     Log.d("LOGIN", "save token dipanggil")
                     saveToken(loginData.accessToken ?: "", loginData.refreshToken ?: "")
+                    Log.d("LOGIN", "access token : ${loginData.accessToken}, refresh token : ${loginData.refreshToken}")
                     saveUserId(loginData.userId ?: "")
                     loginPref()
                 }

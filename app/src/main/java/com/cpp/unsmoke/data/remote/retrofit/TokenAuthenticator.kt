@@ -25,11 +25,12 @@ class TokenAuthenticator(
     override fun authenticate(route: Route?, response: Response): Request? {
         if (response.code == 401) {
             val refreshToken = runBlocking { loginPreferences.getRefreshToken().first() }
-            val currentAccessToken = runBlocking { loginPreferences.getToken().first() }
 
-            return if (!refreshToken.isNullOrEmpty() && !currentAccessToken.isNullOrEmpty()) {
+            Log.d("TokenAuthenticator", "Refresh Token : $refreshToken")
+
+            return if (!refreshToken.isNullOrEmpty()) {
                 val newAccessToken = runBlocking {
-                    when (val result = refreshToken(refreshToken, currentAccessToken)) {
+                    when (val result = refreshToken(refreshToken)) {
                         is Result.Success -> result.data.data?.accessToken
                         else -> null
                     }
@@ -56,11 +57,10 @@ class TokenAuthenticator(
         }
     }
 
-    private suspend fun refreshToken(refreshToken: String, accessToken: String): Result<RefreshResponse> = runBlocking {
+    private suspend fun refreshToken(refreshToken: String): Result<RefreshResponse> = runBlocking {
         try {
-            val apiService = ApiConfig.getApiServiceWithoutAuth()
-            val authHeader = "Bearer $accessToken"
-            val response = apiService.refresh(authHeader, refreshToken)
+            val apiService = ApiConfig.getApiService()
+            val response = apiService.refresh(refreshToken)
             Result.Success(response)
         } catch (e: HttpException) {
             val errorResponse = parseError(e)

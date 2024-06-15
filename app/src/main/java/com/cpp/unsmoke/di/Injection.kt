@@ -17,37 +17,32 @@ object Injection {
     fun provideAuthRepository(context: Context): AuthRepository {
         val pref = LoginPreferences.getInstance(context.dataStore)
 
-        // Step 1: Create temporary ApiService without TokenAuthenticator
-        val apiService = ApiConfig.getApiServiceWithoutAuth()
+        val apiService = ApiConfig.getApiServiceWithoutAuth(pref)
 
-        // Update AuthRepository to use final ApiService
         return AuthRepository.getInstance(apiService, pref)
     }
 
     fun providePersonalizedPlanRepository(context: Context): PersonalizedPlanRepository {
         val pref = LoginPreferences.getInstance(context.dataStore)
 
-        val userAfter = runBlocking { pref.getToken().first() }
-
-        Log.d("Injection", "providePersonalizedPlanRepository: $userAfter")
-
-        // Create ApiService with AuthRepository and TokenAuthenticator
-        val apiService = ApiConfig.getApiService(userAfter ?: "", pref)
+        val apiService = ApiConfig.getApiServiceWithoutAuth(pref)
 
         return PersonalizedPlanRepository.getInstance(apiService, pref)
     }
 
     fun provideShopRepository(context: Context): ShopRepository {
         val pref = LoginPreferences.getInstance(context.dataStore)
-        val userAfter = runBlocking { pref.getToken().first() }
-        val apiService = ApiConfig.getApiService(userAfter ?: "", pref)
+
+        val apiService = ApiConfig.getApiServiceWithoutAuth(pref)
+
         return ShopRepository.getInstance(apiService, pref)
     }
 
     fun provideJournalRepository(context: Context): JournalRepository {
         val pref = LoginPreferences.getInstance(context.dataStore)
-        val userAfter = runBlocking { pref.getToken().first() }
-        val apiService = ApiConfig.getApiService(userAfter ?: "", pref)
+
+        val apiService = ApiConfig.getApiServiceWithoutAuth(pref)
+
         return JournalRepository.getInstance(apiService, pref)
     }
 

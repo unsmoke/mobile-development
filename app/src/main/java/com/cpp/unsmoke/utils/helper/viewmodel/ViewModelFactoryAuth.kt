@@ -17,6 +17,7 @@ import com.cpp.unsmoke.ui.personalizedplan.PersonalizedViewModel
 import com.cpp.unsmoke.ui.shop.ShopViewModel
 
 class ViewModelFactoryAuth private constructor(
+    private val authRepository: AuthRepository,
     private val personalizedPlanRepository: PersonalizedPlanRepository,
     private val settingRepository: SettingRepository,
     private val shopRepository: ShopRepository,
@@ -31,6 +32,7 @@ class ViewModelFactoryAuth private constructor(
         fun getInstance(context: Context): ViewModelFactoryAuth {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: ViewModelFactoryAuth(
+                    Injection.provideAuthRepository(context),
                     Injection.providePersonalizedPlanRepository(context),
                     Injection.provideSettingRepository(context),
                     Injection.provideShopRepository(context),
@@ -45,6 +47,8 @@ class ViewModelFactoryAuth private constructor(
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when (modelClass) {
+            LoginViewModel::class.java -> LoginViewModel(authRepository, settingRepository) as T
+            RegisterViewModel::class.java -> RegisterViewModel(authRepository) as T
             PersonalizedViewModel::class.java -> PersonalizedViewModel(personalizedPlanRepository, settingRepository) as T
             ProfileViewModel::class.java -> ProfileViewModel(settingRepository) as T
             ShopViewModel::class.java -> ShopViewModel(shopRepository, settingRepository) as T

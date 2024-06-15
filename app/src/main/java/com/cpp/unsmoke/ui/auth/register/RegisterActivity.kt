@@ -32,7 +32,7 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val viewModel = ObtainViewModelFactory.obtain<RegisterViewModel>(this)
+        val viewModel = ObtainViewModelFactory.obtainAuth<RegisterViewModel>(this)
 
         supportActionBar?.hide()
 

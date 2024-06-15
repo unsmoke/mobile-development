@@ -15,27 +15,18 @@ class ApiConfig {
         private const val BASE_URL = BuildConfig.BASE_URL
 
         fun getApiService(
-            token: String,
-            loginPreferences: LoginPreferences
         ): ApiService {
-            Log.d("GetApiService", "getApiService: $token")
+
             val loggingInterceptor = if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
             } else {
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
             }
-            val authInterceptor = Interceptor { chain ->
-                val req = chain.request()
-                val requestHeaders = req.newBuilder()
-                    .addHeader("Authorization", "Bearer $token")
-                    .build()
-                chain.proceed(requestHeaders)
-            }
+
             val client = OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
-                .addInterceptor(authInterceptor)
-                .authenticator(TokenAuthenticator(loginPreferences))
                 .build()
+
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -45,15 +36,21 @@ class ApiConfig {
             return retrofit.create(ApiService::class.java)
         }
 
-        fun getApiServiceWithoutAuth(): ApiService {
+        fun getApiServiceWithoutAuth(
+            loginPreferences: LoginPreferences
+        ): ApiService {
+
             val loggingInterceptor = if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
             } else {
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
             }
+
             val client = OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
+                .authenticator(TokenAuthenticator(loginPreferences))
                 .build()
+
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
