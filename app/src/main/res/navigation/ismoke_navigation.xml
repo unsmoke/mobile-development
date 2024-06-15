@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ismoke_navigation"
+    app:startDestination="@id/ismokeOneFragment">
+
+    <fragment
+        android:id="@+id/ismokeOneFragment"
+        android:name="com.cpp.unsmoke.ui.ismoke.screen.IsmokeOneFragment"
+        android:label="fragment_ismoke_one"
+        tools:layout="@layout/fragment_ismoke_one" >
+        <action
+            android:id="@+id/action_ismokeOneFragment_to_ismokeTwoFragment"
+            app:destination="@id/ismokeTwoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ismokeTwoFragment"
+        android:name="com.cpp.unsmoke.ui.ismoke.screen.IsmokeTwoFragment"
+        android:label="fragment_ismoke_two"
+        tools:layout="@layout/fragment_ismoke_two" >
+        <action
+            android:id="@+id/action_ismokeTwoFragment_to_ismokeThreeFragment"
+            app:destination="@id/ismokeThreeFragment" />
+        <action
+            android:id="@+id/action_ismokeTwoFragment_to_ismokeFourFragment"
+            app:destination="@id/ismokeFourFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ismokeThreeFragment"
+        android:name="com.cpp.unsmoke.ui.ismoke.screen.IsmokeThreeFragment"
+        android:label="fragment_ismoke_three"
+        tools:layout="@layout/fragment_ismoke_three" />
+    <fragment
+        android:id="@+id/ismokeFourFragment"
+        android:name="com.cpp.unsmoke.ui.ismoke.screen.IsmokeFourFragment"
+        android:label="fragment_ismoke_four"
+        tools:layout="@layout/fragment_ismoke_four" />
+</navigation>
