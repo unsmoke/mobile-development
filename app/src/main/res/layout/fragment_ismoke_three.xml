@@ -1,14 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/accent_white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.ismoke.screen.IsmokeThreeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <ImageView
+        android:id="@+id/iv_success_asset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="164dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/self_confidence_asset"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tv_result_success"
+        style="@style/TextContent.TitleSecondaryBlack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:text="@string/result_success_recorded_title"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_success_asset"/>
+    
+    <TextView
+        android:id="@+id/tv_result_success_description"
+        style="@style/TextContent.Description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_result_success"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="16dp"
+        android:text="@string/result_success_recorded_description"
+        android:textAlignment="center"/>
+
+    <LinearLayout
+        android:id="@+id/cv_smoke_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="4dp"
+        android:paddingVertical="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_result_success_description">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_smoke_consume"
+            android:layout_width="200dp"
+            android:layout_height="70dp"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginVertical="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            app:cardCornerRadius="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_smoke_consume_title"
+                    style="@style/TextContent.DescriptionMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/smoke_consumed"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:id="@+id/tv_smoke_consume"
+                    style="@style/TextContent.TitleSecondaryBlack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:textAlignment="center"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_smoke_limit"
+            android:layout_width="200dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            app:cardCornerRadius="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_smoke_quota_title"
+                    style="@style/TextContent.DescriptionMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/smoke_limit"
+                    android:textAlignment="center"
+                    android:textColor="@color/dark_green" />
+
+                <TextView
+                    android:id="@+id/tv_smoke_quota"
+                    style="@style/TextContent.TitleSecondaryBlack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:textAlignment="center"
+                    android:textColor="@color/dark_green"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+    <com.cpp.unsmoke.utils.customview.CustomButton
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/button_state"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="@string/ok"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
