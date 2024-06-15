@@ -26,7 +26,8 @@ class LeaderboardPagingSource(
         return try {
             val position = params.key ?: INITIAL_PAGE_INDEX
             val token = runBlocking { loginPreferences.getToken().first() }
-            val userProv = runBlocking { userPreferences.getProv().first() }
+//            val userProv = runBlocking { userPreferences.getProv().first() }
+            val userProv = "13"
             val response = apiService.getLeaderboardByProvince("Bearer $token", userProv.toString().toInt(), position, params.loadSize).data
             val leaderboardItems = response?.filterNotNull() ?: emptyList()
             LoadResult.Page(
