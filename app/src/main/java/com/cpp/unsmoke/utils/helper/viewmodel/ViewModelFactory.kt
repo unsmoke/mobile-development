@@ -14,7 +14,6 @@ import com.cpp.unsmoke.ui.personalizedplan.PersonalizedViewModel
 
 class ViewModelFactory private constructor(
     private val authRepository: AuthRepository,
-    private val personalizedPlanRepository: PersonalizedPlanRepository,
     private val settingRepository: SettingRepository
 ) : ViewModelProvider.NewInstanceFactory() {
 
@@ -27,7 +26,6 @@ class ViewModelFactory private constructor(
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: ViewModelFactory(
                     Injection.provideAuthRepository(context),
-                    Injection.providePersonalizedPlanRepository(context),
                     Injection.provideSettingRepository(context)
                 ).also {
                     INSTANCE = it
@@ -39,13 +37,9 @@ class ViewModelFactory private constructor(
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel(authRepository, personalizedPlanRepository) as T
+            return LoginViewModel(authRepository, settingRepository) as T
         } else if (modelClass.isAssignableFrom(RegisterViewModel::class.java)){
             return RegisterViewModel(authRepository) as T
-        } else if (modelClass.isAssignableFrom(PersonalizedViewModel::class.java)){
-            return PersonalizedViewModel(personalizedPlanRepository) as T
-        } else if (modelClass.isAssignableFrom(ProfileViewModel::class.java)){
-            return ProfileViewModel(settingRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
     }

@@ -19,6 +19,9 @@
         android:theme="@style/Theme.Unsmoke"
         tools:targetApi="31">
         <activity
+            android:name=".ui.ismoke.IsmokeActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.journal.JournalActivity"
             android:exported="false" />
 

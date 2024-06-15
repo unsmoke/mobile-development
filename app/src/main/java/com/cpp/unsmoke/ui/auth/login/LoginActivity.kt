@@ -13,6 +13,7 @@ import com.cpp.unsmoke.ui.auth.forgotpassword.ForgotPasswordActivity
 import com.cpp.unsmoke.ui.auth.register.RegisterActivity
 import com.cpp.unsmoke.ui.main.MainActivity
 import com.cpp.unsmoke.ui.personalizedplan.PersonalizedActivity
+import com.cpp.unsmoke.ui.personalizedplan.PersonalizedViewModel
 import com.cpp.unsmoke.utils.helper.viewmodel.ObtainViewModelFactory
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -66,7 +67,8 @@ class LoginActivity : AppCompatActivity() {
                                 binding.btnLogin.isClickable = true
                             }
                             is Result.Success -> {
-                                viewModel.getPersonalizedPlan().observe(this){resultPlan ->
+                                val personalizedViewModel = ObtainViewModelFactory.obtainAuth<PersonalizedViewModel>(this)
+                                personalizedViewModel.getPersonalizedPlan().observe(this){resultPlan ->
                                     if (resultPlan != null){
                                         when(resultPlan){
                                             is Result.Loading -> {
@@ -77,7 +79,8 @@ class LoginActivity : AppCompatActivity() {
                                                     toPersonalized()
                                                 }
 
-                                                if(resultPlan.error == "Unauthorized") {
+                                                if(resultPlan.error.contains("not authorized")) {
+                                                    viewModel.logout()
                                                     alertBuilder.setTitle("Unauthorized")
                                                     alertBuilder.setMessage("Please Login Again")
                                                     alertBuilder.setPositiveButton("OK") { _, _ ->

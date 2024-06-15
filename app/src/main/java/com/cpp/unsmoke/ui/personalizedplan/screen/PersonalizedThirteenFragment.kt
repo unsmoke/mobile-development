@@ -14,6 +14,7 @@ import com.cpp.unsmoke.R
 import com.cpp.unsmoke.data.remote.Result
 import com.cpp.unsmoke.data.remote.responses.userplan.DataItemPlan
 import com.cpp.unsmoke.databinding.FragmentPersonalizedThirteenBinding
+import com.cpp.unsmoke.ui.auth.login.LoginActivity
 import com.cpp.unsmoke.ui.main.MainActivity
 import com.cpp.unsmoke.ui.personalizedplan.PersonalizedViewModel
 import com.cpp.unsmoke.ui.personalizedplan.adapter.PersonalizedAdapter
@@ -35,7 +36,7 @@ class PersonalizedThirteenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val personalizedViewModel = ObtainViewModelFactory.obtain<PersonalizedViewModel>(requireActivity())
+        val personalizedViewModel = ObtainViewModelFactory.obtainAuth<PersonalizedViewModel>(requireActivity())
 
         binding.rvPlan.layoutManager = LinearLayoutManager(requireContext())
 
@@ -55,6 +56,11 @@ class PersonalizedThirteenFragment : Fragment() {
                                         setUserData(lastThreePlans)
                                     }
                                     is Result.Error -> {
+                                        if (resultPlan.error.contains("not authorized")){
+                                            Toast.makeText(requireContext(), "Your are not allowed to access this resource", Toast.LENGTH_SHORT).show()
+                                            personalizedViewModel.logout()
+                                            toLogin()
+                                        }
                                         Toast.makeText(requireContext(), "Failed to get personalized all plan", Toast.LENGTH_SHORT).show()
                                     }
                                     is Result.Loading -> {
@@ -67,6 +73,11 @@ class PersonalizedThirteenFragment : Fragment() {
                         }
                     }
                     is Result.Error -> {
+                        if (result.error.contains("not authorized")){
+                            Toast.makeText(requireContext(), "Your are not allowed to access this resource", Toast.LENGTH_SHORT).show()
+                            personalizedViewModel.logout()
+                            toLogin()
+                        }
                         Toast.makeText(requireContext(), "Failed to get personalized plan", Toast.LENGTH_SHORT).show()
                     }
                     is Result.Loading -> {
@@ -104,9 +115,15 @@ class PersonalizedThirteenFragment : Fragment() {
                         is Result.Success -> {
                             val intent = Intent(requireActivity(), MainActivity::class.java)
                             startActivity(intent)
+                            requireActivity().finish()
                         }
 
                         is Result.Error -> {
+                            if (result.error.contains("not authorized")){
+                                Toast.makeText(requireContext(), "Your are not allowed to access this resource", Toast.LENGTH_SHORT).show()
+                                personalizedViewModel.logout()
+                                toLogin()
+                            }
                             Toast.makeText(requireContext(), "Failed to update plan", Toast.LENGTH_SHORT).show()
                         }
 
@@ -137,5 +154,11 @@ class PersonalizedThirteenFragment : Fragment() {
         // Mendapatkan tampilan progress bar dari tata letak induk dan menampilkannya
         val progressBar = requireActivity().findViewById<View>(R.id.progress_bar)
         progressBar.visibility = View.VISIBLE
+    }
+
+    private fun toLogin(){
+        val intent = Intent(requireActivity(), LoginActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
     }
 }

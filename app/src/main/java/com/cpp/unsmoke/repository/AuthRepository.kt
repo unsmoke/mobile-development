@@ -27,7 +27,9 @@ class AuthRepository(
             val response = apiService.login(email, password)
             if (response.code == 200) { // Assuming 200 is the success code
                 response.data?.let { loginData ->
+                    Log.d("LOGIN", "save token dipanggil")
                     saveToken(loginData.accessToken ?: "", loginData.refreshToken ?: "")
+                    saveUserId(loginData.userId ?: "")
                     loginPref()
                 }
             }
@@ -58,42 +60,18 @@ class AuthRepository(
         }
     }
 
-    fun refresh(): LiveData<Result<RefreshResponse>> = liveData {
-        emit(Result.Loading)
-        try {
-            val refreshToken = runBlocking { getRefreshToken().first() }
-            val response = apiService.refresh(refreshToken.toString())
-            if (refreshToken.isNullOrEmpty()) {
-                emit(Result.Error("Refresh token is missing"))
-                return@liveData
-            }
-            if (response.code == 200) { // Assuming 200 is the success code
-                response.data?.let { refreshData ->
-                    updateToken(refreshData.accessToken ?: "")
-                }
-                emit(Result.Success(response))
-            } else{
-                emit(Result.Error("Failed to refresh token: ${response.code}"))
-            }
-        } catch (e: HttpException) {
-            val errorResponse = parseError(e)
-            Log.e("REFRESH_TOKEN", errorResponse)
-            emit(Result.Error(errorResponse))
-        } catch (e: Exception) {
-            Log.e("REFRESH_TOKEN", e.message.toString())
-            emit(Result.Error(e.message ?: "An unknown error occurred"))
+    private suspend fun saveToken(token: String, refreshToken: String) =
+        runBlocking {
+            loginPreferences.saveToken(token, refreshToken)
         }
-    }
 
-    private suspend fun saveToken(token: String, refreshToken: String) = loginPreferences.saveToken(token, refreshToken)
+    private suspend fun saveUserId(id: String) = runBlocking {
+        loginPreferences.saveUserId(id)
+    }
 
     private suspend fun loginPref() = loginPreferences.loginPref()
 
     fun getLoginStatus() = loginPreferences.getLoginStatus()
-
-    private fun getRefreshToken() = loginPreferences.getRefreshToken()
-
-    private suspend fun updateToken(token: String) = loginPreferences.updateToken(token)
 
     private fun parseError(e: HttpException): String {
         return try {

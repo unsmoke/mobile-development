@@ -1,60 +1,103 @@
 package com.cpp.unsmoke.ui.shop.screen
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.Navigation
+import androidx.recyclerview.widget.GridLayoutManager
 import com.cpp.unsmoke.R
+import com.cpp.unsmoke.data.local.preferences.LoginPreferences
+import com.cpp.unsmoke.data.remote.Result
+import com.cpp.unsmoke.data.remote.responses.shop.DataItem
+import com.cpp.unsmoke.databinding.FragmentShopBinding
+import com.cpp.unsmoke.ui.shop.ShopViewModel
+import com.cpp.unsmoke.ui.shop.adapter.ShopAdapter
+import com.cpp.unsmoke.utils.helper.viewmodel.ObtainViewModelFactory
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ShopFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ShopFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentShopBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var shopAdapter: ShopAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_shop, container, false)
+    ): View {
+        _binding = FragmentShopBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ShopFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ShopFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val viewModel = ObtainViewModelFactory.obtainAuth<ShopViewModel>(requireActivity())
+
+        binding.inventoryBtn.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_shopFragment_to_inventoryFragment)
+        }
+
+        shopAdapter = ShopAdapter { item ->
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(item.name)
+                .setMessage(item.description)
+                .setPositiveButton("OK") { dialog, _ ->
+                    dialog.dismiss()
+                    val userId = viewModel.getUserId().toString()
+                    Log.d("ShopFragment", "userId: $userId")
+                    item.itemId?.let {
+                        viewModel.buyItem(userId, it).observe(viewLifecycleOwner) { result ->
+                            when (result) {
+                                is Result.Success -> {
+                                    Toast.makeText(requireContext(), "Item purchased successfully", Toast.LENGTH_SHORT).show()
+                                }
+
+                                is Result.Error -> {
+                                    Toast.makeText(requireContext(), "Failed to purchase item", Toast.LENGTH_SHORT).show()
+                                }
+
+                                is Result.Loading -> {
+                                    // Handle loading state if necessary
+                                }
+                            }
+                        }
+                    }
+                }
+                .setNegativeButton("Cancel") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
+        binding.rvItemList.apply {
+            layoutManager = GridLayoutManager(context, 2)
+            adapter = shopAdapter
+        }
+
+        viewModel.getMyShop().observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Success -> {
+                    result.data.data?.let { items ->
+                        shopAdapter.submitList(items)
+                    }
+                }
+                is Result.Error -> {
+                    Toast.makeText(requireContext(), "Failed to load shop items", Toast.LENGTH_SHORT).show()
+                }
+                is Result.Loading -> {
+                    Toast.makeText(requireContext(), "Loading shop items", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

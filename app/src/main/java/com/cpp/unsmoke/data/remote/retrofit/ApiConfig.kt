@@ -1,5 +1,6 @@
 package com.cpp.unsmoke.data.remote.retrofit
 
+import android.util.Log
 import com.cpp.unsmoke.BuildConfig
 import com.cpp.unsmoke.data.local.preferences.LoginPreferences
 import okhttp3.Interceptor
@@ -15,9 +16,9 @@ class ApiConfig {
 
         fun getApiService(
             token: String,
-            authRepository: AuthRepository,
             loginPreferences: LoginPreferences
         ): ApiService {
+            Log.d("GetApiService", "getApiService: $token")
             val loggingInterceptor = if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
             } else {
@@ -33,7 +34,7 @@ class ApiConfig {
             val client = OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .addInterceptor(authInterceptor)
-                .authenticator(TokenAuthenticator(authRepository, loginPreferences))
+                .authenticator(TokenAuthenticator(loginPreferences))
                 .build()
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)

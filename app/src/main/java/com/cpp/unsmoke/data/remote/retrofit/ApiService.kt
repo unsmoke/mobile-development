@@ -11,9 +11,11 @@ import com.cpp.unsmoke.data.remote.responses.shop.CreateItemResponse
 import com.cpp.unsmoke.data.remote.responses.shop.GetAllMyShopResponse
 import com.cpp.unsmoke.data.remote.responses.userplan.GetActiveUserPlanResponse
 import com.cpp.unsmoke.data.remote.responses.userplan.GetAllUserPlanResponse
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -37,7 +39,8 @@ interface ApiService {
     @FormUrlEncoded
     @POST("refresh")
     suspend fun refresh(
-        @Field("refreshToken") refreshToken: String,
+        @Header("Authorization") authHeader: String,
+        @Field("refresh_token") refreshToken: String
     ): RefreshResponse
 
     @FormUrlEncoded
