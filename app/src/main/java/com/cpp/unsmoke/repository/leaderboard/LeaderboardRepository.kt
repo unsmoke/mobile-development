@@ -23,11 +23,6 @@ class LeaderboardRepository(
         ).liveData
     }
 
-//    suspend fun getMyRank(): LeaderboardItem {
-//        val token = loginPreferences.getToken()
-//        return apiService.getMyRank("Bearer $token")
-//    }
-
     companion object {
         @Volatile
         private var instance: LeaderboardRepository? = null

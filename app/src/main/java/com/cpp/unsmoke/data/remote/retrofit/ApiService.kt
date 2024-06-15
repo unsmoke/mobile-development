@@ -114,11 +114,11 @@ interface ApiService {
         @Field("item_id") itemId: String
     ): CreateItemResponse
 
-    @GET("province/{provinceId}")
+    @GET("leaderboard/province/{provinceId}")
     suspend fun getLeaderboardByProvince(
         @Header("Authorization") authHeader: String,
         @Path("provinceId") provinceId: Int,
         @Query("page") page: Int = 1,
-        @Query("size") size: Int = 20
+        @Query("per_page") size: Int = 5
     ): LeaderboardResponse
 }

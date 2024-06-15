@@ -7,6 +7,7 @@ import com.cpp.unsmoke.data.remote.responses.leaderboard.LeaderboardItem
 import kotlinx.coroutines.runBlocking
 import com.cpp.unsmoke.data.local.preferences.LoginPreferences
 import com.cpp.unsmoke.data.local.preferences.UserPreferences
+import kotlinx.coroutines.flow.first
 
 class LeaderboardPagingSource(
     private val apiService: ApiService,
@@ -24,8 +25,8 @@ class LeaderboardPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LeaderboardItem> {
         return try {
             val position = params.key ?: INITIAL_PAGE_INDEX
-            val token = runBlocking { loginPreferences.getToken() }
-            val userProv = runBlocking { userPreferences.getProv() }
+            val token = runBlocking { loginPreferences.getToken().first() }
+            val userProv = runBlocking { userPreferences.getProv().first() }
             val response = apiService.getLeaderboardByProvince("Bearer $token", userProv.toString().toInt(), position, params.loadSize).data
             val leaderboardItems = response?.filterNotNull() ?: emptyList()
             LoadResult.Page(

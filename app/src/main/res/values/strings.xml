@@ -119,5 +119,6 @@
     <string name="smoking_quantity_question">How many cigarettes are you consuming right now?</string>
     <string name="smoking_feelings_question">How are you feeling right now?</string>
     <string name="smoking_reason_question">What made you want to smoke?</string>
+    <string name="retry">Retry</string>
 
 </resources>
