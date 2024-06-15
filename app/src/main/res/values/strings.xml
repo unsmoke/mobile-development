@@ -112,4 +112,12 @@
     <string name="smoke_limit">Cigarettes limit</string>
     <string name="journaling_description">You will get an extra +40XP if you fill out this journal</string>
     <string name="journaling_title">Let\'s fill in your daily journal!</string>
+
+    <string name="ismoke_title">Daily Cigarette Log</string>
+    <string name="ismoke_descriptions">Enter the following data each time you smoke to record your daily cigarette intake and help recognize any patterns in your smoking habits.</string>
+    <string name="smoking_time_question">What time are you smoking right now?</string>
+    <string name="smoking_quantity_question">How many cigarettes are you consuming right now?</string>
+    <string name="smoking_feelings_question">How are you feeling right now?</string>
+    <string name="smoking_reason_question">What made you want to smoke?</string>
+
 </resources>
