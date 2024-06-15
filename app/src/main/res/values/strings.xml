@@ -107,5 +107,10 @@
     <string name="summary_emotions">Today you feel %1$s</string>
     <string name="summary_challenges">The challenge you face today is %1$s</string>
     <string name="summary_commitment">Your commitment for tomorrow is %1$s</string>
-    
+
+    <string name="journaling_title">It is time to fill up your daily journal!</string>
+    <string name="journaling_description">You will get an extra +40 XP</string>
+
+    <string name="smoke_consumed">Cigarettes consumed</string>
+    <string name="smoke_limit">Cigarettes limit</string>
 </resources>
