@@ -3,6 +3,7 @@ package com.cpp.unsmoke.data.remote.retrofit
 import com.cpp.unsmoke.data.remote.responses.auth.LoginResponse
 import com.cpp.unsmoke.data.remote.responses.auth.RefreshResponse
 import com.cpp.unsmoke.data.remote.responses.auth.RegisterResponse
+import com.cpp.unsmoke.data.remote.responses.leaderboard.LeaderboardResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.CityResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.CreatePersonalizedResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.GetPersonalizedResponse
@@ -19,6 +20,7 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
     @FormUrlEncoded
@@ -111,4 +113,12 @@ interface ApiService {
         @Field("user_id") userId: String,
         @Field("item_id") itemId: String
     ): CreateItemResponse
+
+    @GET("province/{provinceId}")
+    suspend fun getLeaderboardByProvince(
+        @Header("Authorization") authHeader: String,
+        @Path("provinceId") provinceId: Int,
+        @Query("page") page: Int = 1,
+        @Query("size") size: Int = 20
+    ): LeaderboardResponse
 }

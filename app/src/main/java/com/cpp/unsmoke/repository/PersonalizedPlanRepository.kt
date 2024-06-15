@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.cpp.unsmoke.data.local.preferences.LoginPreferences
+import com.cpp.unsmoke.data.local.preferences.UserPreferences
 import com.cpp.unsmoke.data.remote.Result
 import com.cpp.unsmoke.data.remote.responses.personalized.CityResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.CreatePersonalizedResponse
@@ -21,7 +22,8 @@ import retrofit2.HttpException
 
 class PersonalizedPlanRepository(
     private var apiService: ApiService,
-    private val loginPreferences: LoginPreferences
+    private val loginPreferences: LoginPreferences,
+    private val userPreferences: UserPreferences
 ) {
 
     fun setPersonalizedPlan(
@@ -179,6 +181,14 @@ class PersonalizedPlanRepository(
         }
     }
 
+    suspend fun setProv(provId: String) = runBlocking {
+        userPreferences.setProv(provId)
+    }
+
+    suspend fun setCity(cityId: String) = runBlocking {
+        userPreferences.setCity(cityId)
+    }
+
     private fun parseError(e: HttpException): String {
         return try {
             val errorBody = e.response()?.errorBody()?.string()
@@ -204,10 +214,11 @@ class PersonalizedPlanRepository(
 
         fun getInstance(
             apiService: ApiService,
-            preferences: LoginPreferences
+            loginPreferences: LoginPreferences,
+            userPreferences: UserPreferences
         ): PersonalizedPlanRepository =
             instance ?: synchronized(this) {
-                instance ?: PersonalizedPlanRepository(apiService, preferences).also {
+                instance ?: PersonalizedPlanRepository(apiService, loginPreferences, userPreferences).also {
                     instance = it
                 }
             }

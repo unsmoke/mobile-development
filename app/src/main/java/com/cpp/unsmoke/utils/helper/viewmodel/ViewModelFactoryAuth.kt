@@ -1,5 +1,6 @@
 package com.cpp.unsmoke.utils.helper.viewmodel
 
+import LeaderboardRepository
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +14,7 @@ import com.cpp.unsmoke.ui.auth.login.LoginViewModel
 import com.cpp.unsmoke.ui.auth.register.RegisterViewModel
 import com.cpp.unsmoke.ui.journal.JournalViewModel
 import com.cpp.unsmoke.ui.main.profile.ProfileViewModel
+import com.cpp.unsmoke.ui.main.rank.RankViewModel
 import com.cpp.unsmoke.ui.personalizedplan.PersonalizedViewModel
 import com.cpp.unsmoke.ui.shop.ShopViewModel
 
@@ -21,7 +23,8 @@ class ViewModelFactoryAuth private constructor(
     private val personalizedPlanRepository: PersonalizedPlanRepository,
     private val settingRepository: SettingRepository,
     private val shopRepository: ShopRepository,
-    private val journalRepository: JournalRepository
+    private val journalRepository: JournalRepository,
+    private val leaderboardRepository: LeaderboardRepository
 ) : ViewModelProvider.NewInstanceFactory() {
 
     companion object {
@@ -36,7 +39,8 @@ class ViewModelFactoryAuth private constructor(
                     Injection.providePersonalizedPlanRepository(context),
                     Injection.provideSettingRepository(context),
                     Injection.provideShopRepository(context),
-                    Injection.provideJournalRepository(context)
+                    Injection.provideJournalRepository(context),
+                    Injection.provideLeaderboardRepository(context)
                 ).also {
                     INSTANCE = it
                 }
@@ -53,6 +57,7 @@ class ViewModelFactoryAuth private constructor(
             ProfileViewModel::class.java -> ProfileViewModel(settingRepository) as T
             ShopViewModel::class.java -> ShopViewModel(shopRepository, settingRepository) as T
             JournalViewModel::class.java -> JournalViewModel(journalRepository) as T
+            RankViewModel::class.java -> RankViewModel(leaderboardRepository) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
     }
