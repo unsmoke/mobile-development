@@ -1,4 +1,8 @@
 package com.cpp.unsmoke.ui.journal
 
-class JournalViewModel {
+import androidx.lifecycle.ViewModel
+
+class JournalViewModel: ViewModel() {
+
+
 }
