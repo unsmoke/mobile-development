@@ -46,8 +46,6 @@ class JournalingFiveFragment : Fragment() {
         }
 
         binding.btnNext.setOnClickListener {
-            val intent = Intent(requireActivity(), MainActivity::class.java)
-            startActivity(intent)
             requireActivity().finish()
         }
 
