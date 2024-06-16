@@ -1,6 +1,7 @@
 package com.cpp.unsmoke.ui.main
 
 import android.Manifest
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
@@ -14,6 +15,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.cpp.unsmoke.R
 import com.cpp.unsmoke.databinding.ActivityMainBinding
+import com.cpp.unsmoke.ui.ismoke.IsmokeActivity
 import com.cpp.unsmoke.ui.notification.AlarmInfo
 import com.cpp.unsmoke.ui.notification.MyDailyReminderReceiver
 import kotlinx.coroutines.CoroutineScope
@@ -51,6 +53,11 @@ class MainActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         navView.setupWithNavController(navController)
+
+        binding.ismokeBtn.setOnClickListener {
+            val intent = Intent(this, IsmokeActivity::class.java)
+            startActivity(intent)
+        }
 
 
         if (Build.VERSION.SDK_INT >= 33) {

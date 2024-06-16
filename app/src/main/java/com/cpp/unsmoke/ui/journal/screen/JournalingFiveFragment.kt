@@ -52,7 +52,7 @@ class JournalingFiveFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 isEnabled = false
-                requireActivity().onBackPressed()
+                requireActivity().finish()
             }
         })
 

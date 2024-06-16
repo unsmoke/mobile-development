@@ -7,11 +7,36 @@
     android:layout_height="match_parent"
     tools:context=".ui.ismoke.IsmokeActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/ismoke_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/normal_green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:text="@string/back"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:fontFamily="@font/poppins_semibold"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView5"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:defaultNavHost="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ismoke_toolbar"
         app:navGraph="@navigation/ismoke_navigation" />
 </androidx.constraintlayout.widget.ConstraintLayout>

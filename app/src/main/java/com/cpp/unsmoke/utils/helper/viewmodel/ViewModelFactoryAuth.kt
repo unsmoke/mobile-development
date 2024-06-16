@@ -12,6 +12,7 @@ import com.cpp.unsmoke.repository.SettingRepository
 import com.cpp.unsmoke.repository.ShopRepository
 import com.cpp.unsmoke.ui.auth.login.LoginViewModel
 import com.cpp.unsmoke.ui.auth.register.RegisterViewModel
+import com.cpp.unsmoke.ui.ismoke.IsmokeViewModel
 import com.cpp.unsmoke.ui.journal.JournalViewModel
 import com.cpp.unsmoke.ui.main.profile.ProfileViewModel
 import com.cpp.unsmoke.ui.main.rank.RankViewModel
@@ -58,6 +59,7 @@ class ViewModelFactoryAuth private constructor(
             ShopViewModel::class.java -> ShopViewModel(shopRepository, settingRepository) as T
             JournalViewModel::class.java -> JournalViewModel(journalRepository) as T
             RankViewModel::class.java -> RankViewModel(leaderboardRepository) as T
+            IsmokeViewModel::class.java -> IsmokeViewModel() as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
     }
