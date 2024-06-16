@@ -1,5 +1,7 @@
 package com.cpp.unsmoke.ui.main.home
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -52,6 +54,27 @@ class HomeFragment : Fragment() {
         binding.cvDailyJournal.setOnClickListener {
             val intent = Intent(requireActivity(), JournalActivity::class.java)
             startActivity(intent)
+        }
+
+        playImageViewAnimation()
+    }
+
+    private fun playImageViewAnimation() {
+        val scaleX = ObjectAnimator.ofFloat(binding.icLung, View.SCALE_X, 1f, 1.2f, 1f).apply {
+            duration = 3200
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }
+
+        val scaleY = ObjectAnimator.ofFloat(binding.icLung, View.SCALE_Y, 1f, 1.2f, 1f).apply {
+            duration = 3200
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }
+
+        AnimatorSet().apply {
+            playTogether(scaleX, scaleY)
+            start()
         }
     }
 
