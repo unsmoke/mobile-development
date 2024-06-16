@@ -12,13 +12,18 @@ import com.cpp.unsmoke.data.remote.responses.shop.CreateItemResponse
 import com.cpp.unsmoke.data.remote.responses.shop.GetAllMyShopResponse
 import com.cpp.unsmoke.data.remote.responses.userplan.GetActiveUserPlanResponse
 import com.cpp.unsmoke.data.remote.responses.userplan.GetAllUserPlanResponse
+import com.cpp.unsmoke.data.remote.responses.userprofile.UpdateUserDataResponse
+import com.cpp.unsmoke.data.remote.responses.userprofile.UserDetailDataResponse
+import okhttp3.MultipartBody
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -121,4 +126,17 @@ interface ApiService {
         @Query("page") page: Int = 1,
         @Query("per_page") size: Int = 5
     ): LeaderboardResponse
+
+    @GET("user")
+    suspend fun getUserDetail(
+        @Header("Authorization") authHeader: String,
+    ): UserDetailDataResponse
+
+    @Multipart
+    @PUT("profile")
+    suspend fun updateUserProfile(
+        @Header("Authorization") authHeader: String,
+        @Part file: MultipartBody.Part,
+        @Part("username") fullName: String,
+    ): UpdateUserDataResponse
 }
