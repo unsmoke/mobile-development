@@ -26,8 +26,10 @@ android {
         val properties = Properties()
         properties.load(keystoreFile.inputStream())
         val value = properties.getProperty("base_url")
+        val valueGeminiAPI = properties.getProperty("gemini_api")
 
         buildConfigField("String", "BASE_URL",  "\"${value}\"")
+        buildConfigField("String", "GEMINI_API",  "\"${valueGeminiAPI}\"")
     }
 
     buildTypes {
@@ -81,4 +83,6 @@ dependencies {
     implementation(libs.room.ktx)
     implementation(libs.room.runtime)
     ksp(libs.room.compiler)
+
+    implementation(libs.generativeai)
 }

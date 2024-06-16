@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
     private suspend fun fetchAlarmsFromApi(): List<AlarmInfo> {
         // Simulate an API call
         return listOf(
-            AlarmInfo("08:00", "Good morning! Time to start your day!"),
+            AlarmInfo("00:40", "Good morning! Time to start your day!"),
             AlarmInfo("09:00", "Don't forget to take a lunch break!"),
             AlarmInfo("10:00", "Time to relax and unwind for the evening.")
         )

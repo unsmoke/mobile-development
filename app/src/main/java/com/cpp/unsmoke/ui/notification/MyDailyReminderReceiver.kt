@@ -72,6 +72,8 @@ class MyDailyReminderReceiver : BroadcastReceiver() {
 
             val timeArray = alarm.time.split(":").map { it.toInt() }
 
+            Log.d("MyDailyReminderReceiver", "setRepeatingAlarms: ${timeArray[0]} ${timeArray[1]}")
+
             val calendar = Calendar.getInstance().apply {
                 set(Calendar.HOUR_OF_DAY, timeArray[0])
                 set(Calendar.MINUTE, timeArray[1])
