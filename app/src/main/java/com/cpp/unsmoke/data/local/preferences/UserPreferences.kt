@@ -35,7 +35,31 @@ class UserPreferences(private val dataStore: DataStore<Preferences>) {
         }
     }
 
-    suspend fun clearLanguage() {
+    suspend fun setUserDay(day: String) {
+        dataStore.edit { preferences ->
+            preferences[USER_DAY_PREF] = day
+        }
+    }
+
+    fun getUserDay(): Flow<String?> {
+        return dataStore.data.map { preferences ->
+            preferences[USER_DAY_PREF]
+        }
+    }
+
+    suspend fun setUserLung(lung: String){
+        dataStore.edit { preferences ->
+            preferences[USER_LUNG_PREF] = lung
+        }
+    }
+
+    fun getUserLung(): Flow<String?> {
+        return dataStore.data.map { preferences ->
+            preferences[USER_LUNG_PREF]
+        }
+    }
+
+    suspend fun clearUserPref() {
         dataStore.edit { preferences ->
             preferences[USER_PROV_PREF] = ""
             preferences[USER_CITY_PREF] = ""
@@ -48,6 +72,8 @@ class UserPreferences(private val dataStore: DataStore<Preferences>) {
         private var INSTANCE: UserPreferences? = null
         private val USER_PROV_PREF = stringPreferencesKey("user_prov_pref")
         private val USER_CITY_PREF = stringPreferencesKey("user_city_pref")
+        private val USER_DAY_PREF = stringPreferencesKey("user_day_pref")
+        private val USER_LUNG_PREF = stringPreferencesKey("user_lung_pref")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreferences {
             return INSTANCE ?: synchronized(this) {
