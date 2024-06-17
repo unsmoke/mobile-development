@@ -16,11 +16,14 @@ data class UserDetailDataResponse(
 
 data class DataUserDetail(
 
+	@field:SerializedName("current_lung")
+	val currentLung: Any? = null,
+
 	@field:SerializedName("city")
 	val city: String? = null,
 
 	@field:SerializedName("profile_url")
-	val profileUrl: Any? = null,
+	val profileUrl: String? = null,
 
 	@field:SerializedName("created_at")
 	val createdAt: String? = null,
@@ -33,6 +36,9 @@ data class DataUserDetail(
 
 	@field:SerializedName("cigarettes_quota")
 	val cigarettesQuota: List<Int?>? = null,
+
+	@field:SerializedName("current_day")
+	val currentDay: Int? = null,
 
 	@field:SerializedName("money_saved")
 	val moneySaved: Int? = null,

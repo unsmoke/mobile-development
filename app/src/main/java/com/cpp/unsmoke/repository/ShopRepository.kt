@@ -6,6 +6,7 @@ import androidx.lifecycle.liveData
 import com.cpp.unsmoke.data.local.preferences.LoginPreferences
 import com.cpp.unsmoke.data.remote.Result
 import com.cpp.unsmoke.data.remote.responses.shop.CreateItemResponse
+import com.cpp.unsmoke.data.remote.responses.shop.EquipItemResponse
 import com.cpp.unsmoke.data.remote.responses.shop.GetAllMyShopResponse
 import com.cpp.unsmoke.data.remote.retrofit.ApiService
 import kotlinx.coroutines.flow.Flow
@@ -64,6 +65,24 @@ class ShopRepository(
             Log.d("PersonalizedPlanRepository", "setPersonalizedPlan: $accessToken)")
 
             val response = apiService.buyItem("Bearer $accessToken", userId, itemId)
+            emit(Result.Success(response))
+        } catch (e: HttpException) {
+            emit(Result.Error(parseError(e)))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message ?: "An unknown error occurred"))
+        }
+    }
+
+    fun equipItem(userId: String, itemId: String): LiveData<Result<EquipItemResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val accessToken = runBlocking {
+                loginPreferences.getToken().first()
+            }
+
+            Log.d("PersonalizedPlanRepository", "setPersonalizedPlan: $accessToken)")
+
+            val response = apiService.equipItem("Bearer $accessToken", userId, itemId)
             emit(Result.Success(response))
         } catch (e: HttpException) {
             emit(Result.Error(parseError(e)))

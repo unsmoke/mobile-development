@@ -9,12 +9,14 @@ import com.cpp.unsmoke.data.remote.responses.personalized.CreatePersonalizedResp
 import com.cpp.unsmoke.data.remote.responses.personalized.GetPersonalizedResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.ProvinceResponse
 import com.cpp.unsmoke.data.remote.responses.shop.CreateItemResponse
+import com.cpp.unsmoke.data.remote.responses.shop.EquipItemResponse
 import com.cpp.unsmoke.data.remote.responses.shop.GetAllMyShopResponse
 import com.cpp.unsmoke.data.remote.responses.userplan.GetActiveUserPlanResponse
 import com.cpp.unsmoke.data.remote.responses.userplan.GetAllUserPlanResponse
 import com.cpp.unsmoke.data.remote.responses.userprofile.UpdateUserDataResponse
 import com.cpp.unsmoke.data.remote.responses.userprofile.UserDetailDataResponse
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -119,6 +121,15 @@ interface ApiService {
         @Field("item_id") itemId: String
     ): CreateItemResponse
 
+    @FormUrlEncoded
+    @PUT("inventory/equip")
+    suspend fun equipItem(
+        @Header("Authorization") authHeader: String,
+        @Field("user_id") userId: String,
+        @Field("item_id") itemId: String
+    ): EquipItemResponse
+
+
     @GET("leaderboard/province/{provinceId}")
     suspend fun getLeaderboardByProvince(
         @Header("Authorization") authHeader: String,
@@ -137,6 +148,6 @@ interface ApiService {
     suspend fun updateUserProfile(
         @Header("Authorization") authHeader: String,
         @Part file: MultipartBody.Part,
-        @Part("username") fullName: String,
+        @Part("username") fullName: RequestBody,
     ): UpdateUserDataResponse
 }

@@ -126,4 +126,7 @@
 
     <string name="result_failed_recorded_title">You failed to get streak and XP!</string>
     <string name="result_failed_recorded_description">You have exceeded the allowed cigarette consumption limit for today, so your streak will be lost and you won\'t gain XP. Don\'t give up, try again tomorrow!</string>
+    <string name="username">username</string>
+    <string name="choose_your_photo_profile">Choose your photo profile</string>
+    <string name="save_changes">Save Changes</string>
 </resources>

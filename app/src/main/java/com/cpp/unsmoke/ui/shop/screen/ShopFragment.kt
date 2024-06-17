@@ -55,6 +55,21 @@ class ShopFragment : Fragment() {
                         viewModel.buyItem(userId, it).observe(viewLifecycleOwner) { result ->
                             when (result) {
                                 is Result.Success -> {
+                                    viewModel.getMyShop().observe(viewLifecycleOwner) { resultShop ->
+                                        when (resultShop) {
+                                            is Result.Success -> {
+                                                resultShop.data.data?.let { items ->
+                                                    shopAdapter.submitList(items)
+                                                }
+                                            }
+                                            is Result.Error -> {
+                                                Toast.makeText(requireContext(), "Failed to load shop items", Toast.LENGTH_SHORT).show()
+                                            }
+                                            is Result.Loading -> {
+                                                Toast.makeText(requireContext(), "Loading shop items", Toast.LENGTH_SHORT).show()
+                                            }
+                                        }
+                                    }
                                     Toast.makeText(requireContext(), "Item purchased successfully", Toast.LENGTH_SHORT).show()
                                 }
 
@@ -74,6 +89,7 @@ class ShopFragment : Fragment() {
                 }
                 .show()
         }
+
         binding.rvItemList.apply {
             layoutManager = GridLayoutManager(context, 2)
             adapter = shopAdapter
