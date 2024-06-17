@@ -2,6 +2,7 @@ package com.cpp.unsmoke.di
 
 import LeaderboardRepository
 import android.content.Context
+import com.cpp.unsmoke.data.local.preferences.GamificationPreferences
 import com.cpp.unsmoke.data.local.preferences.LoginPreferences
 import com.cpp.unsmoke.data.local.preferences.UserPreferences
 import com.cpp.unsmoke.data.local.preferences.dataStore
@@ -55,6 +56,10 @@ object Injection {
         val apiService = ApiConfig.getApiServiceWithoutAuth(pref)
 
         return LeaderboardRepository.getInstance(apiService, pref, userPref)
+    }
+
+    fun provideGamificationPreferences(context: Context): GamificationPreferences {
+        return GamificationPreferences.getInstance(context.dataStore)
     }
 
     fun provideSettingRepository(context: Context): SettingRepository {

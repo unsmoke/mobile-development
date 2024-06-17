@@ -13,7 +13,12 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.cpp.unsmoke.R
+import com.cpp.unsmoke.background.MyWorker
 import com.cpp.unsmoke.databinding.ActivityMainBinding
 import com.cpp.unsmoke.ui.ismoke.IsmokeActivity
 import com.cpp.unsmoke.ui.notification.AlarmInfo
@@ -22,6 +27,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
@@ -70,6 +76,8 @@ class MainActivity : AppCompatActivity() {
         fetchNotificationDataAndSetAlarms()
 
         AutoStartHelper.getInstance().getAutoStartPermission(this)
+
+        scheduleWorker()
     }
 
     private fun fetchNotificationDataAndSetAlarms() {
@@ -90,6 +98,37 @@ class MainActivity : AppCompatActivity() {
             AlarmInfo("09:00", "Don't forget to take a lunch break!"),
             AlarmInfo("10:00", "Time to relax and unwind for the evening.")
         )
+    }
+
+    private fun scheduleWorker() {
+        val workRequest = PeriodicWorkRequestBuilder<MyWorker>(1, TimeUnit.DAYS)
+            .setInitialDelay(calculateInitialDelay(17, 4), TimeUnit.MILLISECONDS)
+            .build()
+
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            "DailyWorker",
+            ExistingPeriodicWorkPolicy.REPLACE,
+            workRequest
+        )
+    }
+
+    private fun calculateInitialDelay(hour: Int, minute: Int): Long {
+        val currentTime = System.currentTimeMillis()
+        val calendar = java.util.Calendar.getInstance().apply {
+            set(java.util.Calendar.HOUR_OF_DAY, hour)
+            set(java.util.Calendar.MINUTE, minute)
+            set(java.util.Calendar.SECOND, 0)
+            set(java.util.Calendar.MILLISECOND, 0)
+        }
+
+        var diff = calendar.timeInMillis - currentTime
+        if (diff <= 0) {
+            // If the scheduled time is before the current time, set it for the next day
+            calendar.add(java.util.Calendar.DAY_OF_MONTH, 1)
+            diff = calendar.timeInMillis - currentTime
+        }
+
+        return diff
     }
 
     companion object {

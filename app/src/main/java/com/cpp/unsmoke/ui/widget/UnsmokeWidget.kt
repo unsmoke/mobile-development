@@ -2,20 +2,17 @@ package com.cpp.unsmoke.ui.widget
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
+import android.content.BroadcastReceiver
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.Paint
-import android.graphics.Typeface
 import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.os.Build
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.TextPaint
-import android.text.style.TypefaceSpan
 import android.util.Log
 import android.widget.RemoteViews
 import com.cpp.unsmoke.R
+import kotlin.random.Random
 
 /**
  * Implementation of App Widget functionality.
@@ -38,11 +35,37 @@ class UnsmokeWidget : AppWidgetProvider() {
     override fun onEnabled(context: Context) {
         networkChangeReceiver = NetworkChangeReceiver()
         val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-        context.registerReceiver(networkChangeReceiver, filter)
+//        context.registerReceiver(networkChangeReceiver, filter)
+
+        // Register broadcast receiver for updating widget
+        val widgetUpdateFilter = IntentFilter(ACTION_UPDATE_WIDGET)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.registerReceiver(widgetUpdateReceiver, widgetUpdateFilter, Context.RECEIVER_EXPORTED)
+        } else {
+            context.registerReceiver(widgetUpdateReceiver, widgetUpdateFilter)
+        }
     }
 
     override fun onDisabled(context: Context) {
         context.unregisterReceiver(networkChangeReceiver)
+        context.unregisterReceiver(widgetUpdateReceiver)
+    }
+
+    private val widgetUpdateReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            if (intent.action == ACTION_UPDATE_WIDGET) {
+                val appWidgetManager = AppWidgetManager.getInstance(context)
+                val appWidgetIds = AppWidgetManager.getInstance(context).getAppWidgetIds(
+                    ComponentName(context, UnsmokeWidget::class.java)
+                )
+                Log.d("UnsmokeWidget", "Broadcast received, updating widgets")
+                onUpdate(context, appWidgetManager, appWidgetIds)
+            }
+        }
+    }
+
+    companion object {
+        const val ACTION_UPDATE_WIDGET = "com.cpp.unsmoke.UPDATE_WIDGET"
     }
 }
 
@@ -52,11 +75,12 @@ internal fun updateAppWidget(
     appWidgetManager: AppWidgetManager,
     appWidgetId: Int
 ) {
-    val views: RemoteViews = if (isNetworkAvailable(context)) {
-        RemoteViews(context.packageName, R.layout.unsmoke_widget)
-    } else {
-        RemoteViews(context.packageName, R.layout.failed_connection_widget)
-    }
+    val views: RemoteViews = RemoteViews(context.packageName, R.layout.unsmoke_widget)
+
+    // Generate random number and set to TextView
+    val randomNumber = Random.nextInt(100)
+    Log.d("UnsmokeWidget", "Random number: $randomNumber")
+    views.setTextViewText(R.id.streak_widget, randomNumber.toString())
 
     // Instruct the widget manager to update the widget
     appWidgetManager.updateAppWidget(appWidgetId, views)

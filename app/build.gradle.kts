@@ -85,4 +85,7 @@ dependencies {
     ksp(libs.room.compiler)
 
     implementation(libs.generativeai)
+
+    implementation(libs.androidx.work.runtime.ktx)
+
 }

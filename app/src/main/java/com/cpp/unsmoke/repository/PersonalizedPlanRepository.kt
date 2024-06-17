@@ -23,7 +23,7 @@ import retrofit2.HttpException
 class PersonalizedPlanRepository(
     private var apiService: ApiService,
     private val loginPreferences: LoginPreferences,
-    private val userPreferences: UserPreferences
+    val userPreferences: UserPreferences
 ) {
 
     fun setPersonalizedPlan(
@@ -108,6 +108,25 @@ class PersonalizedPlanRepository(
                 emit(Result.Error(e.message ?: "An unknown error occurred"))
             }
         }
+
+    suspend fun getPersonalizedPlanResult(): Result<GetPersonalizedResponse> {
+        return try {
+            val accessToken = loginPreferences.getToken().first()
+            Log.d("PersonalizedPlanRepository", "setPersonalizedPlan: $accessToken)")
+
+            val response = apiService.getPersonalizedPlan("Bearer $accessToken")
+            Result.Success(response)
+        } catch (e: HttpException) {
+            val token = loginPreferences.getToken().first()
+            Log.d("PersonalizedPlanRepository", "getPersonalizedPlan: token: $token")
+            val errorResponse = parseError(e)
+            Log.e("GET_PERSONALIZED_PLAN", errorResponse)
+            Result.Error(errorResponse)
+        } catch (e: Exception) {
+            Log.e("GET_PERSONALIZED_PLAN", e.message.toString())
+            Result.Error(e.message ?: "An unknown error occurred")
+        }
+    }
 
     fun getProvince(): LiveData<Result<ProvinceResponse>> = liveData {
         emit(Result.Loading)
