@@ -70,6 +70,12 @@ class HomeFragment : Fragment() {
                     binding.currentDayProgram.text = userData.data?.currentDay.toString()
                     binding.moneySaved.text = userData.data?.moneySaved.toString()
                     binding.smokeAvoided.text = userData.data?.cigarettesAvoided.toString()
+                    binding.icLung.load(userData.data?.currentLung){
+                        decoderFactory { result, options, _ ->
+                            SvgDecoder(result.source, options)
+                        }
+                    }
+                    viewModel.setLungUrlToLcal(userData.data?.currentLung.toString())
                 }
                 is com.cpp.unsmoke.data.remote.Result.Error -> {
                     // Handle error

@@ -77,6 +77,10 @@ object Injection {
 
     fun provideSettingRepository(context: Context): SettingRepository {
         val pref = LoginPreferences.getInstance(context.dataStore)
-        return SettingRepository.getInstance(pref)
+
+        val userPref = UserPreferences.getInstance(context.dataStore)
+
+
+        return SettingRepository.getInstance(pref, userPref)
     }
 }

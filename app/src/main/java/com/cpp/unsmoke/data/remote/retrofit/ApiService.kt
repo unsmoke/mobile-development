@@ -1,8 +1,11 @@
 package com.cpp.unsmoke.data.remote.retrofit
 
+import com.cpp.unsmoke.data.remote.responses.auth.ForgotPasswordResponse
 import com.cpp.unsmoke.data.remote.responses.auth.LoginResponse
 import com.cpp.unsmoke.data.remote.responses.auth.RefreshResponse
 import com.cpp.unsmoke.data.remote.responses.auth.RegisterResponse
+import com.cpp.unsmoke.data.remote.responses.auth.ResetPasswordResponse
+import com.cpp.unsmoke.data.remote.responses.auth.VerifyResponse
 import com.cpp.unsmoke.data.remote.responses.leaderboard.LeaderboardResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.CityResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.CreatePersonalizedResponse
@@ -150,4 +153,25 @@ interface ApiService {
         @Part("username") fullName: RequestBody,
         @Part file: MultipartBody.Part,
     ): UpdateUserDataResponse
+
+    @FormUrlEncoded
+    @POST("user/verify")
+    suspend fun verifyUser(
+        @Field("email") email: String,
+        @Field("otp") otp: String
+    ): VerifyResponse
+
+    @FormUrlEncoded
+    @POST("user/forgot-password")
+    suspend fun forgotPassword(
+        @Field("email") email: String
+    ): ForgotPasswordResponse
+
+    @FormUrlEncoded
+    @POST("user/reset-password")
+    suspend fun resetPassword(
+        @Field("email") email: String,
+        @Field("token") otp: String,
+        @Field("new_password") password: String
+    ): ResetPasswordResponse
 }

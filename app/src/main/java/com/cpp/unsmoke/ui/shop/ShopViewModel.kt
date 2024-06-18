@@ -51,19 +51,19 @@ class ShopViewModel(private val shopRepository: ShopRepository, private val sett
     }
 
     fun setLungUrlToLcal(url: String){
-        viewModelScope.launch {
+        runBlocking {
             shopRepository.setLungUrl(url)
         }
     }
 
     fun setLungIdToLocal(id: String) {
-        viewModelScope.launch {
+        runBlocking {
             shopRepository.setLungId(id)
         }
     }
 
     fun logout() {
-        viewModelScope.launch {
+        runBlocking {
             settingRepository.logout()
         }
     }

@@ -19,6 +19,9 @@
         android:theme="@style/Theme.Unsmoke"
         tools:targetApi="31">
         <activity
+            android:name=".ui.auth.register.RegisterOTPActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.main.profile.editprofile.EditProfileActivity"
             android:exported="false" />
 

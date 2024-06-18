@@ -76,6 +76,10 @@ class UserDataRepository(
 
     fun getLungUrl() = userPreferences.getUserLung()
 
+    suspend fun saveLungUrl(url: String) {
+        userPreferences.setUserLung(url)
+    }
+
     fun getLungId() = userPreferences.getUserLungId()
 
     fun getUserId() = preferences.getUserId()

@@ -11,7 +11,9 @@ import com.cpp.unsmoke.repository.PersonalizedPlanRepository
 import com.cpp.unsmoke.repository.SettingRepository
 import com.cpp.unsmoke.repository.ShopRepository
 import com.cpp.unsmoke.repository.UserDataRepository
+import com.cpp.unsmoke.ui.auth.forgotpassword.ForgotPasswordViewModel
 import com.cpp.unsmoke.ui.auth.login.LoginViewModel
+import com.cpp.unsmoke.ui.auth.newpassword.NewPasswordViewModel
 import com.cpp.unsmoke.ui.auth.register.RegisterViewModel
 import com.cpp.unsmoke.ui.ismoke.IsmokeViewModel
 import com.cpp.unsmoke.ui.journal.JournalViewModel
@@ -60,6 +62,8 @@ class ViewModelFactoryAuth private constructor(
         return when (modelClass) {
             LoginViewModel::class.java -> LoginViewModel(authRepository, settingRepository) as T
             RegisterViewModel::class.java -> RegisterViewModel(authRepository) as T
+            ForgotPasswordViewModel::class.java -> ForgotPasswordViewModel(authRepository) as T
+            NewPasswordViewModel::class.java -> NewPasswordViewModel(authRepository) as T
             PersonalizedViewModel::class.java -> PersonalizedViewModel(personalizedPlanRepository, settingRepository) as T
             ProfileViewModel::class.java -> ProfileViewModel(userDataRepository, settingRepository) as T
             ShopViewModel::class.java -> ShopViewModel(shopRepository, settingRepository) as T

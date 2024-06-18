@@ -9,6 +9,7 @@ import com.cpp.unsmoke.data.remote.responses.userprofile.UserDetailDataResponse
 import com.cpp.unsmoke.repository.SettingRepository
 import com.cpp.unsmoke.repository.UserDataRepository
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class ProfileViewModel(
     private val userDataRepository: UserDataRepository,
@@ -19,8 +20,9 @@ class ProfileViewModel(
     }
 
     fun logout() {
-        viewModelScope.launch {
+        runBlocking {
             settingRepository.logout()
+            settingRepository.clearUserPreferences()
         }
     }
 }

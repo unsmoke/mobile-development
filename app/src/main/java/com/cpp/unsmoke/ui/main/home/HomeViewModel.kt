@@ -27,6 +27,12 @@ class HomeViewModel(
         }
     }
 
+    fun setLungUrlToLcal(url: String){
+        viewModelScope.launch {
+            userDataRepository.saveLungUrl(url)
+        }
+    }
+
     fun getUserData(): LiveData<Result<UserDetailDataResponse>> {
         return userDataRepository.getUserData()
     }
