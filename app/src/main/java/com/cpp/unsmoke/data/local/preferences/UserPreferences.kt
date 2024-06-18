@@ -59,6 +59,18 @@ class UserPreferences(private val dataStore: DataStore<Preferences>) {
         }
     }
 
+    suspend fun setUserLungId(lung: String){
+        dataStore.edit { preferences ->
+            preferences[USER_LUNG_ID_PREF] = lung
+        }
+    }
+
+    fun getUserLungId(): Flow<String?> {
+        return dataStore.data.map { preferences ->
+            preferences[USER_LUNG_ID_PREF]
+        }
+    }
+
     suspend fun setCigaretteConsumed(cigarette: String){
         dataStore.edit { preferences ->
             preferences[CIGARETTE_CONSUMED] = cigarette
@@ -87,6 +99,7 @@ class UserPreferences(private val dataStore: DataStore<Preferences>) {
         private val USER_DAY_PREF = stringPreferencesKey("user_day_pref")
         private val USER_LUNG_PREF = stringPreferencesKey("user_lung_pref")
         private val CIGARETTE_CONSUMED = stringPreferencesKey("cigarette_consumed")
+        private val USER_LUNG_ID_PREF = stringPreferencesKey("user_lung_id_pref")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreferences {
             return INSTANCE ?: synchronized(this) {

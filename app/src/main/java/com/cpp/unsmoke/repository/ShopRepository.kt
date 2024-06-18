@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.cpp.unsmoke.data.local.preferences.LoginPreferences
+import com.cpp.unsmoke.data.local.preferences.UserPreferences
 import com.cpp.unsmoke.data.remote.Result
 import com.cpp.unsmoke.data.remote.responses.shop.CreateItemResponse
 import com.cpp.unsmoke.data.remote.responses.shop.EquipItemResponse
@@ -17,7 +18,8 @@ import retrofit2.HttpException
 
 class ShopRepository(
     private var apiService: ApiService,
-    private val loginPreferences: LoginPreferences
+    private val loginPreferences: LoginPreferences,
+    private val userPreferences: UserPreferences
 ) {
     fun getMyShop(): LiveData<Result<GetAllMyShopResponse>> = liveData {
         emit(Result.Loading)
@@ -91,6 +93,18 @@ class ShopRepository(
         }
     }
 
+    suspend fun setLungUrl(lungUrl: String) {
+        userPreferences.setUserLung(lungUrl)
+    }
+
+    suspend fun setLungId(lungId: String) {
+        userPreferences.setUserLungId(lungId)
+    }
+
+    fun getLungUrl() = userPreferences.getUserLung()
+
+    fun getLungId() = userPreferences.getUserLungId()
+
     fun getUserId() = loginPreferences.getUserId()
 
     private fun parseError(e: HttpException): String {
@@ -118,10 +132,11 @@ class ShopRepository(
 
         fun getInstance(
             apiService: ApiService,
-            preferences: LoginPreferences
+            preferences: LoginPreferences,
+            userPreferences: UserPreferences
         ): ShopRepository =
             instance ?: synchronized(this) {
-                instance ?: ShopRepository(apiService, preferences).also {
+                instance ?: ShopRepository(apiService, preferences, userPreferences).also {
                     instance = it
                 }
             }

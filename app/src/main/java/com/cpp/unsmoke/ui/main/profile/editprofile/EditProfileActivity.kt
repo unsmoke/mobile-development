@@ -4,6 +4,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,8 @@ class EditProfileActivity : AppCompatActivity() {
     private var file: File? = null
     private var fileName: String = "not found"
 
+    private lateinit var launcherGallery: ActivityResultLauncher<PickVisualMediaRequest>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditProfileBinding.inflate(layoutInflater)
@@ -29,8 +32,31 @@ class EditProfileActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.fi_ss_arrow_small_left)
 
-        binding.edtPhotoProfile.setOnClickListener {
+        launcherGallery = registerForActivityResult(
+            ActivityResultContracts.PickVisualMedia()
+        ) { uri: Uri? ->
+            if (uri != null) {
+                currentImageUri = uri
+                currentImageUri.let {
+                    if (it != null) {
+                        file = uriToFile(it, this)
+                    }
+                }
+
+                showImage()
+            } else {
+                Log.d("Photo Picker", "No media selected")
+            }
+        }
+
+        binding.tvEditPhoto.setOnClickListener {
             startGallery()
+        }
+    }
+
+    private fun showImage() {
+        currentImageUri?.let {
+            binding.ivItemPhoto.setImageURI(it)
         }
     }
 
@@ -41,22 +67,5 @@ class EditProfileActivity : AppCompatActivity() {
 
     private fun startGallery() {
         launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-    }
-
-    private val launcherGallery = registerForActivityResult(
-        ActivityResultContracts.PickVisualMedia()
-    ) { uri: Uri? ->
-        if (uri != null) {
-            currentImageUri = uri
-            currentImageUri.let {
-                if (it != null) {
-                    file = uriToFile(it, this)
-                    fileName = file?.name ?: "not found"
-                    binding.edtPhotoProfile.text = Editable.Factory.getInstance().newEditable(fileName)
-                }
-            }
-        } else {
-            Log.d("Photo Picker", "No media selected")
-        }
     }
 }

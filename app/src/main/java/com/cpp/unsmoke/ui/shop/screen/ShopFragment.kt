@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
+import coil.decode.SvgDecoder
+import coil.load
 import com.cpp.unsmoke.R
 import com.cpp.unsmoke.data.local.preferences.LoginPreferences
 import com.cpp.unsmoke.data.remote.Result
@@ -38,6 +40,16 @@ class ShopFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val viewModel = ObtainViewModelFactory.obtainAuth<ShopViewModel>(requireActivity())
+
+        viewModel.setLungUrl()
+
+        viewModel.currentLungUrl.observe(viewLifecycleOwner) {
+            binding.ivLung.load(it){
+                decoderFactory { result, options, _ ->
+                    SvgDecoder(result.source, options)
+                }
+            }
+        }
 
         binding.inventoryBtn.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_shopFragment_to_inventoryFragment)

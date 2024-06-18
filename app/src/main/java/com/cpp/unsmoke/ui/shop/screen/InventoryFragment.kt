@@ -1,6 +1,7 @@
 package com.cpp.unsmoke.ui.shop.screen
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,17 +38,66 @@ class InventoryFragment : Fragment() {
 
         val viewModel = ObtainViewModelFactory.obtainAuth<ShopViewModel>(requireActivity())
 
-        inventoryAdapter = InventoryAdapter { item ->
-            showAlert(item)
+        inventoryAdapter = InventoryAdapter(viewModel, viewLifecycleOwner) { item ->
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(item.name)
+                .setMessage(item.description)
+                .setPositiveButton("OK") { dialog, _ ->
+                    dialog.dismiss()
+                    val userId = viewModel.getUserId().toString()
+                    Log.d("ShopFragment", "userId: $userId")
+                    item.itemId?.let {
+                        viewModel.equipItem(userId, it).observe(viewLifecycleOwner) { result ->
+                            when (result) {
+                                is Result.Success -> {
+                                    viewModel.setLungUrlToLcal(result.data.data?.currentLung ?: "")
+                                    viewModel.setLungIdToLocal(result.data.data?.itemId ?: "")
+                                    Toast.makeText(requireContext(), "Item equipped", Toast.LENGTH_SHORT).show()
+                                    viewModel.getMyInventory().observe(viewLifecycleOwner) { resultLung ->
+                                        when (resultLung) {
+                                            is Result.Success -> {
+                                                Toast.makeText(requireContext(), "Item Reload", Toast.LENGTH_SHORT).show()
+                                                resultLung.data.data?.let { items ->
+                                                    viewModel.setLungUrl()
+                                                    viewModel.setLungId()
+                                                    inventoryAdapter.submitList(items)
+                                                }
+                                            }
+                                            is Result.Error -> {
+                                                Toast.makeText(requireContext(), "Failed to load inventory items", Toast.LENGTH_SHORT).show()
+                                            }
+                                            is Result.Loading -> {
+                                                // Handle loading state if necessary
+                                            }
+                                        }
+                                    }
+                                }
+                                is Result.Error -> {
+                                    Toast.makeText(requireContext(), "Failed to equip item", Toast.LENGTH_SHORT).show()
+                                }
+                                is Result.Loading -> {
+                                    // Handle loading state if necessary
+                                }
+                            }
+                        }
+                    }
+                }
+                .setNegativeButton("Cancel") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
         }
         binding.rvItemList.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = inventoryAdapter
         }
 
+
         viewModel.getMyInventory().observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Success -> {
+                    viewModel.setLungUrl()
+                    viewModel.setLungId()
                     result.data.data?.let { items ->
                         inventoryAdapter.submitList(items)
                     }
@@ -61,16 +111,6 @@ class InventoryFragment : Fragment() {
             }
         }
 
-    }
-
-    private fun showAlert(item: DataItem) {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(item.name)
-            .setMessage(item.description)
-            .setPositiveButton("OK") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
     }
 
     override fun onDestroyView() {

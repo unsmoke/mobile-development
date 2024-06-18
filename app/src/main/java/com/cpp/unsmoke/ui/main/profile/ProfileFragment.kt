@@ -16,6 +16,7 @@ import com.cpp.unsmoke.databinding.FragmentPlanBinding
 import com.cpp.unsmoke.databinding.FragmentProfileBinding
 import com.cpp.unsmoke.ui.auth.login.LoginActivity
 import com.cpp.unsmoke.ui.main.home.HomeViewModel
+import com.cpp.unsmoke.ui.main.profile.editprofile.EditProfileActivity
 import com.cpp.unsmoke.ui.personalizedplan.PersonalizedViewModel
 import com.cpp.unsmoke.utils.helper.viewmodel.ObtainViewModelFactory
 
@@ -41,6 +42,11 @@ class ProfileFragment : Fragment() {
         val profileViewModel = ObtainViewModelFactory.obtainAuth<ProfileViewModel>(requireActivity())
 
         val alertBuilder = AlertDialog.Builder(requireActivity())
+
+        binding.btnEdit.setOnClickListener {
+            val intent = Intent(requireActivity(), EditProfileActivity::class.java)
+            startActivity(intent)
+        }
 
         binding.btnLogout.setOnClickListener {
             // Call logout function from ProfileViewModel

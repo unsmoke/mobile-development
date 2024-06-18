@@ -37,7 +37,9 @@ object Injection {
 
         val apiService = ApiConfig.getApiServiceWithoutAuth(pref)
 
-        return ShopRepository.getInstance(apiService, pref)
+        val userPref = UserPreferences.getInstance(context.dataStore)
+
+        return ShopRepository.getInstance(apiService, pref, userPref)
     }
 
     fun provideJournalRepository(context: Context): JournalRepository {

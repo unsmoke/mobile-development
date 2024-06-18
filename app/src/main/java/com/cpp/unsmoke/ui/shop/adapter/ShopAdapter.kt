@@ -5,7 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.decode.SvgDecoder
+import coil.load
 import com.cpp.unsmoke.data.remote.responses.shop.DataItem
 import com.cpp.unsmoke.databinding.ShopItemRowBinding
 
@@ -17,9 +18,12 @@ class ShopAdapter(private val onItemClickCallback: (DataItem) -> Unit) :
 
         fun bind(item: DataItem, onItemClickCallback: (DataItem) -> Unit) {
             with(binding) {
-                Glide.with(root.context)
-                    .load(item.imgUrl)
-                    .into(ivItem)
+                ivItem.load(item.imgUrl) {
+                    decoderFactory { result, options, _ ->
+                        SvgDecoder(result.source, options)
+                    }
+                }
+
                 tvItemPrice.text = item.price.toString()
                 root.setOnClickListener {
                     onItemClickCallback(item)

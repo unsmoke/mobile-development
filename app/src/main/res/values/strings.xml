@@ -129,4 +129,6 @@
     <string name="username">username</string>
     <string name="choose_your_photo_profile">Choose your photo profile</string>
     <string name="save_changes">Save Changes</string>
+    <string name="edit_photo_profile">Edit Photo Profile</string>
+    <string name="equiped">Equiped</string>
 </resources>
