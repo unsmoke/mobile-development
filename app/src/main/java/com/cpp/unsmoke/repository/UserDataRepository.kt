@@ -1,8 +1,10 @@
 package com.cpp.unsmoke.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.cpp.unsmoke.data.local.preferences.LoginPreferences
+import com.cpp.unsmoke.data.local.preferences.UserPreferences
 import com.cpp.unsmoke.data.remote.Result
 import com.cpp.unsmoke.data.remote.responses.userprofile.UpdateUserDataResponse
 import com.cpp.unsmoke.data.remote.responses.userprofile.UserDetailDataResponse
@@ -21,7 +23,8 @@ import java.io.File
 
 class UserDataRepository(
     private var apiService: ApiService,
-    private val preferences: LoginPreferences
+    private val preferences: LoginPreferences,
+    private val userPreferences: UserPreferences
 ) {
 
     fun getUserData(): LiveData<Result<UserDetailDataResponse>> = liveData {
@@ -53,20 +56,29 @@ class UserDataRepository(
             if (file != null) {
                 val newUsername = username.toRequestBody("text/plain".toMediaType())
                 val fileReduced = file.reduceFileImage()
-                val requestFile = fileReduced.asRequestBody("image/*".toMediaType())
-                val body = MultipartBody.Part.createFormData("profile_url", file.name, requestFile)
-                val response = apiService.updateUserProfile("Bearer $token", body, newUsername)
+                val requestFile = fileReduced.asRequestBody("image/jpeg".toMediaType())
+                val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+                val response = apiService.updateUserProfile("Bearer $token", newUsername, body)
+                Log.d("UserDataRepository", "updateDataProfile: $response")
                 emit(Result.Success(response))
             } else {
                 emit(Result.Error("File is null"))
             }
         } catch (e: HttpException) {
             val error = parseError(e)
+            Log.e("UserDataRepository", "updateDataProfile: $error")
             emit(Result.Error(error))
         } catch (e: Exception) {
+            Log.e("UserDataRepository", "updateDataProfile: ${e.message}")
             emit(Result.Error(e.message ?: "Unknown error occurred"))
         }
     }
+
+    fun getLungUrl() = userPreferences.getUserLung()
+
+    fun getLungId() = userPreferences.getUserLungId()
+
+    fun getUserId() = preferences.getUserId()
 
     private fun parseError(e: HttpException): String {
         return try {
@@ -93,10 +105,11 @@ class UserDataRepository(
 
         fun getInstance(
             apiService: ApiService,
-            preferences: LoginPreferences
+            preferences: LoginPreferences,
+            userPreferences: UserPreferences
         ): UserDataRepository =
             instance ?: synchronized(this) {
-                instance ?: UserDataRepository(apiService, preferences).also {
+                instance ?: UserDataRepository(apiService, preferences, userPreferences).also {
                     instance = it
                 }
             }

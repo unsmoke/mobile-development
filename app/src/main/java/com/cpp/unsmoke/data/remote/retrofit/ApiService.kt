@@ -144,10 +144,10 @@ interface ApiService {
     ): UserDetailDataResponse
 
     @Multipart
-    @PUT("profile")
+    @PUT("user/profile")
     suspend fun updateUserProfile(
         @Header("Authorization") authHeader: String,
-        @Part file: MultipartBody.Part,
         @Part("username") fullName: RequestBody,
+        @Part file: MultipartBody.Part,
     ): UpdateUserDataResponse
 }

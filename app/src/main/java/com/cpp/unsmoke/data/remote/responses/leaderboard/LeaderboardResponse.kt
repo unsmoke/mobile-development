@@ -23,5 +23,11 @@ data class LeaderboardItem(
 	val exp: Int? = null,
 
 	@field:SerializedName("username")
-	val username: String? = null
+	val username: String? = null,
+
+	@field:SerializedName("profile_url")
+	val profileUrl: String? = null,
+
+	@field:SerializedName("current_lung")
+	val lungUrl: String? = null
 )

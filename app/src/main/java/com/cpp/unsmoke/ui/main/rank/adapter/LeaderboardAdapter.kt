@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.cpp.unsmoke.data.remote.responses.leaderboard.LeaderboardItem
 import com.cpp.unsmoke.databinding.RankItemRowBinding
 
@@ -29,8 +30,11 @@ class LeaderboardAdapter :
             binding.tvRankNumber.text = data.rank.toString()
             binding.tvUsername.text = data.username
             binding.tvUserXp.text = "${data.exp} XP"
-            // You can set the photo if there is any, here is a placeholder example:
-            // binding.ivItemPhoto.setImageResource(R.drawable.ic_placeholder)
+            if (data.profileUrl != null){
+                binding.ivItemPhoto.load(data.profileUrl)
+            } else {
+                binding.ivItemPhoto.load(data.lungUrl)
+            }
         }
     }
 

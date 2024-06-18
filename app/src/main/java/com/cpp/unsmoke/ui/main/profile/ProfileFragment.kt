@@ -8,8 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.lifecycle.ViewModelProvider
+import coil.decode.SvgDecoder
+import coil.load
 import com.cpp.unsmoke.R
 import com.cpp.unsmoke.databinding.FragmentHomeBinding
 import com.cpp.unsmoke.databinding.FragmentPlanBinding
@@ -27,6 +30,8 @@ class ProfileFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private lateinit var profileViewModel: ProfileViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,7 +44,31 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val profileViewModel = ObtainViewModelFactory.obtainAuth<ProfileViewModel>(requireActivity())
+        profileViewModel = ObtainViewModelFactory.obtainAuth<ProfileViewModel>(requireActivity())
+
+        profileViewModel.getUserData().observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is com.cpp.unsmoke.data.remote.Result.Loading -> {
+                    // Show loading indicator if necessary
+                }
+                is com.cpp.unsmoke.data.remote.Result.Success -> {
+                    val userData = result.data
+                    // Update UI with userData
+                    binding.tvUsername.text = userData.data?.username
+                    binding.tvEmail.text = userData.data?.email
+                    if (userData.data?.profileUrl != null){
+                        binding.ivItemPhoto.load(userData.data.profileUrl)
+                    } else {
+                        binding.ivItemPhoto.load(R.drawable.photo_profile)
+                    }
+
+                }
+                is com.cpp.unsmoke.data.remote.Result.Error -> {
+                    // Handle error
+                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
 
         val alertBuilder = AlertDialog.Builder(requireActivity())
 
@@ -59,6 +88,34 @@ class ProfileFragment : Fragment() {
                 startActivity(intent)
                 requireActivity().finishAffinity()
             }.create().show()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        profileViewModel.getUserData().observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is com.cpp.unsmoke.data.remote.Result.Loading -> {
+                    // Show loading indicator if necessary
+                }
+                is com.cpp.unsmoke.data.remote.Result.Success -> {
+                    val userData = result.data
+                    // Update UI with userData
+                    binding.tvUsername.text = userData.data?.username
+                    binding.tvEmail.text = userData.data?.email
+                    if (userData.data?.profileUrl != null){
+                        binding.ivItemPhoto.load(userData.data.profileUrl)
+                    } else {
+                        binding.ivItemPhoto.load(R.drawable.photo_profile)
+                    }
+
+                }
+                is com.cpp.unsmoke.data.remote.Result.Error -> {
+                    // Handle error
+                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 

@@ -8,9 +8,15 @@ import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.cpp.unsmoke.data.remote.Result
 import com.cpp.unsmoke.data.remote.responses.leaderboard.LeaderboardItem
+import com.cpp.unsmoke.data.remote.responses.userprofile.UserDetailDataResponse
+import com.cpp.unsmoke.repository.UserDataRepository
 
-class RankViewModel(private val leaderboardRepository: LeaderboardRepository): ViewModel() {
+class RankViewModel(
+    private val userDataRepository: UserDataRepository,
+    private val leaderboardRepository: LeaderboardRepository
+) : ViewModel() {
 
     private val _refreshTrigger = MutableLiveData<Unit>()
     private val refreshTrigger: LiveData<Unit> get() = _refreshTrigger
@@ -21,5 +27,9 @@ class RankViewModel(private val leaderboardRepository: LeaderboardRepository): V
 
     fun refreshData() {
         _refreshTrigger.value = Unit
+    }
+
+    fun getUserData(): LiveData<Result<UserDetailDataResponse>> {
+        return userDataRepository.getUserData()
     }
 }

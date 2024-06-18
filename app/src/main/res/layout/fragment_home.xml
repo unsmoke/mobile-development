@@ -176,6 +176,7 @@
                         app:layout_constraintTop_toBottomOf="@id/ic_money"/>
 
                     <TextView
+                        android:id="@+id/money_saved"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAlignment="center"
@@ -219,6 +220,7 @@
                         app:layout_constraintTop_toBottomOf="@id/ic_calendar"/>
 
                     <TextView
+                        android:id="@+id/current_day_program"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAlignment="center"
@@ -262,6 +264,7 @@
                         app:layout_constraintTop_toBottomOf="@id/ic_smoke"/>
 
                     <TextView
+                        android:id="@+id/smoke_avoided"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAlignment="center"
