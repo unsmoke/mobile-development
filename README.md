@@ -4,7 +4,7 @@
 - In local.properties file add this 2 lines :
 ```
 base_url=your_base_url
-gemini_api=your_gemeni_api
+gemini_api=your_gemini_api
 ```
 
 # Feature
