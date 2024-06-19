@@ -5,6 +5,8 @@
 - Journaling
 - Breath Exercise
 - Personalization Data
+- Personalized Notification
+- App Widget
 
 # Build With
 - Gemini API
