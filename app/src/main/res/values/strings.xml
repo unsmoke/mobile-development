@@ -137,4 +137,12 @@
     <string name="equiped">Equiped</string>
     <string name="otp_verification">OTP Verification</string>
     <string name="desc_otp_register">Enter the otp code that has been sent to your email</string>
+
+    <string name="result_hold_breath_title">Breathing exercise complete!</string>
+    <string name="result_hold_breath_description">Well done on finishing your breathing session! Remember, regular practice can greatly enhance your focus, reduce stress, and improve overall health. Keep up the good work and make breathing exercises a part of your daily wellness routine.</string>
+    <string name="duration">Duration</string>
+    <string name="highest_record">Highest record</string>
+
+    <string name="did_you_know">Did you know?</string>
+    <string name="medical_news_description">Medical News Today explains that the average person can hold their breath for about 30–90 seconds.</string>
 </resources>
