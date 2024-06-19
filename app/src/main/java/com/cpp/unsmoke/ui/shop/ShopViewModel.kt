@@ -39,31 +39,31 @@ class ShopViewModel(private val shopRepository: ShopRepository, private val sett
     }
 
     fun setLungUrl() {
-        _currentLungUrl.value = runBlocking {
-            shopRepository.getLungUrl().first()
+        viewModelScope.launch {
+            _currentLungUrl.value = shopRepository.getLungUrl().first()
         }
     }
 
     fun setLungId() {
-        _currentLungId.value = runBlocking {
-            shopRepository.getLungId().first()
+        viewModelScope.launch {
+            _currentLungId.value = shopRepository.getLungId().first()
         }
     }
 
     fun setLungUrlToLcal(url: String){
-        viewModelScope.launch {
+        runBlocking {
             shopRepository.setLungUrl(url)
         }
     }
 
     fun setLungIdToLocal(id: String) {
-        viewModelScope.launch {
+        runBlocking {
             shopRepository.setLungId(id)
         }
     }
 
     fun logout() {
-        viewModelScope.launch {
+        runBlocking {
             settingRepository.logout()
         }
     }

@@ -30,6 +30,7 @@
                 android:scaleType="fitCenter" />
 
             <ImageView
+                android:id="@+id/ic_lung_plan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -149,7 +150,7 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_plan_name" />
 
                 <TextView
-                    android:id="@+id/tv_percentage"
+                    android:id="@+id/tv_day_duration"
                     style="@style/TextContent.TitleSecondaryGreen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -87,6 +87,10 @@ class UserPreferences(private val dataStore: DataStore<Preferences>) {
         dataStore.edit { preferences ->
             preferences[USER_PROV_PREF] = ""
             preferences[USER_CITY_PREF] = ""
+            preferences[USER_DAY_PREF] = ""
+            preferences[USER_LUNG_PREF] = ""
+            preferences[USER_LUNG_ID_PREF] = ""
+            preferences[CIGARETTE_CONSUMED] = ""
         }
     }
 

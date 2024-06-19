@@ -12,6 +12,7 @@ import com.cpp.unsmoke.repository.JournalRepository
 import com.cpp.unsmoke.repository.PersonalizedPlanRepository
 import com.cpp.unsmoke.repository.SettingRepository
 import com.cpp.unsmoke.repository.ShopRepository
+import com.cpp.unsmoke.repository.UserDataRepository
 
 object Injection {
     fun provideAuthRepository(context: Context): AuthRepository {
@@ -64,8 +65,22 @@ object Injection {
         return GamificationPreferences.getInstance(context.dataStore)
     }
 
+    fun provideUserDataRepository(context: Context): UserDataRepository {
+        val pref = LoginPreferences.getInstance(context.dataStore)
+
+        val userPref = UserPreferences.getInstance(context.dataStore)
+
+        val apiService = ApiConfig.getApiServiceWithoutAuth(pref)
+
+        return UserDataRepository.getInstance(apiService, pref, userPref)
+    }
+
     fun provideSettingRepository(context: Context): SettingRepository {
         val pref = LoginPreferences.getInstance(context.dataStore)
-        return SettingRepository.getInstance(pref)
+
+        val userPref = UserPreferences.getInstance(context.dataStore)
+
+
+        return SettingRepository.getInstance(pref, userPref)
     }
 }

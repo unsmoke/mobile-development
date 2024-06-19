@@ -130,4 +130,6 @@
     <string name="save_changes">Save Changes</string>
     <string name="edit_photo_profile">Edit Photo Profile</string>
     <string name="equiped">Equiped</string>
+    <string name="otp_verification">OTP Verification</string>
+    <string name="desc_otp_register">Enter the otp code that has been sent to your email</string>
 </resources>

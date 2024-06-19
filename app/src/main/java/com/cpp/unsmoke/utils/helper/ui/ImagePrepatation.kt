@@ -5,6 +5,8 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -15,6 +17,7 @@ import com.cpp.unsmoke.BuildConfig
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -66,6 +69,24 @@ fun uriToFile(imageUri: Uri, context: Context): File {
     outputStream.close()
     inputStream.close()
     return myFile
+}
+
+fun drawableToFile(context: Context, drawable: Drawable, fileName: String): File {
+    // Convert drawable to bitmap
+    val bitmap = (drawable as BitmapDrawable).bitmap
+
+    // Create a file in the cache directory
+    val file = File(context.cacheDir, fileName)
+    try {
+        // Write the bitmap to the file
+        val outputStream = FileOutputStream(file)
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+        outputStream.flush()
+        outputStream.close()
+    } catch (e: IOException) {
+        e.printStackTrace()
+    }
+    return file
 }
 
 fun File.reduceFileImage(): File {

@@ -6,8 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import coil.decode.SvgDecoder
+import coil.load
 import com.cpp.unsmoke.R
 import com.cpp.unsmoke.databinding.FragmentHomeBinding
 import com.cpp.unsmoke.databinding.FragmentPlanBinding
@@ -37,6 +40,35 @@ class RankFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         rankViewModel = ObtainViewModelFactory.obtainAuth<RankViewModel>(requireActivity())
+
+        rankViewModel.getUserData().observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is com.cpp.unsmoke.data.remote.Result.Loading -> {
+                    // Show loading indicator if necessary
+                }
+                is com.cpp.unsmoke.data.remote.Result.Success -> {
+                    val userData = result.data
+                    // Update UI with userData
+                    binding.tvRankUser.text = userData.data?.rank.toString()
+                    binding.tvPointXp.text = userData.data?.exp.toString()
+                    binding.tvUsername.text = userData.data?.username
+                    if (userData.data?.profileUrl != null){
+                        binding.ivItemPhoto.load(userData.data.profileUrl)
+                    } else {
+                        binding.ivItemPhoto.load(userData.data?.currentLung){
+                            decoderFactory { result, options, _ ->
+                                SvgDecoder(result.source, options)
+                            }
+                        }
+                    }
+
+                }
+                is com.cpp.unsmoke.data.remote.Result.Error -> {
+                    // Handle error
+                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
 
         adapter = LeaderboardAdapter()
 

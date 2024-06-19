@@ -7,8 +7,11 @@ import com.cpp.unsmoke.data.local.preferences.LoginPreferences
 import com.cpp.unsmoke.data.remote.responses.auth.LoginResponse
 import com.cpp.unsmoke.data.remote.retrofit.ApiService
 import com.cpp.unsmoke.data.remote.Result
+import com.cpp.unsmoke.data.remote.responses.auth.ForgotPasswordResponse
 import com.cpp.unsmoke.data.remote.responses.auth.RefreshResponse
 import com.cpp.unsmoke.data.remote.responses.auth.RegisterResponse
+import com.cpp.unsmoke.data.remote.responses.auth.ResetPasswordResponse
+import com.cpp.unsmoke.data.remote.responses.auth.VerifyResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -57,6 +60,51 @@ class AuthRepository(
             emit(Result.Error(errorResponse))
         } catch (e: Exception) {
             Log.e("REGISTER", e.message.toString())
+            emit(Result.Error(e.message ?: "An unknown error occurred"))
+        }
+    }
+
+    fun verifyOtpRegister(email: String, otp: String): LiveData<Result<VerifyResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = apiService.verifyUser(email, otp)
+            emit(Result.Success(response))
+        } catch (e: HttpException){
+            val errorResponse = parseError(e)
+            Log.e("VERIFY", errorResponse)
+            emit(Result.Error(errorResponse))
+        } catch (e: Exception) {
+            Log.e("VERIFY", e.message.toString())
+            emit(Result.Error(e.message ?: "An unknown error occurred"))
+        }
+    }
+
+    fun forgotPassword(email: String): LiveData<Result<ForgotPasswordResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = apiService.forgotPassword(email)
+            emit(Result.Success(response))
+        } catch (e: HttpException){
+            val errorResponse = parseError(e)
+            Log.e("FORGOT", errorResponse)
+            emit(Result.Error(errorResponse))
+        } catch (e: Exception) {
+            Log.e("FORGOT", e.message.toString())
+            emit(Result.Error(e.message ?: "An unknown error occurred"))
+        }
+    }
+
+    fun resetPassword(email: String, otp: String, password: String): LiveData<Result<ResetPasswordResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = apiService.resetPassword(email, otp, password)
+            emit(Result.Success(response))
+        } catch (e: HttpException){
+            val errorResponse = parseError(e)
+            Log.e("RESET", errorResponse)
+            emit(Result.Error(errorResponse))
+        } catch (e: Exception) {
+            Log.e("RESET", e.message.toString())
             emit(Result.Error(e.message ?: "An unknown error occurred"))
         }
     }

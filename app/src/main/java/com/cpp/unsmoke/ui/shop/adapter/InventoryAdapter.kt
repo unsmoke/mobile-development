@@ -28,7 +28,7 @@ class InventoryAdapter(
 
                 viewModel.currentLungId.observe(lifecycleOwner) { currentLungId ->
                     // Set visibility of the equipped label based on whether the itemId matches the currentLungId
-                    if (item.itemId == currentLungId) {
+                    if (item.itemId == currentLungId || item.imgUrl == viewModel.currentLungUrl.value) {
                         equipedLabel.visibility = View.VISIBLE
                         ivItemPhoto.alpha = 0.5f
                     } else {

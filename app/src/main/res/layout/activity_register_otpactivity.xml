@@ -6,10 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/normal_green"
-    tools:context=".ui.auth.forgotpassword.ForgotPasswordActivity">
+    tools:context=".ui.auth.register.RegisterOTPActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/forgot_password_toolbar"
+        android:id="@+id/register_otp_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="@string/forgot_password"
+            android:text="@string/otp_verification"
             android:textColor="@color/dark_green"
             android:textSize="27sp" />
 
@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:text="@string/forgot_password_instruction"
+            android:text="@string/desc_otp_register"
             android:textSize="14sp" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -65,20 +65,19 @@
             app:boxCornerRadiusBottomStart="16dp"
             app:boxCornerRadiusTopEnd="16dp"
             app:boxCornerRadiusTopStart="16dp"
-            app:startIconDrawable="@drawable/fi_rr_envelope"
             app:startIconTint="@color/neutral_50">
 
             <com.cpp.unsmoke.utils.customview.EditText
-                android:id="@+id/edt_forgot_password"
+                android:id="@+id/edt_otp_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
+                android:inputType="number"
                 tools:ignore="SpeakableTextPresentCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.cpp.unsmoke.utils.customview.CustomButton
-            android:id="@+id/btn_send"
+            android:id="@+id/btn_verify"
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:layout_marginBottom="40dp"
@@ -90,12 +89,12 @@
     </LinearLayout>
 
     <ProgressBar
-        android:id="@+id/forgot_password_progress_bar"
+        android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

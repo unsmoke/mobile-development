@@ -75,6 +75,7 @@ class RegisterActivity : AppCompatActivity() {
                     binding.signupPasswordEditTextLayout,
                     binding.signupConfirmPasswordEditTextLayout
                 )) {
+                viewModel.setEmail(email)
                 viewModel.register(fullName, email, password).observe(this){result ->
                     if (result != null){
                         when(result){
@@ -94,7 +95,7 @@ class RegisterActivity : AppCompatActivity() {
                             }
                             is Result.Success -> {
                                 binding.btnLogin.isClickable = true
-                                toLogin()
+                                toOtp(email)
                             }
 
                             else -> {}
@@ -106,8 +107,16 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         binding.btnLogin.setOnClickListener {
-            toPersonalized()
+            toLogin()
         }
+    }
+
+    private fun toOtp(email: String) {
+        val intent = Intent(this, RegisterOTPActivity::class.java).apply {
+            putExtra("Email", email)
+        }
+        startActivity(intent)
+        finish()
     }
 
     private fun toLogin() {

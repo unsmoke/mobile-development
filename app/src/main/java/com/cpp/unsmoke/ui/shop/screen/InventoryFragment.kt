@@ -17,6 +17,7 @@ import com.cpp.unsmoke.ui.shop.ShopViewModel
 import com.cpp.unsmoke.ui.shop.adapter.InventoryAdapter
 import com.cpp.unsmoke.utils.helper.viewmodel.ObtainViewModelFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.runBlocking
 
 class InventoryFragment : Fragment() {
 
@@ -50,16 +51,18 @@ class InventoryFragment : Fragment() {
                         viewModel.equipItem(userId, it).observe(viewLifecycleOwner) { result ->
                             when (result) {
                                 is Result.Success -> {
-                                    viewModel.setLungUrlToLcal(result.data.data?.currentLung ?: "")
-                                    viewModel.setLungIdToLocal(result.data.data?.itemId ?: "")
+                                    runBlocking {
+                                        viewModel.setLungUrlToLcal(result.data.data?.currentLung ?: "")
+                                        viewModel.setLungIdToLocal(result.data.data?.itemId ?: "")
+                                    }
                                     Toast.makeText(requireContext(), "Item equipped", Toast.LENGTH_SHORT).show()
                                     viewModel.getMyInventory().observe(viewLifecycleOwner) { resultLung ->
                                         when (resultLung) {
                                             is Result.Success -> {
+                                                viewModel.setLungUrl()
+                                                viewModel.setLungId()
                                                 Toast.makeText(requireContext(), "Item Reload", Toast.LENGTH_SHORT).show()
                                                 resultLung.data.data?.let { items ->
-                                                    viewModel.setLungUrl()
-                                                    viewModel.setLungId()
                                                     inventoryAdapter.submitList(items)
                                                 }
                                             }

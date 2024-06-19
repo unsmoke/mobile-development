@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.cpp.unsmoke.R
 import com.cpp.unsmoke.data.remote.Result
 import com.cpp.unsmoke.databinding.ActivityLoginBinding
@@ -16,6 +17,7 @@ import com.cpp.unsmoke.ui.personalizedplan.PersonalizedActivity
 import com.cpp.unsmoke.ui.personalizedplan.PersonalizedViewModel
 import com.cpp.unsmoke.utils.helper.viewmodel.ObtainViewModelFactory
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class LoginActivity : AppCompatActivity() {
@@ -28,12 +30,11 @@ class LoginActivity : AppCompatActivity() {
 
         val viewModel = ObtainViewModelFactory.obtainAuth<LoginViewModel>(this)
 
-        val isLogin = runBlocking {
-            viewModel.getLoginStatus().first()
-        }
-
-        if (isLogin){
-            toHome()
+        lifecycleScope.launch {
+            val isLogin = viewModel.getLoginStatus().first()
+            if (isLogin) {
+                toHome()
+            }
         }
 
         val alertBuilder = AlertDialog.Builder(this)
