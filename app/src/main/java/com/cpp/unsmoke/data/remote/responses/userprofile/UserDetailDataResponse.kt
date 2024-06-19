@@ -17,7 +17,7 @@ data class UserDetailDataResponse(
 data class DataUserDetail(
 
 	@field:SerializedName("current_lung")
-	val currentLung: Any? = null,
+	val currentLung: String? = null,
 
 	@field:SerializedName("city")
 	val city: String? = null,
@@ -41,7 +41,7 @@ data class DataUserDetail(
 	val currentDay: Int? = null,
 
 	@field:SerializedName("money_saved")
-	val moneySaved: Int? = null,
+	val moneySaved: Double? = null,
 
 	@field:SerializedName("full_name")
 	val fullName: String? = null,

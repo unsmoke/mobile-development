@@ -1,5 +1,8 @@
 package com.cpp.unsmoke.data.remote.retrofit
 
+import com.cpp.unsmoke.data.remote.responses.activity.BreathResponse
+import com.cpp.unsmoke.data.remote.responses.activity.JournalResponse
+import com.cpp.unsmoke.data.remote.responses.activity.RelapseResponse
 import com.cpp.unsmoke.data.remote.responses.auth.ForgotPasswordResponse
 import com.cpp.unsmoke.data.remote.responses.auth.LoginResponse
 import com.cpp.unsmoke.data.remote.responses.auth.RefreshResponse
@@ -7,6 +10,7 @@ import com.cpp.unsmoke.data.remote.responses.auth.RegisterResponse
 import com.cpp.unsmoke.data.remote.responses.auth.ResetPasswordResponse
 import com.cpp.unsmoke.data.remote.responses.auth.VerifyResponse
 import com.cpp.unsmoke.data.remote.responses.leaderboard.LeaderboardResponse
+import com.cpp.unsmoke.data.remote.responses.milestone.MilestoneResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.CityResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.CreatePersonalizedResponse
 import com.cpp.unsmoke.data.remote.responses.personalized.GetPersonalizedResponse
@@ -174,4 +178,47 @@ interface ApiService {
         @Field("token") otp: String,
         @Field("new_password") password: String
     ): ResetPasswordResponse
+
+    @FormUrlEncoded
+    @POST("breathing-activities")
+    suspend fun sendBreathActivity(
+        @Header("Authorization") authHeader: String,
+        @Field("user_id") userId: String,
+        @Field("duration") duration: Int,
+        @Field("reward") reward: Int,
+        @Field("date") date: Long
+    ): BreathResponse
+
+    @FormUrlEncoded
+    @POST("journal-activities")
+    suspend fun sendJournalActivity(
+        @Header("Authorization") authHeader: String,
+        @Field("user_id") userId: String,
+        @Field("title") title: String,
+        @Field("body") content: String,
+        @Field("reward") reward: Int,
+        @Field("date") date: Long
+    ): JournalResponse
+
+    @FormUrlEncoded
+    @POST("relapse")
+    suspend fun sendRelapseActivity(
+        @Header("Authorization") authHeader: String,
+        @Field("user_id") userId: String,
+        @Field("reward") reward: Int,
+        @Field("cigarettes_this_day") cigarettesThisDay: Int,
+        @Field("date") date: Long
+    ): RelapseResponse
+
+    @GET("user-milestones/{userId}")
+    suspend fun getMilestonesById(
+        @Header("Authorization") authHeader: String,
+        @Path("userId") userId: String
+    ): MilestoneResponse
+
+    @GET("user-milestones")
+    suspend fun getAllMilestones(
+        @Header("Authorization") authHeader: String
+    ): MilestoneResponse
+
 }
