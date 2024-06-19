@@ -51,8 +51,8 @@
     <string name="challenge_desc">Complete the following challenges to earn XP and daily streaks!</string>
     <string name="challenge_smoke">Limit daily cigarettes</string>
     <string name="challenge_breath">Breathing Exercise</string>
-    <string name="milestone_title">Milestone Progress</string>
-    <string name="milestone_desc">Reach milestones to achieve your goals</string>
+    <string name="milestone_title">Badges Colletions</string>
+    <string name="milestone_desc">The badges represent the milestone you have achieved. Keep collecting them to reach your ultimate goals!</string>
     <string name="rank_title">Rank</string>
     <string name="xp_title">XP</string>
     <string name="rank_description">Compete with people who have the same goals as you. Break a leg!</string>
@@ -123,9 +123,13 @@
 
     <string name="result_success_recorded_title">Log has been saved!</string>
     <string name="result_success_recorded_description">Remember not to exceed the daily smoking limit that has been set. If you fail, you will lose your streak and fail to gain XP, which will affect the condition of your virtual lungs!</string>
-
     <string name="result_failed_recorded_title">You failed to get streak and XP!</string>
     <string name="result_failed_recorded_description">You have exceeded the allowed cigarette consumption limit for today, so your streak will be lost and you won\'t gain XP. Don\'t give up, try again tomorrow!</string>
+
+    <string name="result_journal_success_title">You have filled out your journal today!</string>
+    <string name="result_journal_success_description">We are sure you can succeed in reaching your goals. Hard work will not betray the results and consistency is the key!</string>
+    <string name="xp_earned">XP Earned</string>
+
     <string name="username">username</string>
     <string name="choose_your_photo_profile">Choose your photo profile</string>
     <string name="save_changes">Save Changes</string>
@@ -133,4 +137,12 @@
     <string name="equiped">Equiped</string>
     <string name="otp_verification">OTP Verification</string>
     <string name="desc_otp_register">Enter the otp code that has been sent to your email</string>
+
+    <string name="result_hold_breath_title">Breathing exercise complete!</string>
+    <string name="result_hold_breath_description">Well done on finishing your breathing session! Remember, regular practice can greatly enhance your focus, reduce stress, and improve overall health. Keep up the good work and make breathing exercises a part of your daily wellness routine.</string>
+    <string name="duration">Duration</string>
+    <string name="highest_record">Highest record</string>
+
+    <string name="did_you_know">Did you know?</string>
+    <string name="medical_news_description">Medical News Today explains that the average person can hold their breath for about 30–90 seconds.</string>
 </resources>
