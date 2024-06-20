@@ -85,6 +85,12 @@ class HomeFragment : Fragment() {
             }
         }
 
+        binding.tvSmokeConsume.text = (if (viewModel.getUserCigConsumed().toString().isEmpty()){
+            "0"
+        } else {
+            viewModel.getUserCigConsumed()
+        }).toString()
+
         binding.shopBtn.setOnClickListener {
             val intent = Intent(requireContext(), ShopActivity::class.java)
             startActivity(intent)

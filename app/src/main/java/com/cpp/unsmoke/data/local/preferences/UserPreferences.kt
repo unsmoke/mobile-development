@@ -92,7 +92,7 @@ class UserPreferences(private val dataStore: DataStore<Preferences>) {
 
     fun getJournalIsFilled(): Flow<Boolean?> {
         return dataStore.data.map { preferences ->
-            preferences[JOURNAL_IS_FILLED]
+            preferences[JOURNAL_IS_FILLED] ?: false
         }
     }
 
@@ -104,7 +104,7 @@ class UserPreferences(private val dataStore: DataStore<Preferences>) {
 
     fun getIsmokeJournalIsFilled(): Flow<Boolean?> {
         return dataStore.data.map { preferences ->
-            preferences[ISMOKE_JOURNAL_IS_FILLED]
+            preferences[ISMOKE_JOURNAL_IS_FILLED] ?: false
         }
     }
 
@@ -116,7 +116,7 @@ class UserPreferences(private val dataStore: DataStore<Preferences>) {
 
     fun getBreathActivityIsFilled(): Flow<Boolean?> {
         return dataStore.data.map { preferences ->
-            preferences[BREATH_ACTIVITY_IS_FILLED]
+            preferences[BREATH_ACTIVITY_IS_FILLED] ?: false
         }
     }
 

@@ -40,13 +40,13 @@ class ShopViewModel(private val shopRepository: ShopRepository, private val sett
 
     fun setLungUrl() {
         viewModelScope.launch {
-            _currentLungUrl.value = shopRepository.getLungUrl().first()
+            _currentLungUrl.value = shopRepository.getLungUrl().first() ?: "https://storage.googleapis.com/unsmoke-assets/lungs/plain-lung.svg"
         }
     }
 
     fun setLungId() {
         viewModelScope.launch {
-            _currentLungId.value = shopRepository.getLungId().first()
+            _currentLungId.value = shopRepository.getLungId().first() ?: "123"
         }
     }
 

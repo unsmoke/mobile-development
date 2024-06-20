@@ -41,39 +41,114 @@ class MyWorker(context: Context, workerParams: WorkerParameters) : CoroutineWork
 
     override suspend fun doWork(): Result {
         return try {
-            val isDailyJournalDone = gamificationPreferences.getDailyJournalDone().first()
-            val isSmokeUnderLimits = gamificationPreferences.getSmokeUnderLimits().first()
-            val isExerciseBreathDone = gamificationPreferences.getExerciseBreathDone().first()
+            val isDailyJournalDone = userPreferences.getJournalIsFilled().first()
+            val isSmokeUnderLimits = userPreferences.getBreathActivityIsFilled().first()
+            val isExerciseBreathDone = userPreferences.getIsmokeJournalIsFilled().first()
 
             Log.d("MyWorker", "isDailyJournalDone=$isDailyJournalDone, isSmokeUnderLimits=$isSmokeUnderLimits, isExerciseBreathDone=$isExerciseBreathDone")
 
-            if (isDailyJournalDone && isSmokeUnderLimits && isExerciseBreathDone) {
+            val cigarettesConsumed = userPreferences.getCigaretteConsumed().first()?.toInt() ?: -1
+
+            if (isExerciseBreathDone == true) {
                 // Get personalized plan
+                val relapseResult = activityRepository.sendRelapseData(cigarettesConsumed).asFlow()
 
-            }
+                var resultBreath: Result? = null
+                relapseResult.collect{
+                    Log.d("MyWorker", "Result from getPersonalizedPlan: $it")
+                    resultBreath = when (it) {
+                        is com.cpp.unsmoke.data.remote.Result.Success -> {
+                            // Convert LiveData to Flow
+                            val userDataFlow = userDataRepository.getUserData().asFlow()
 
-            // Convert LiveData to Flow
-            val userDataFlow = userDataRepository.getUserData().asFlow()
+                            // Collect the Flow
+                            var result: Result? = null
+                            userDataFlow.collect { dataResult ->
+                                Log.d("MyWorker", "Result from getPersonalizedPlan: $dataResult")
 
-            // Collect the Flow
-            var result: Result? = null
-            userDataFlow.collect { dataResult ->
-                Log.d("MyWorker", "Result from getPersonalizedPlan: $dataResult")
+                                result = when (dataResult) {
+                                    is com.cpp.unsmoke.data.remote.Result.Success -> {
+                                        // Send broadcast to update widget
+                                        val intent = Intent(UnsmokeWidget.ACTION_UPDATE_WIDGET)
+                                        applicationContext.sendBroadcast(intent)
+                                        updateWidget(dataResult.data.data?.streakCount)
+                                        Result.success()
+                                    }
+                                    is com.cpp.unsmoke.data.remote.Result.Error -> Result.failure()
+                                    else -> Result.failure()
+                                }
+                            }
 
-                result = when (dataResult) {
-                    is com.cpp.unsmoke.data.remote.Result.Success -> {
-                        // Send broadcast to update widget
-                        val intent = Intent(UnsmokeWidget.ACTION_UPDATE_WIDGET)
-                        applicationContext.sendBroadcast(intent)
-                        updateWidget(dataResult.data.data?.streakCount)
-                        Result.success()
+                            result ?: Result.failure()
+                            Result.success()
+                        }
+                        is com.cpp.unsmoke.data.remote.Result.Error -> Result.failure()
+                        else -> Result.failure()
                     }
-                    is com.cpp.unsmoke.data.remote.Result.Error -> Result.failure()
-                    else -> Result.failure()
                 }
+                resultBreath ?: Result.failure()
+            } else {
+                val relapseResult = activityRepository.sendRelapseData(-1).asFlow()
+
+                var resultBreath: Result? = null
+                relapseResult.collect{
+                    Log.d("MyWorker", "Result from getPersonalizedPlan: $it")
+                    resultBreath = when (it) {
+                        is com.cpp.unsmoke.data.remote.Result.Success -> {
+                            // Send broadcast to update widget
+                            // Convert LiveData to Flow
+                            val userDataFlow = userDataRepository.getUserData().asFlow()
+
+                            // Collect the Flow
+                            var result: Result? = null
+                            userDataFlow.collect { dataResult ->
+                                Log.d("MyWorker", "Result from getPersonalizedPlan: $dataResult")
+
+                                result = when (dataResult) {
+                                    is com.cpp.unsmoke.data.remote.Result.Success -> {
+                                        // Send broadcast to update widget
+                                        val intent = Intent(UnsmokeWidget.ACTION_UPDATE_WIDGET)
+                                        applicationContext.sendBroadcast(intent)
+                                        updateWidget(dataResult.data.data?.streakCount)
+                                        Result.success()
+                                    }
+                                    is com.cpp.unsmoke.data.remote.Result.Error -> Result.failure()
+                                    else -> Result.failure()
+                                }
+                            }
+
+                            result ?: Result.failure()
+                            Result.success()
+                        }
+                        is com.cpp.unsmoke.data.remote.Result.Error -> Result.failure()
+                        else -> Result.failure()
+                    }
+                }
+                resultBreath ?: Result.failure()
             }
 
-            result ?: Result.failure()
+//            // Convert LiveData to Flow
+//            val userDataFlow = userDataRepository.getUserData().asFlow()
+//
+//            // Collect the Flow
+//            var result: Result? = null
+//            userDataFlow.collect { dataResult ->
+//                Log.d("MyWorker", "Result from getPersonalizedPlan: $dataResult")
+//
+//                result = when (dataResult) {
+//                    is com.cpp.unsmoke.data.remote.Result.Success -> {
+//                        // Send broadcast to update widget
+//                        val intent = Intent(UnsmokeWidget.ACTION_UPDATE_WIDGET)
+//                        applicationContext.sendBroadcast(intent)
+//                        updateWidget(dataResult.data.data?.streakCount)
+//                        Result.success()
+//                    }
+//                    is com.cpp.unsmoke.data.remote.Result.Error -> Result.failure()
+//                    else -> Result.failure()
+//                }
+//            }
+//
+//            result ?: Result.failure()
 
         } catch (e: Exception) {
             Log.e("MyWorker", "Error executing work", e)

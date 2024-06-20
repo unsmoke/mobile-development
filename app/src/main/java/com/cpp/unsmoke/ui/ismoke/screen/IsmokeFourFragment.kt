@@ -5,9 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import com.cpp.unsmoke.R
 import com.cpp.unsmoke.databinding.FragmentIsmokeFourBinding
+import com.cpp.unsmoke.ui.ismoke.IsmokeViewModel
+import com.cpp.unsmoke.utils.helper.viewmodel.ObtainViewModelFactory
 
 class IsmokeFourFragment : Fragment() {
     private var _binding: FragmentIsmokeFourBinding? = null
@@ -24,6 +27,24 @@ class IsmokeFourFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val ismokeViewModel = ObtainViewModelFactory.obtainAuth<IsmokeViewModel>(requireActivity())
+
+        binding.tvSmokeConsume.text = ismokeViewModel.getUserCigConsumed().toString()
+
+        ismokeViewModel.getUserData().observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is com.cpp.unsmoke.data.remote.Result.Success -> {
+                    binding.tvSmokeQuota.text = result.data.data?.cigarettesQuota?.get(0).toString()
+                }
+                is com.cpp.unsmoke.data.remote.Result.Error -> {
+                    Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+                }
+                is com.cpp.unsmoke.data.remote.Result.Loading -> {
+                    Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
 
         hideToolBar()
 

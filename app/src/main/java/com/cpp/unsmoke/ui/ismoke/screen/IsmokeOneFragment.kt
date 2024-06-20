@@ -48,6 +48,12 @@ class IsmokeOneFragment : Fragment() {
 
         val ismokeViewModel = ObtainViewModelFactory.obtainAuth<IsmokeViewModel>(requireActivity())
 
+        val latestCigConsume: Int = if (ismokeViewModel.getUserCigConsumed().isNullOrEmpty()) {
+            0
+        } else {
+            ismokeViewModel.getUserCigConsumed()?.toInt() ?: 0
+        }
+
         ismokeViewModel.smokeTime.observe(viewLifecycleOwner) { smokeTime ->
             binding.edtSmokingTime.setText(smokeTime)
         }
@@ -100,6 +106,9 @@ class IsmokeOneFragment : Fragment() {
             if (isSmokeTimeSet && isCigaretteCountSet && isFeelingsSet && validateTimes()) {
                 ismokeViewModel.setSmokeTime(smokeTime)
                 ismokeViewModel.setCigaretteCount(cigaretteCount)
+                ismokeViewModel.setIsmokeIsFilled(true)
+                ismokeViewModel.setTotalCigNow((latestCigConsume + cigaretteCount.toInt()))
+                ismokeViewModel.setUserCigConsume(latestCigConsume + cigaretteCount.toInt())
                 ismokeViewModel.setFeelings(feelings)
                 Navigation.findNavController(view)
                     .navigate(R.id.action_ismokeOneFragment_to_ismokeTwoFragment)

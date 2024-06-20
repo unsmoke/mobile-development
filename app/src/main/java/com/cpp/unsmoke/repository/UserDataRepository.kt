@@ -3,6 +3,7 @@ package com.cpp.unsmoke.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import com.cpp.unsmoke.data.local.preferences.GamificationPreferences
 import com.cpp.unsmoke.data.local.preferences.LoginPreferences
 import com.cpp.unsmoke.data.local.preferences.UserPreferences
 import com.cpp.unsmoke.data.remote.Result
@@ -83,6 +84,12 @@ class UserDataRepository(
     fun getLungId() = userPreferences.getUserLungId()
 
     fun getUserId() = preferences.getUserId()
+
+    suspend fun setUserCigConsume(cig: Int) {
+        userPreferences.setCigaretteConsumed(cig.toString())
+    }
+
+    fun getUserCigarette() = userPreferences.getCigaretteConsumed()
 
     private fun parseError(e: HttpException): String {
         return try {

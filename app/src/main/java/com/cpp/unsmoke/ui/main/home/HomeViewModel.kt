@@ -23,7 +23,7 @@ class HomeViewModel(
 
     fun loadLungUrl() {
         viewModelScope.launch {
-            _currentLungUrl.value = userDataRepository.getLungUrl().first()
+            _currentLungUrl.value = userDataRepository.getLungUrl().first() ?: "https://storage.googleapis.com/unsmoke-assets/lungs/plain-lung.svg"
         }
     }
 
@@ -32,6 +32,10 @@ class HomeViewModel(
             userDataRepository.saveLungUrl(url)
         }
     }
+
+    fun getUserCigConsumed() = runBlocking {
+            userDataRepository.getUserCigarette().first()
+        }
 
     fun getUserData(): LiveData<Result<UserDetailDataResponse>> {
         return userDataRepository.getUserData()

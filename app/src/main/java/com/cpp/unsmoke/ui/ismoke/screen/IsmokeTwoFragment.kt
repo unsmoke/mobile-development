@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.Navigation
 import com.cpp.unsmoke.R
@@ -19,6 +20,8 @@ class IsmokeTwoFragment : Fragment() {
 
     private var isReasonSet = false
     private var reason = ""
+
+    private var totalSmoke: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -89,14 +92,39 @@ class IsmokeTwoFragment : Fragment() {
             }
         }
 
-        binding.btnNext.setOnClickListener {
-            if (isReasonSet) {
-                ismokeViewModel.setSmokingReason(reason)
-                Navigation.findNavController(view).navigate(R.id.action_ismokeTwoFragment_to_ismokeThreeFragment)
-            } else {
-                Navigation.findNavController(view).navigate(R.id.action_ismokeTwoFragment_to_ismokeFourFragment)
+        ismokeViewModel.totalCigNow.observe(viewLifecycleOwner) { total ->
+            totalSmoke = total
+        }
+
+        ismokeViewModel.getUserData().observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is com.cpp.unsmoke.data.remote.Result.Success -> {
+                    binding.btnNext.setOnClickListener {
+                        if (totalSmoke < (result.data.data?.cigarettesQuota?.get(0) ?: 0)) {
+                            ismokeViewModel.setSmokingReason(reason)
+                            Navigation.findNavController(view).navigate(R.id.action_ismokeTwoFragment_to_ismokeThreeFragment)
+                        } else {
+                            Navigation.findNavController(view).navigate(R.id.action_ismokeTwoFragment_to_ismokeFourFragment)
+                        }
+                    }
+                }
+                is com.cpp.unsmoke.data.remote.Result.Error -> {
+                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                }
+                is com.cpp.unsmoke.data.remote.Result.Loading -> {
+                    Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT).show()
+                }
             }
         }
+
+//        binding.btnNext.setOnClickListener {
+//            if (isReasonSet) {
+//                ismokeViewModel.setSmokingReason(reason)
+//                Navigation.findNavController(view).navigate(R.id.action_ismokeTwoFragment_to_ismokeThreeFragment)
+//            } else {
+//                Navigation.findNavController(view).navigate(R.id.action_ismokeTwoFragment_to_ismokeFourFragment)
+//            }
+//        }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

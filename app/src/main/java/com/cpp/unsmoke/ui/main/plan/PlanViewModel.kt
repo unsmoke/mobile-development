@@ -23,7 +23,7 @@ class PlanViewModel(
 
     fun loadLungUrl() {
         viewModelScope.launch {
-            _currentLungUrl.value = userDataRepository.getLungUrl().first()
+            _currentLungUrl.value = userDataRepository.getLungUrl().first() ?: "https://storage.googleapis.com/unsmoke-assets/lungs/plain-lung.svg"
         }
     }
 

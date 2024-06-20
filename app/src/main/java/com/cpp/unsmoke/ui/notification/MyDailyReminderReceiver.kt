@@ -25,7 +25,7 @@ class MyDailyReminderReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val type = intent.getStringExtra(EXTRA_TYPE)
         val message = intent.getStringExtra(EXTRA_MESSAGE)
-        val title = if (type.equals(TYPE_ONE_TIME, ignoreCase = true)) TYPE_ONE_TIME else TYPE_REPEATING
+        val title = "Keep up the good work buddy"
         val notifId = intent.getIntExtra(EXTRA_NOTIF_ID, 0)
         if (message != null) {
             showAlarmNotification(context, title, message, notifId)
@@ -41,6 +41,7 @@ class MyDailyReminderReceiver : BroadcastReceiver() {
             .setSmallIcon(R.drawable.green_no_text)
             .setContentTitle(title)
             .setContentText(message)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(message))
             .setColor(ContextCompat.getColor(context, android.R.color.transparent))
             .setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
             .setSound(alarmSound)
