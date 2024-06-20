@@ -38,7 +38,7 @@ class MyDailyReminderReceiver : BroadcastReceiver() {
         val notificationManagerCompat = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val builder = NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(R.drawable.icon_smoke)
+            .setSmallIcon(R.drawable.green_no_text)
             .setContentTitle(title)
             .setContentText(message)
             .setColor(ContextCompat.getColor(context, android.R.color.transparent))
