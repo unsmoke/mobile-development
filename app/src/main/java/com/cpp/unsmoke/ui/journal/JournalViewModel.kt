@@ -4,9 +4,16 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.cpp.unsmoke.data.remote.Result
+import com.cpp.unsmoke.data.remote.responses.activity.JournalResponse
+import com.cpp.unsmoke.repository.ActivityRepository
 import com.cpp.unsmoke.repository.JournalRepository
+import kotlinx.coroutines.launch
 
-class JournalViewModel(private val journalRepository: JournalRepository): ViewModel() {
+class JournalViewModel(
+    private val activityRepository: ActivityRepository
+): ViewModel() {
 
     /* FRAGMENT TWO */
     private val _feeling = MutableLiveData<String>()
@@ -42,5 +49,14 @@ class JournalViewModel(private val journalRepository: JournalRepository): ViewMo
         Log.d("JournalViewModel", allData)
     }
 
+    fun sendJournalDataToRepository(commitment: String): LiveData<Result<JournalResponse>> {
+        return activityRepository.sendJournalData(commitment)
+    }
+
+    fun setJournalIsFilled() {
+        viewModelScope.launch {
+            activityRepository.setJournalIsFilled(true)
+        }
+    }
 
 }

@@ -45,5 +45,14 @@
         android:id="@+id/journalingFiveFragment"
         android:name="com.cpp.unsmoke.ui.journal.screen.JournalingFiveFragment"
         android:label="fragment_journaling_five"
-        tools:layout="@layout/fragment_journaling_five" />
+        tools:layout="@layout/fragment_journaling_five" >
+        <action
+            android:id="@+id/action_journalingFiveFragment_to_journalingResultFragment"
+            app:destination="@id/journalingResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/journalingResultFragment"
+        android:name="com.cpp.unsmoke.ui.journal.screen.JournalingResultFragment"
+        android:label="fragment_journaling_result"
+        tools:layout="@layout/fragment_journaling_result" />
 </navigation>

@@ -74,7 +74,7 @@ class ViewModelFactoryAuth private constructor(
             PersonalizedViewModel::class.java -> PersonalizedViewModel(personalizedPlanRepository, settingRepository) as T
             ProfileViewModel::class.java -> ProfileViewModel(userDataRepository, settingRepository) as T
             ShopViewModel::class.java -> ShopViewModel(shopRepository, settingRepository) as T
-            JournalViewModel::class.java -> JournalViewModel(journalRepository) as T
+            JournalViewModel::class.java -> JournalViewModel(activityRepository) as T
             RankViewModel::class.java -> RankViewModel(userDataRepository, leaderboardRepository) as T
             IsmokeViewModel::class.java -> IsmokeViewModel() as T
             HomeViewModel::class.java -> HomeViewModel(userDataRepository, settingRepository) as T

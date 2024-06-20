@@ -6,12 +6,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import com.cpp.unsmoke.BuildConfig
 import com.cpp.unsmoke.R
+import com.cpp.unsmoke.data.remote.Result
 import com.cpp.unsmoke.databinding.FragmentJournalingFiveBinding
 import com.cpp.unsmoke.ui.journal.JournalViewModel
+import com.cpp.unsmoke.ui.notification.AlarmInfo
+import com.cpp.unsmoke.ui.notification.MyDailyReminderReceiver
 import com.cpp.unsmoke.utils.helper.viewmodel.ObtainViewModelFactory
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.BlockThreshold
@@ -19,16 +24,24 @@ import com.google.ai.client.generativeai.type.GenerationConfig
 import com.google.ai.client.generativeai.type.HarmCategory
 import com.google.ai.client.generativeai.type.SafetySetting
 import com.google.ai.client.generativeai.type.generationConfig
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.Calendar
+import java.util.Locale
 
 class JournalingFiveFragment : Fragment() {
     private var _binding: FragmentJournalingFiveBinding? = null
     private val binding get() = _binding!!
 
     private var commitmentValue = ""
+
+    private lateinit var reminderReceiver: MyDailyReminderReceiver
+
+    private lateinit var alarmInfo: List<AlarmInfo>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,11 +70,28 @@ class JournalingFiveFragment : Fragment() {
             binding.tvCommitment.text =
                 getString(R.string.summary_commitment, commitment)
                 commitmentValue = commitment
+                journalingViewModel.sendJournalDataToRepository(commitment).observe(viewLifecycleOwner) { result ->
+                    when (result) {
+                        is Result.Success -> {
+                            Toast.makeText(requireContext(), "Journaling sent successfully", Toast.LENGTH_SHORT).show()
+                            binding.btnNext.setOnClickListener {
+                                Navigation.findNavController(view).navigate(R.id.action_journalingFiveFragment_to_journalingResultFragment)
+                            }
+                        }
+                        is Result.Error -> {
+//                            Toast.makeText(requireContext(), "Journaling failed to send", Toast.LENGTH_SHORT).show()
+                            binding.btnNext.setOnClickListener {
+                                Navigation.findNavController(view).navigate(R.id.action_journalingFiveFragment_to_journalingResultFragment)
+                            }
+                        }
+                        is Result.Loading -> {
+                            Toast.makeText(requireContext(), "Sending journaling...", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
         }
 
-        binding.btnNext.setOnClickListener {
-            requireActivity().finish()
-        }
+        journalingViewModel.setJournalIsFilled()
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -124,11 +154,36 @@ class JournalingFiveFragment : Fragment() {
                     val message = jsonObject.getString("pesan")
                     messages.add(id to message)
                 }
-                for ((id, message) in messages) {
-                    Log.d("Gemini", "ID: $id, Message: $message")
-                }
+                setAlarmsWithMessages(messages)
             } catch (e: Exception) {
                 Log.e("Gemini", "Error parsing JSON response", e)
+            }
+        }
+    }
+
+    private fun setAlarmsWithMessages(messages: List<Pair<String, String>>) {
+        val currentTime = System.currentTimeMillis()
+        val intervalInMillis = 24 * 60 * 60 * 1000 / messages.size
+        val calendar = Calendar.getInstance()
+
+        val alarmInfoList = messages.mapIndexed { index, (_, message) ->
+            calendar.timeInMillis = currentTime + index * intervalInMillis
+            val hours = calendar.get(Calendar.HOUR_OF_DAY)
+            val minutes = calendar.get(Calendar.MINUTE)
+            val formattedTime = String.format(Locale.getDefault(), "%02d:%02d", hours, minutes)
+            Log.d("FormattedTime", "Index: $index, Time: $formattedTime, Message: $message")
+            AlarmInfo(formattedTime, message)
+        }
+
+        // Log the contents of alarmInfoList
+        alarmInfoList.forEach { alarmInfo ->
+            Log.d("AlarmInfoList", "Time: ${alarmInfo.time}, Message: ${alarmInfo.message}")
+        }
+
+        reminderReceiver = MyDailyReminderReceiver()
+        CoroutineScope(Dispatchers.IO).launch {
+            withContext(Dispatchers.Main) {
+                reminderReceiver.setRepeatingAlarms(requireActivity(), alarmInfoList)
             }
         }
     }

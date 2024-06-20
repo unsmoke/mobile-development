@@ -70,10 +70,10 @@ class MainActivity : AppCompatActivity() {
             requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
 
-        reminderReceiver = MyDailyReminderReceiver()
-
-        // Call the method to fetch notification data and set alarms
-        fetchNotificationDataAndSetAlarms()
+//        reminderReceiver = MyDailyReminderReceiver()
+//
+//        // Call the method to fetch notification data and set alarms
+//        fetchNotificationDataAndSetAlarms()
 
         AutoStartHelper.getInstance().getAutoStartPermission(this)
 
