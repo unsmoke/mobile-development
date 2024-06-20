@@ -10,12 +10,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import coil.decode.SvgDecoder
 import coil.load
 import com.cpp.unsmoke.R
 import com.cpp.unsmoke.databinding.FragmentHomeBinding
 import com.cpp.unsmoke.databinding.FragmentPlanBinding
-import com.cpp.unsmoke.ui.main.home.HomeViewModel
+import com.cpp.unsmoke.data.remote.Result
 import com.cpp.unsmoke.utils.helper.viewmodel.ObtainViewModelFactory
 
 class PlanFragment : Fragment() {
@@ -26,6 +27,7 @@ class PlanFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var viewModel: PlanViewModel
+    private lateinit var adapter: PlanAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +41,8 @@ class PlanFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ObtainViewModelFactory.obtainAuth<PlanViewModel>(requireActivity())
+
+        setupRecyclerView()
 
         viewModel.loadLungUrl()
 
@@ -69,7 +73,59 @@ class PlanFragment : Fragment() {
             }
         }
 
+        viewModel.getAllMilestones().observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> {
+                    // Show loading indicator if necessary
+                }
+                is Result.Success -> {
+                    val allMilestones = result.data.data
+                    viewModel.getMilestoneById().observe(viewLifecycleOwner) { idResult ->
+                        when (idResult) {
+                            is Result.Loading -> {
+                                // Show loading indicator if necessary
+                            }
+                            is Result.Success -> {
+                                val achievedMilestones = idResult.data.data
+                                val badgeList = allMilestones?.map { milestone ->
+                                    milestone?.title?.let {
+                                        milestone.description?.let { it1 ->
+                                            milestone.badgeUrl?.let { it2 ->
+                                                achievedMilestones?.let { it3 ->
+                                                    Badge(
+                                                        title = it,
+                                                        description = it1,
+                                                        badgeUrl = it2,
+                                                        isAchieved = it3.any { it?.title == milestone.title }
+                                                    )
+                                                }
+                                            }
+                                        }
+                                    }
+                                }?.filterNotNull() // Filter out null values
+                                adapter.submitList(badgeList)
+                            }
+                            is Result.Error -> {
+                                // Handle error
+                                Toast.makeText(requireContext(), idResult.error, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
+                is Result.Error -> {
+                    // Handle error
+                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
         playImageViewAnimation()
+    }
+
+    private fun setupRecyclerView() {
+        adapter = PlanAdapter()
+        binding.rvMilestoneList.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvMilestoneList.adapter = adapter
     }
 
     override fun onResume() {

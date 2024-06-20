@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.cpp.unsmoke.di.Injection
 import com.cpp.unsmoke.repository.AuthRepository
 import com.cpp.unsmoke.repository.JournalRepository
+import com.cpp.unsmoke.repository.MilestoneRepository
 import com.cpp.unsmoke.repository.PersonalizedPlanRepository
 import com.cpp.unsmoke.repository.SettingRepository
 import com.cpp.unsmoke.repository.ShopRepository
@@ -32,7 +33,8 @@ class ViewModelFactoryAuth private constructor(
     private val shopRepository: ShopRepository,
     private val journalRepository: JournalRepository,
     private val leaderboardRepository: LeaderboardRepository,
-    private val userDataRepository: UserDataRepository
+    private val userDataRepository: UserDataRepository,
+    private val milestoneRepository: MilestoneRepository
 ) : ViewModelProvider.NewInstanceFactory() {
 
     companion object {
@@ -49,7 +51,8 @@ class ViewModelFactoryAuth private constructor(
                     Injection.provideShopRepository(context),
                     Injection.provideJournalRepository(context),
                     Injection.provideLeaderboardRepository(context),
-                    Injection.provideUserDataRepository(context)
+                    Injection.provideUserDataRepository(context),
+                    Injection.provideMilestoneRepository(context)
                 ).also {
                     INSTANCE = it
                 }
@@ -71,7 +74,7 @@ class ViewModelFactoryAuth private constructor(
             RankViewModel::class.java -> RankViewModel(userDataRepository, leaderboardRepository) as T
             IsmokeViewModel::class.java -> IsmokeViewModel() as T
             HomeViewModel::class.java -> HomeViewModel(userDataRepository, settingRepository) as T
-            PlanViewModel::class.java -> PlanViewModel(userDataRepository, settingRepository) as T
+            PlanViewModel::class.java -> PlanViewModel(milestoneRepository, userDataRepository, settingRepository) as T
             EditProfileViewModel::class.java -> EditProfileViewModel(userDataRepository) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }

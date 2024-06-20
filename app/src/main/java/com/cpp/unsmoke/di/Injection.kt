@@ -9,6 +9,7 @@ import com.cpp.unsmoke.data.local.preferences.dataStore
 import com.cpp.unsmoke.data.remote.retrofit.ApiConfig
 import com.cpp.unsmoke.repository.AuthRepository
 import com.cpp.unsmoke.repository.JournalRepository
+import com.cpp.unsmoke.repository.MilestoneRepository
 import com.cpp.unsmoke.repository.PersonalizedPlanRepository
 import com.cpp.unsmoke.repository.SettingRepository
 import com.cpp.unsmoke.repository.ShopRepository
@@ -73,6 +74,14 @@ object Injection {
         val apiService = ApiConfig.getApiServiceWithoutAuth(pref)
 
         return UserDataRepository.getInstance(apiService, pref, userPref)
+    }
+
+    fun provideMilestoneRepository(context: Context): MilestoneRepository {
+        val pref = LoginPreferences.getInstance(context.dataStore)
+
+        val apiService = ApiConfig.getApiServiceWithoutAuth(pref)
+
+        return MilestoneRepository.getInstance(apiService, pref)
     }
 
     fun provideSettingRepository(context: Context): SettingRepository {
