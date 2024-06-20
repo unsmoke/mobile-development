@@ -42,6 +42,22 @@ class HoldBreathFragment : Fragment() {
 
         viewModel = ObtainViewModelFactory.obtainAuth<HoldBreathViewModel>(requireActivity())
 
+        viewModel.getUserData().observe(viewLifecycleOwner) { result ->
+            if (result != null) {
+                when (result) {
+                    is Result.Success -> {
+                        binding.tvGretings.text = "Hello, ${result.data.data?.username}"
+                    }
+                    is Result.Error -> {
+                        Toast.makeText(requireContext(), "Failed to get user data", Toast.LENGTH_SHORT).show()
+                    }
+                    is Result.Loading -> {
+                        Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
         binding.btnHoldBreath.setOnClickListener {
             if (!isStop){
                 startStopwatch()

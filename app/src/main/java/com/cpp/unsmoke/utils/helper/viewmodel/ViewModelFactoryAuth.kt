@@ -80,7 +80,7 @@ class ViewModelFactoryAuth private constructor(
             HomeViewModel::class.java -> HomeViewModel(userDataRepository, settingRepository) as T
             PlanViewModel::class.java -> PlanViewModel(milestoneRepository, userDataRepository, settingRepository) as T
             EditProfileViewModel::class.java -> EditProfileViewModel(userDataRepository) as T
-            HoldBreathViewModel::class.java -> HoldBreathViewModel(activityRepository) as T
+            HoldBreathViewModel::class.java -> HoldBreathViewModel(activityRepository, userDataRepository) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
     }

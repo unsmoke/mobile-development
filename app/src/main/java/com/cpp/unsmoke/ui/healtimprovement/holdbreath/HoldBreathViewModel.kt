@@ -6,13 +6,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cpp.unsmoke.data.remote.Result
 import com.cpp.unsmoke.data.remote.responses.activity.BreathResponse
+import com.cpp.unsmoke.data.remote.responses.userprofile.UserDetailDataResponse
 import com.cpp.unsmoke.repository.ActivityRepository
+import com.cpp.unsmoke.repository.UserDataRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class HoldBreathViewModel(
-    private val activityRepository: ActivityRepository
+    private val activityRepository: ActivityRepository,
+    private val userDataRepository: UserDataRepository
 ): ViewModel(){
 
     private val _duration = MutableLiveData<Int>()
@@ -43,5 +46,9 @@ class HoldBreathViewModel(
         return runBlocking {
             activityRepository.getBreathActivityIsFilled().first()
         }
+    }
+
+    fun getUserData(): LiveData<Result<UserDetailDataResponse>> {
+        return userDataRepository.getUserData()
     }
 }
