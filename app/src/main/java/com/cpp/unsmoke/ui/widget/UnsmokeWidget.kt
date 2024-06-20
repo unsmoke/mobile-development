@@ -11,7 +11,14 @@ import android.net.ConnectivityManager
 import android.os.Build
 import android.util.Log
 import android.widget.RemoteViews
+import androidx.work.ListenableWorker.Result
 import com.cpp.unsmoke.R
+import com.cpp.unsmoke.di.Injection
+import com.cpp.unsmoke.repository.UserDataRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.random.Random
 
 /**
@@ -75,13 +82,27 @@ internal fun updateAppWidget(
     appWidgetManager: AppWidgetManager,
     appWidgetId: Int
 ) {
-    val views: RemoteViews = RemoteViews(context.packageName, R.layout.unsmoke_widget)
+    CoroutineScope(Dispatchers.Main).launch {
+        val views = RemoteViews(context.packageName, R.layout.unsmoke_widget)
 
-    // Generate random number and set to TextView
-    val randomNumber = Random.nextInt(100)
-    Log.d("UnsmokeWidget", "Random number: $randomNumber")
-    views.setTextViewText(R.id.streak_widget, randomNumber.toString())
+        val userDataRepository = Injection.provideUserDataRepository(context)
+        val result = withContext(Dispatchers.IO) {
+            userDataRepository.getUserData()
+        }
 
-    // Instruct the widget manager to update the widget
-    appWidgetManager.updateAppWidget(appWidgetId, views)
+        result.observeForever {
+            when (it) {
+                is com.cpp.unsmoke.data.remote.Result.Success -> {
+                    views.setTextViewText(R.id.streak_widget, it.data.data?.streakCount.toString())
+                }
+                is com.cpp.unsmoke.data.remote.Result.Error -> {
+                    views.setTextViewText(R.id.streak_widget, "-1")
+                }
+                else -> {
+                    views.setTextViewText(R.id.streak_widget, "1")
+                }
+            }
+            appWidgetManager.updateAppWidget(appWidgetId, views)
+        }
+    }
 }
