@@ -19,6 +19,7 @@ import com.cpp.unsmoke.ui.healtimprovement.holdbreath.HoldBreathActivity
 import com.cpp.unsmoke.ui.healtimprovement.holdbreath.screen.HoldBreathFragment
 import com.cpp.unsmoke.ui.journal.JournalActivity
 import com.cpp.unsmoke.ui.shop.ShopActivity
+import com.cpp.unsmoke.utils.helper.gamification.Gamification
 import com.cpp.unsmoke.utils.helper.viewmodel.ObtainViewModelFactory
 
 class HomeFragment : Fragment() {
@@ -68,7 +69,7 @@ class HomeFragment : Fragment() {
                     binding.tvStreakUser.text = "${userData.data?.streakCount.toString()} Streak"
                     binding.tvSmokeQuota.text = userData.data?.cigarettesQuota?.getOrNull(0).toString()
                     binding.currentDayProgram.text = userData.data?.currentDay.toString()
-                    binding.moneySaved.text = userData.data?.moneySaved.toString()
+                    binding.moneySaved.text = Gamification.formatNumber(userData.data?.moneySaved ?: 0.0)
                     binding.smokeAvoided.text = userData.data?.cigarettesAvoided.toString()
                     binding.icLung.load(userData.data?.currentLung){
                         decoderFactory { result, options, _ ->
