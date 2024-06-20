@@ -3,11 +3,11 @@ package com.cpp.unsmoke.utils.helper.gamification
 import java.text.DecimalFormat
 
 object Gamification {
-    const val RELAPSE_REWARD = 10
-    const val JOURNAL_REWARD = 5
-    const val BREATH_REWARD = 5
+    const val RELAPSE_REWARD = 60
+    const val JOURNAL_REWARD = 50
+    const val BREATH_REWARD = 35
 
-    fun formatNumber(value: Double): String {
+    fun formatNumberGamification(value: Double): String {
         val suffixes = arrayOf("", "K", "M", "B", "T")
         val formatter = DecimalFormat("#.#")
 

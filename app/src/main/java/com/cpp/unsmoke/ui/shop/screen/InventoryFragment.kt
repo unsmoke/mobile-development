@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.cpp.unsmoke.R
 import com.cpp.unsmoke.data.remote.Result
 import com.cpp.unsmoke.data.remote.responses.shop.DataItem
 import com.cpp.unsmoke.databinding.FragmentInventoryBinding
@@ -42,7 +44,8 @@ class InventoryFragment : Fragment() {
         inventoryAdapter = InventoryAdapter(viewModel, viewLifecycleOwner) { item ->
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle(item.name)
-                .setMessage(item.description)
+                .setMessage("Are you sure to equip this item?")
+                .setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.dialog_bg_purple))
                 .setPositiveButton("OK") { dialog, _ ->
                     dialog.dismiss()
                     val userId = viewModel.getUserId().toString()

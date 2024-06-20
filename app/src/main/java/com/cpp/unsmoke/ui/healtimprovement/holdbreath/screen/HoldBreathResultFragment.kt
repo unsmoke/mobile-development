@@ -46,6 +46,10 @@ class HoldBreathResultFragment : Fragment() {
 
         binding.tvXpEarnedPoint.text = Gamification.BREATH_REWARD.toString()
 
+        binding.btnNext.setOnClickListener {
+            requireActivity().finish()
+        }
+
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 isEnabled = false

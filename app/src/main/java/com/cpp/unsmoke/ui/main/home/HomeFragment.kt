@@ -69,7 +69,7 @@ class HomeFragment : Fragment() {
                     binding.tvStreakUser.text = "${userData.data?.streakCount.toString()} Streak"
                     binding.tvSmokeQuota.text = userData.data?.cigarettesQuota?.getOrNull(0).toString()
                     binding.currentDayProgram.text = userData.data?.currentDay.toString()
-                    binding.moneySaved.text = Gamification.formatNumber(userData.data?.moneySaved ?: 0.0)
+                    binding.moneySaved.text = Gamification.formatNumberGamification(userData.data?.moneySaved ?: 0.0)
                     binding.smokeAvoided.text = userData.data?.cigarettesAvoided.toString()
                     binding.icLung.load(userData.data?.currentLung){
                         decoderFactory { result, options, _ ->
@@ -90,6 +90,9 @@ class HomeFragment : Fragment() {
         } else {
             viewModel.getUserCigConsumed()
         }).toString()
+
+        binding.tvExp1.text = "${Gamification.RELAPSE_REWARD} XP"
+        binding.tvExp2.text = "${Gamification.BREATH_REWARD} XP"
 
         binding.shopBtn.setOnClickListener {
             val intent = Intent(requireContext(), ShopActivity::class.java)
