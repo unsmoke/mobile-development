@@ -8,7 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.Navigation
+import com.cpp.unsmoke.R
+import com.cpp.unsmoke.data.remote.Result
 import com.cpp.unsmoke.databinding.FragmentHoldBreathBinding
+import com.cpp.unsmoke.ui.healtimprovement.holdbreath.HoldBreathViewModel
+import com.cpp.unsmoke.utils.helper.viewmodel.ObtainViewModelFactory
 import java.util.Locale
 
 class HoldBreathFragment : Fragment() {
@@ -19,6 +24,8 @@ class HoldBreathFragment : Fragment() {
     private var handlerStopwatch = Handler(Looper.getMainLooper())
     private var startTime: Long = 0
     private var elapsedTime: Long = 0
+
+    private lateinit var viewModel: HoldBreathViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,13 +40,15 @@ class HoldBreathFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel = ObtainViewModelFactory.obtainAuth<HoldBreathViewModel>(requireActivity())
+
         binding.btnHoldBreath.setOnClickListener {
             if (!isStop){
                 startStopwatch()
                 startAnimation()
                 setBtnToStop()
             } else {
-                stopStopwatch()
+                stopStopwatch(it)
                 stopAnimation()
                 setBtnToStart()
             }
@@ -91,10 +100,28 @@ class HoldBreathFragment : Fragment() {
         handlerStopwatch.post(stopwatchRunnable)
     }
 
-    private fun stopStopwatch() {
+    private fun stopStopwatch(view: View) {
         elapsedTime = System.currentTimeMillis() - startTime
         handlerStopwatch.removeCallbacks(stopwatchRunnable)
-        Toast.makeText(requireContext(), elapsedTime.toString(), Toast.LENGTH_SHORT).show()
+        val elapsedSeconds = (elapsedTime / 1000).toInt()
+        viewModel.sendBreathData(elapsedSeconds)
+        viewModel.sendBreathDataToRepository(elapsedSeconds).observe(viewLifecycleOwner) { result ->
+            if (result != null) {
+                when (result){
+                    is Result.Success -> {
+                        viewModel.setBreathIsFilled()
+                        result.data.data?.highestDuration?.let { viewModel.setHighestRecord(it) }
+                        Navigation.findNavController(view).navigate(R.id.action_holdBreathFragment_to_holdBreathResultFragment)
+                    }
+                    is Result.Error -> {
+                        Toast.makeText(requireContext(), "Failed to send breath data", Toast.LENGTH_SHORT).show()
+                    }
+                    is Result.Loading -> {
+                        Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
     }
 
     private val stopwatchRunnable = object : Runnable {

@@ -103,6 +103,36 @@ class ActivityRepository(
         }
     }
 
+    suspend fun setCigarettesConsumed(cigarettesConsumed: Int) {
+        userPreferences.setCigaretteConsumed(cigarettesConsumed.toString())
+    }
+
+    fun getCigarettesConsumed() = userPreferences.getCigaretteConsumed()
+
+    suspend fun setJournalIsFilled(isFilled: Boolean) {
+        userPreferences.setJournalIsFilled(isFilled)
+    }
+
+    fun getJournalIsFilled() = userPreferences.getJournalIsFilled()
+
+    suspend fun setIsmokeJournalIsFilled(isFilled: Boolean) {
+        userPreferences.setIsmokeJournalIsFilled(isFilled)
+    }
+
+    fun getIsmokeJournalIsFilled() = userPreferences.getIsmokeJournalIsFilled()
+
+    suspend fun setBreathActivityIsFilled(isFilled: Boolean) {
+        userPreferences.setBreathActivityIsFilled(isFilled)
+    }
+
+    fun getBreathActivityIsFilled() = userPreferences.getBreathActivityIsFilled()
+
+    suspend fun resetAllActivityIsFilled() {
+        userPreferences.setJournalIsFilled(false)
+        userPreferences.setIsmokeJournalIsFilled(false)
+        userPreferences.setBreathActivityIsFilled(false)
+    }
+
     private fun parseError(e: HttpException): String {
         return try {
             val errorBody = e.response()?.errorBody()?.string()

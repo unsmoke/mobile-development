@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.cpp.unsmoke.di.Injection
+import com.cpp.unsmoke.repository.ActivityRepository
 import com.cpp.unsmoke.repository.AuthRepository
 import com.cpp.unsmoke.repository.JournalRepository
 import com.cpp.unsmoke.repository.MilestoneRepository
@@ -16,6 +17,7 @@ import com.cpp.unsmoke.ui.auth.forgotpassword.ForgotPasswordViewModel
 import com.cpp.unsmoke.ui.auth.login.LoginViewModel
 import com.cpp.unsmoke.ui.auth.newpassword.NewPasswordViewModel
 import com.cpp.unsmoke.ui.auth.register.RegisterViewModel
+import com.cpp.unsmoke.ui.healtimprovement.holdbreath.HoldBreathViewModel
 import com.cpp.unsmoke.ui.ismoke.IsmokeViewModel
 import com.cpp.unsmoke.ui.journal.JournalViewModel
 import com.cpp.unsmoke.ui.main.home.HomeViewModel
@@ -34,7 +36,8 @@ class ViewModelFactoryAuth private constructor(
     private val journalRepository: JournalRepository,
     private val leaderboardRepository: LeaderboardRepository,
     private val userDataRepository: UserDataRepository,
-    private val milestoneRepository: MilestoneRepository
+    private val milestoneRepository: MilestoneRepository,
+    private val activityRepository: ActivityRepository
 ) : ViewModelProvider.NewInstanceFactory() {
 
     companion object {
@@ -52,7 +55,8 @@ class ViewModelFactoryAuth private constructor(
                     Injection.provideJournalRepository(context),
                     Injection.provideLeaderboardRepository(context),
                     Injection.provideUserDataRepository(context),
-                    Injection.provideMilestoneRepository(context)
+                    Injection.provideMilestoneRepository(context),
+                    Injection.provideActivityRepository(context)
                 ).also {
                     INSTANCE = it
                 }
@@ -76,6 +80,7 @@ class ViewModelFactoryAuth private constructor(
             HomeViewModel::class.java -> HomeViewModel(userDataRepository, settingRepository) as T
             PlanViewModel::class.java -> PlanViewModel(milestoneRepository, userDataRepository, settingRepository) as T
             EditProfileViewModel::class.java -> EditProfileViewModel(userDataRepository) as T
+            HoldBreathViewModel::class.java -> HoldBreathViewModel(activityRepository) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
     }

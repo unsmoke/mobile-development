@@ -3,6 +3,7 @@ package com.cpp.unsmoke.data.local.preferences
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -83,6 +84,50 @@ class UserPreferences(private val dataStore: DataStore<Preferences>) {
         }
     }
 
+    suspend fun setJournalIsFilled(isFilled: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[JOURNAL_IS_FILLED] = isFilled
+        }
+    }
+
+    fun getJournalIsFilled(): Flow<Boolean?> {
+        return dataStore.data.map { preferences ->
+            preferences[JOURNAL_IS_FILLED]
+        }
+    }
+
+    suspend fun setIsmokeJournalIsFilled(isFilled: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[ISMOKE_JOURNAL_IS_FILLED] = isFilled
+        }
+    }
+
+    fun getIsmokeJournalIsFilled(): Flow<Boolean?> {
+        return dataStore.data.map { preferences ->
+            preferences[ISMOKE_JOURNAL_IS_FILLED]
+        }
+    }
+
+    suspend fun setBreathActivityIsFilled(isFilled: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[BREATH_ACTIVITY_IS_FILLED] = isFilled
+        }
+    }
+
+    fun getBreathActivityIsFilled(): Flow<Boolean?> {
+        return dataStore.data.map { preferences ->
+            preferences[BREATH_ACTIVITY_IS_FILLED]
+        }
+    }
+
+    suspend fun resetAllActivityIsFilled() {
+        dataStore.edit { preferences ->
+            preferences[JOURNAL_IS_FILLED] = false
+            preferences[ISMOKE_JOURNAL_IS_FILLED] = false
+            preferences[BREATH_ACTIVITY_IS_FILLED] = false
+        }
+    }
+
     suspend fun clearUserPref() {
         dataStore.edit { preferences ->
             preferences[USER_PROV_PREF] = ""
@@ -104,6 +149,9 @@ class UserPreferences(private val dataStore: DataStore<Preferences>) {
         private val USER_LUNG_PREF = stringPreferencesKey("user_lung_pref")
         private val CIGARETTE_CONSUMED = stringPreferencesKey("cigarette_consumed")
         private val USER_LUNG_ID_PREF = stringPreferencesKey("user_lung_id_pref")
+        private val JOURNAL_IS_FILLED = booleanPreferencesKey("journal_is_filled")
+        private val ISMOKE_JOURNAL_IS_FILLED = booleanPreferencesKey("ismoke_journal_is_filled")
+        private val BREATH_ACTIVITY_IS_FILLED = booleanPreferencesKey("breath_activity_is_filled")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreferences {
             return INSTANCE ?: synchronized(this) {
