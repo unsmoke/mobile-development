@@ -8,6 +8,9 @@ gemini_api=your_gemini_api
 ```
 
 # Feature
+![image](https://github.com/unsmoke/mobile-development/assets/87690913/a99c444f-99f6-4db5-9799-e9a6c8267b5a)
+![image](https://github.com/unsmoke/mobile-development/assets/87690913/4b8cc52c-c3ea-4f10-90f1-8fc2c01171e9)
+
 - Shop Item
 - Leaderboard
 - Gamification
