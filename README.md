@@ -7,7 +7,7 @@ base_url=your_base_url
 gemini_api=your_gemini_api
 ```
 
-# The Team
+# Mobile Development Team
 | No | Student ID     | Student Name                        | Origin of University                |
 |----|----------------|-------------------------------------|-------------------------------------|
 | 1  | A121D4KY3469   | Moch. Andi Divangga Pratama         | Universitas Telkom Surabaya         |
