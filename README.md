@@ -7,6 +7,13 @@ base_url=your_base_url
 gemini_api=your_gemini_api
 ```
 
+# The Team
+| No | Student ID     | Student Name                        | Origin of University                |
+|----|----------------|-------------------------------------|-------------------------------------|
+| 1  | A121D4KY3469   | Moch. Andi Divangga Pratama         | Universitas Telkom Surabaya         |
+| 2  | A006D4KX3626   | Jasmine Asyifania                   | Universitas Brawijaya               |
+
+
 # Feature
 ![image](https://github.com/unsmoke/mobile-development/assets/87690913/a99c444f-99f6-4db5-9799-e9a6c8267b5a)
 ![image](https://github.com/unsmoke/mobile-development/assets/87690913/4b8cc52c-c3ea-4f10-90f1-8fc2c01171e9)
